@@ -5,88 +5,88 @@ import { auth } from '../config/firebase';
 import { authApi } from '../api/authApi';
 
 const SignUpScreen = ({ navigation }: any) => {
-  const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-  const handleGoogleSignUp = async () => {
-    const provider = new GoogleAuthProvider();
-    setLoading(true);
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const idToken = await result.user.getIdToken();
-      
-      // Integrate with backend
-      await authApi.signUpWithGoogle(idToken);
-      
-      Alert.alert('Success', 'Account created successfully');
-    } catch (error: any) {
-      console.error('Sign up error:', error);
-      Alert.alert('Error', error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const handleGoogleSignUp = async () => {
+        const provider = new GoogleAuthProvider();
+        setLoading(true);
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const idToken = await result.user.getIdToken();
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Create Account</Text>
-      <Text style={styles.subtitle}>Join us today</Text>
-      
-      <TouchableOpacity 
-        style={styles.googleButton} 
-        onPress={handleGoogleSignUp} 
-        disabled={loading}
-      >
-        {loading ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <Text style={styles.buttonText}>Sign up with Google</Text>
-        )}
-      </TouchableOpacity>
+            // Integrate with backend
+            await authApi.signUpWithGoogle(idToken);
 
-      <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-        <Text style={styles.linkText}>Already have an account? Sign In</Text>
-      </TouchableOpacity>
-    </View>
-  );
+            Alert.alert('Success', 'Account created successfully');
+        } catch (error: any) {
+            console.error('Sign up error:', error);
+            Alert.alert('Error', error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Create Account</Text>
+            <Text style={styles.subtitle}>Join us today</Text>
+
+            <TouchableOpacity
+                style={styles.googleButton}
+                onPress={handleGoogleSignUp}
+                disabled={loading}
+            >
+                {loading ? (
+                    <ActivityIndicator color="#fff" />
+                ) : (
+                    <Text style={styles.buttonText}>Sign up with Google</Text>
+                )}
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+                <Text style={styles.linkText}>Already have an account? Sign In</Text>
+            </TouchableOpacity>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 30,
-    textAlign: 'center',
-  },
-  googleButton: {
-    backgroundColor: '#DB4437', // Google Red
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  linkText: {
-    marginTop: 20,
-    color: '#007AFF',
-    textAlign: 'center',
-  },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        padding: 20,
+        backgroundColor: '#fff',
+    },
+    title: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        textAlign: 'center',
+    },
+    subtitle: {
+        fontSize: 16,
+        color: '#666',
+        marginBottom: 30,
+        textAlign: 'center',
+    },
+    googleButton: {
+        backgroundColor: '#DB4437', // Google Red
+        padding: 15,
+        borderRadius: 8,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    linkText: {
+        marginTop: 20,
+        color: '#007AFF',
+        textAlign: 'center',
+    },
 });
 
 export default SignUpScreen;

@@ -7,94 +7,94 @@ import { RootState } from '../store';
 import axiosInstance from '../api/axiosInstance';
 
 const HomeScreen = () => {
-  const { user } = useSelector((state: RootState) => state.auth);
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+    const { user } = useSelector((state: RootState) => state.auth);
+    const [data, setData] = useState<any>(null);
+    const [loading, setLoading] = useState(false);
 
-  const fetchBackendData = async () => {
-    setLoading(true);
-    try {
-      const response = await axiosInstance.get('/protected');
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
-      setData({ error: 'Failed to fetch from backend' });
-    } finally {
-      setLoading(false);
-    }
-  };
+    const fetchBackendData = async () => {
+        setLoading(true);
+        try {
+            const response = await axiosInstance.get('/protected');
+            setData(response.data);
+        } catch (error) {
+            console.error(error);
+            setData({ error: 'Failed to fetch from backend' });
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome!</Text>
-      <Text style={styles.email}>{user?.email}</Text>
-      
-      <TouchableOpacity style={styles.backendButton} onPress={fetchBackendData}>
-        <Text style={styles.buttonText}>Fetch Protected Data from Backend</Text>
-      </TouchableOpacity>
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Welcome!</Text>
+            <Text style={styles.email}>{user?.email}</Text>
 
-      {loading && <ActivityIndicator style={{ marginTop: 20 }} />}
-      
-      {data && (
-        <View style={styles.dataContainer}>
-          <Text style={styles.dataText}>{JSON.stringify(data, null, 2)}</Text>
+            <TouchableOpacity style={styles.backendButton} onPress={fetchBackendData}>
+                <Text style={styles.buttonText}>Fetch Protected Data from Backend</Text>
+            </TouchableOpacity>
+
+            {loading && <ActivityIndicator style={{ marginTop: 20 }} />}
+
+            {data && (
+                <View style={styles.dataContainer}>
+                    <Text style={styles.dataText}>{JSON.stringify(data, null, 2)}</Text>
+                </View>
+            )}
+
+            <TouchableOpacity style={styles.signOutButton} onPress={() => signOut(auth)}>
+                <Text style={styles.buttonText}>Sign Out</Text>
+            </TouchableOpacity>
         </View>
-      )}
-
-      <TouchableOpacity style={styles.signOutButton} onPress={() => signOut(auth)}>
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f5f5f5',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  email: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 30,
-  },
-  backendButton: {
-    backgroundColor: '#5856D6',
-    padding: 15,
-    borderRadius: 8,
-    width: '100%',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  signOutButton: {
-    backgroundColor: '#FF3B30',
-    padding: 15,
-    borderRadius: 8,
-    width: '100%',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-  dataContainer: {
-    marginTop: 20,
-    padding: 15,
-    backgroundColor: '#eee',
-    borderRadius: 8,
-    width: '100%',
-  },
-  dataText: {
-    fontFamily: 'monospace',
-  }
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: '#f5f5f5',
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    email: {
+        fontSize: 16,
+        color: '#666',
+        marginBottom: 30,
+    },
+    backendButton: {
+        backgroundColor: '#5856D6',
+        padding: 15,
+        borderRadius: 8,
+        width: '100%',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    signOutButton: {
+        backgroundColor: '#FF3B30',
+        padding: 15,
+        borderRadius: 8,
+        width: '100%',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+    dataContainer: {
+        marginTop: 20,
+        padding: 15,
+        backgroundColor: '#eee',
+        borderRadius: 8,
+        width: '100%',
+    },
+    dataText: {
+        fontFamily: 'monospace',
+    },
 });
 
 export default HomeScreen;

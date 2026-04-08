@@ -6,11 +6,11 @@ import { StatusBar } from 'expo-status-bar';
 import { AuthSync } from './src/components/AuthSync';
 
 export default function App() {
-  return (
-    <Provider store={store}>
-      <AuthSync />
-      <StatusBar style="auto" />
-      <AppNavigator />
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <AuthSync />
+            <StatusBar style="auto" />
+            <AppNavigator />
+        </Provider>
+    );
 }
