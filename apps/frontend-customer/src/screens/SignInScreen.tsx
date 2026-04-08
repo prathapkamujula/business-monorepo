@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import { authApi } from '../api/authApi';
 
 const SignInScreen = ({ navigation }: any) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSignIn = async () => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Please enter email and password');
-      return;
-    }
-
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const result = await signInWithPopup(auth, provider);
+      const idToken = await result.user.getIdToken();
+      
+      // Integrate with backend
+      await authApi.signInWithGoogle(idToken);
+      
+      Alert.alert('Success', 'Signed in successfully');
     } catch (error: any) {
+      console.error('Sign in error:', error);
       Alert.alert('Error', error.message);
     } finally {
       setLoading(false);
@@ -26,25 +28,21 @@ const SignInScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSignIn} disabled={loading}>
-        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Sign In</Text>}
+      <Text style={styles.title}>Welcome</Text>
+      <Text style={styles.subtitle}>Sign in to continue</Text>
+      
+      <TouchableOpacity 
+        style={styles.googleButton} 
+        onPress={handleGoogleSignIn} 
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Sign in with Google</Text>
+        )}
       </TouchableOpacity>
+
       <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
         <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
       </TouchableOpacity>
@@ -60,23 +58,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 10,
     textAlign: 'center',
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 12,
-    marginBottom: 15,
-    borderRadius: 8,
+  subtitle: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 30,
+    textAlign: 'center',
   },
-  button: {
-    backgroundColor: '#007AFF',
+  googleButton: {
+    backgroundColor: '#DB4437', // Google Red
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   buttonText: {
     color: '#fff',
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   linkText: {
-    marginTop: 15,
+    marginTop: 20,
     color: '#007AFF',
     textAlign: 'center',
   },

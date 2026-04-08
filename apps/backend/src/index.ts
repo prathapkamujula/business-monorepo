@@ -49,6 +49,32 @@ app.get('/protected', authenticate, (req: Request, res: Response) => {
   });
 });
 
+// Auth Routes
+app.post('/auth/google-signin', async (req: Request, res: Response) => {
+  const { idToken } = req.body;
+  try {
+    const decodedToken = await firebaseAuth.verifyIdToken(idToken);
+    // Here you would typically check if user exists in DB, create if not
+    // For now, we just return success
+    res.json({ success: true, user: decodedToken });
+  } catch (error) {
+    console.error('Error verifying token:', error);
+    res.status(401).send('Unauthorized');
+  }
+});
+
+app.post('/auth/google-signup', async (req: Request, res: Response) => {
+  const { idToken } = req.body;
+  try {
+    const decodedToken = await firebaseAuth.verifyIdToken(idToken);
+    // Handle signup logic (e.g., save to Prisma)
+    res.json({ success: true, user: decodedToken });
+  } catch (error) {
+    console.error('Error verifying token:', error);
+    res.status(401).send('Unauthorized');
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

@@ -1,25 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import { useAuth } from '../context/AuthContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import axiosInstance from '../api/axiosInstance';
 
 const HomeScreen = () => {
-  const { user } = useAuth();
+  const { user } = useSelector((state: RootState) => state.auth);
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchBackendData = async () => {
     setLoading(true);
     try {
-      const idToken = await user?.getIdToken();
-      const response = await fetch('http://localhost:3000/protected', {
-        headers: {
-          'Authorization': `Bearer ${idToken}`
-        }
-      });
-      const result = await response.json();
-      setData(result);
+      const response = await axiosInstance.get('/protected');
+      setData(response.data);
     } catch (error) {
       console.error(error);
       setData({ error: 'Failed to fetch from backend' });

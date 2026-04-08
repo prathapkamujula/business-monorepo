@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useAuth } from '../context/AuthContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
@@ -10,7 +11,7 @@ import { ActivityIndicator, View } from 'react-native';
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
-  const { user, loading } = useAuth();
+  const { user, loading } = useSelector((state: RootState) => state.auth);
 
   if (loading) {
     return (
