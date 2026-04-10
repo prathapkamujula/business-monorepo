@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
-import HomeScreen from '../screens/HomeScreen';
+import MainTabNavigator from './MainTabNavigator';
 import { ActivityIndicator, View } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -23,10 +23,10 @@ const AppNavigator = () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {user ? (
                     // Protected Routes
-                    <Stack.Screen name="Home" component={HomeScreen} />
+                    <Stack.Screen name="Main" component={MainTabNavigator} />
                 ) : (
                     // Auth Routes
                     <>

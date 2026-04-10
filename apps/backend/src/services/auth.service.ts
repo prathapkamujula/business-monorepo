@@ -1,4 +1,5 @@
 import { auth as firebaseAuth } from '../config/firebase';
+import prisma from '../lib/prisma';
 
 export class AuthService {
     async verifyIdToken(idToken: string) {
@@ -11,16 +12,48 @@ export class AuthService {
         }
     }
 
+    private async syncCustomerWithDb(decodedToken: any) {
+        const { uid, email, name, picture, phone_number, email_verified } = decodedToken;
+
+        const existingCustomer = await prisma.customer.findUnique({
+            where: { id: uid },
+        });
+
+        if (existingCustomer) {
+            return prisma.customer.update({
+                where: { id: uid },
+                data: {
+                    lastLoginAt: new Date(),
+                    email: email, // Email might change in some auth providers
+                    photoUrl: picture,
+                    emailVerified: email_verified,
+                },
+            });
+        }
+
+        return prisma.customer.create({
+            data: {
+                id: uid,
+                email: email!,
+                name: name,
+                photoUrl: picture,
+                phoneNumber: phone_number,
+                emailVerified: email_verified,
+                lastLoginAt: new Date(),
+            },
+        });
+    }
+
     async handleGoogleSignin(idToken: string) {
         const decodedToken = await this.verifyIdToken(idToken);
-        // Here you would typically check if user exists in DB, create if not
-        return decodedToken;
+        const customer = await this.syncCustomerWithDb(decodedToken);
+        return { ...decodedToken, customer };
     }
 
     async handleGoogleSignup(idToken: string) {
         const decodedToken = await this.verifyIdToken(idToken);
-        // Handle signup logic (e.g., save to Prisma)
-        return decodedToken;
+        const customer = await this.syncCustomerWithDb(decodedToken);
+        return { ...decodedToken, customer };
     }
 }
 

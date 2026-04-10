@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import customAlert from '../utils/alert';
 import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import { authApi } from '../api/authApi';
@@ -23,10 +24,10 @@ const SignInScreen = ({ navigation }: any) => {
                 throw backendError;
             }
 
-            Alert.alert('Success', 'Signed in successfully');
+            // customAlert('Success', 'Signed in successfully');
         } catch (error: any) {
             console.error('Sign in error:', error);
-            Alert.alert('Error', error.message);
+            customAlert('Error', error.message);
         } finally {
             setLoading(false);
         }

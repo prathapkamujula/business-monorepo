@@ -5,6 +5,8 @@ import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
 import appRoutes from './routes/app.routes';
 import authRoutes from './routes/auth.routes';
+import customerRoutes from './routes/customer.routes';
+import bookingRoutes from './routes/booking.routes';
 import prisma from './lib/prisma';
 
 dotenv.config();
@@ -21,6 +23,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Routes
 app.use('/', appRoutes);
 app.use('/auth', authRoutes);
+app.use('/customers', customerRoutes);
+app.use('/bookings', bookingRoutes);
 
 const startServer = async () => {
     try {
