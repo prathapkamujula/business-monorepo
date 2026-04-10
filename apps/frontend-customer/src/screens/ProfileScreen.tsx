@@ -131,76 +131,76 @@ const ProfileScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.header}>
-                {photoUrl ? (
-                    <Image source={{ uri: photoUrl }} style={styles.profilePic} />
-                ) : (
-                    <View style={[styles.profilePic, styles.placeholderPic]}>
-                        <User size={50} color="#8E8E93" />
-                    </View>
-                )}
-                <Text style={styles.userName}>{name || 'User'}</Text>
-                <TouchableOpacity
-                    style={styles.editButton}
-                    onPress={() => (isEditing ? handleUpdateProfile() : setIsEditing(true))}
-                >
-                    <Text style={styles.editButtonText}>
-                        {isEditing ? 'Save Changes' : 'Edit Profile'}
-                    </Text>
+                <View style={styles.header}>
+                    {photoUrl ? (
+                        <Image source={{ uri: photoUrl }} style={styles.profilePic} />
+                    ) : (
+                        <View style={[styles.profilePic, styles.placeholderPic]}>
+                            <User size={50} color="#8E8E93" />
+                        </View>
+                    )}
+                    <Text style={styles.userName}>{name || 'User'}</Text>
+                    <TouchableOpacity
+                        style={styles.editButton}
+                        onPress={() => (isEditing ? handleUpdateProfile() : setIsEditing(true))}
+                    >
+                        <Text style={styles.editButtonText}>
+                            {isEditing ? 'Save Changes' : 'Edit Profile'}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.section}>
+                    <ProfileItem
+                        icon={User}
+                        label="Name"
+                        value={name}
+                        editable={true}
+                        onChangeText={setName}
+                    />
+                    <ProfileItem
+                        icon={Phone}
+                        label="Phone Number"
+                        value={phoneNumber}
+                        editable={true}
+                        onChangeText={setPhoneNumber}
+                    />
+                    <ProfileItem icon={Mail} label="Email" value={email} editable={false} />
+                    <Text style={styles.infoText}>Email cannot be updated</Text>
+                </View>
+
+                <View style={styles.section}>
+                    <LinkItem
+                        icon={Shield}
+                        label="Privacy Policy"
+                        onPress={() => navigation.navigate('WebView', { title: 'Privacy Policy' })}
+                    />
+                    <LinkItem
+                        icon={HelpCircle}
+                        label="Help & Support"
+                        onPress={() => navigation.navigate('WebView', { title: 'Help & Support' })}
+                    />
+                    <LinkItem
+                        icon={Info}
+                        label="About Us"
+                        onPress={() => navigation.navigate('WebView', { title: 'About Us' })}
+                    />
+                    <LinkItem
+                        icon={Trash2}
+                        label="Request Account Deletion"
+                        onPress={() => {}}
+                        color="#FF3B30"
+                    />
+                </View>
+
+                <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
+                    <LogOut size={20} color="#FF3B30" style={{ marginRight: 10 }} />
+                    <Text style={styles.signOutText}>Logout</Text>
                 </TouchableOpacity>
-            </View>
 
-            <View style={styles.section}>
-                <ProfileItem
-                    icon={User}
-                    label="Name"
-                    value={name}
-                    editable={true}
-                    onChangeText={setName}
-                />
-                <ProfileItem
-                    icon={Phone}
-                    label="Phone Number"
-                    value={phoneNumber}
-                    editable={true}
-                    onChangeText={setPhoneNumber}
-                />
-                <ProfileItem icon={Mail} label="Email" value={email} editable={false} />
-                <Text style={styles.infoText}>Email cannot be updated</Text>
-            </View>
-
-            <View style={styles.section}>
-                <LinkItem
-                    icon={Shield}
-                    label="Privacy Policy"
-                    onPress={() => navigation.navigate('WebView', { title: 'Privacy Policy' })}
-                />
-                <LinkItem
-                    icon={HelpCircle}
-                    label="Help & Support"
-                    onPress={() => navigation.navigate('WebView', { title: 'Help & Support' })}
-                />
-                <LinkItem
-                    icon={Info}
-                    label="About Us"
-                    onPress={() => navigation.navigate('WebView', { title: 'About Us' })}
-                />
-                <LinkItem
-                    icon={Trash2}
-                    label="Request Account Deletion"
-                    onPress={() => {}}
-                    color="#FF3B30"
-                />
-            </View>
-
-            <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
-                <LogOut size={20} color="#FF3B30" style={{ marginRight: 10 }} />
-                <Text style={styles.signOutText}>Logout</Text>
-            </TouchableOpacity>
-
-            <View style={{ height: 40 }} />
-        </ScrollView>
-    </SafeAreaView>
+                <View style={{ height: 40 }} />
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 

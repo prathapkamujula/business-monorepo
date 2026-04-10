@@ -6,9 +6,22 @@ import HomeScreen from '../screens/HomeScreen';
 import BookingScreen from '../screens/BookingScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import WebViewScreen from '../screens/WebViewScreen';
+import ServiceListScreen from '../screens/ServiceListScreen';
 
 const Tab = createBottomTabNavigator();
+const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+
+const HomeStackScreen = () => (
+    <HomeStack.Navigator>
+        <HomeStack.Screen name="HomeMain" component={HomeScreen} options={{ headerShown: false }} />
+        <HomeStack.Screen
+            name="ServiceList"
+            component={ServiceListScreen}
+            options={{ headerShown: false }}
+        />
+    </HomeStack.Navigator>
+);
 
 const ProfileStackScreen = () => (
     <ProfileStack.Navigator>
@@ -40,7 +53,7 @@ const MainTabNavigator = () => {
         >
             <Tab.Screen
                 name="Home"
-                component={HomeScreen}
+                component={HomeStackScreen}
                 options={{
                     tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
                 }}

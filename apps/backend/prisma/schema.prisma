@@ -46,3 +46,42 @@ model Booking {
   @@index([customerId])
   @@index([createdAt])
 }
+
+model Service {
+  id        String   @id @default(uuid())
+  name      String
+  icon      String   // Name of the lucide icon
+  color     String   // Hex color
+  price     Float
+  mrp       Float
+  rating    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("services")
+}
+
+model Offer {
+  id        String   @id @default(uuid())
+  title     String
+  subtitle  String
+  code      String
+  color     String   // Hex color
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("offers")
+}
+
+model BestSeller {
+  id        String   @id @default(uuid())
+  name      String
+  price     Float
+  mrp       Float
+  rating    Float
+  image     String   // URL of the image
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("best_sellers")
+}

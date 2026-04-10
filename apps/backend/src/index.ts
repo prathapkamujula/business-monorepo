@@ -7,6 +7,7 @@ import appRoutes from './routes/app.routes';
 import authRoutes from './routes/auth.routes';
 import customerRoutes from './routes/customer.routes';
 import bookingRoutes from './routes/booking.routes';
+import homeRoutes from './routes/home.routes';
 import prisma from './lib/prisma';
 
 dotenv.config();
@@ -25,6 +26,7 @@ app.use('/', appRoutes);
 app.use('/auth', authRoutes);
 app.use('/customers', customerRoutes);
 app.use('/bookings', bookingRoutes);
+app.use('/home', homeRoutes);
 
 const startServer = async () => {
     try {

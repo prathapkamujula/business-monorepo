@@ -1,0 +1,131 @@
+{
+    "about": {
+        "eyebrow": "HomeHero",
+        "title": "Your home, expertly cared for.",
+        "sub": "We connect you with skilled professionals who deliver high-quality home services right at your doorstep — simple, fast, and reliable.",
+        "tags": ["Home Cleaning", "Repairs", "Beauty & Wellness", "Appliances"],
+        "sections": [
+            {
+                "title": "Our Mission",
+                "content": "To simplify everyday living by providing dependable, high-quality home services through technology and trusted professionals."
+            },
+            {
+                "title": "Our Vision",
+                "content": "Becoming the most trusted home services platform — known for reliability, convenience, and customer satisfaction."
+            },
+            {
+                "title": "Why Choose HomeHero?",
+                "items": [
+                    "Verified and skilled professionals",
+                    "Easy and quick booking process",
+                    "Transparent pricing",
+                    "Reliable customer support",
+                    "Safe and secure platform"
+                ]
+            },
+            {
+                "title": "Our Commitment",
+                "content": "Whether it's a small task or a major service, HomeHero ensures professionalism, safety, and satisfaction at every step."
+            }
+        ]
+    },
+    "privacy": {
+        "eyebrow": "HomeHero",
+        "sub": "How we collect, use, and protect your personal data when you use the HomeHero platform and services.",
+        "badge": "Last updated — Apr 10 2026",
+        "items": [
+            {
+                "num": "01",
+                "title": "Background & Applicability",
+                "content": "This Policy applies to all users of HomeHero services. By using our services, you agree to this Policy. We are not responsible for third-party websites linked on our Platform."
+            },
+            {
+                "num": "02",
+                "title": "Personal Data We Collect",
+                "bullets": [
+                    "Contact Data — name, email, phone, address",
+                    "Profile Data — username, photos, profile details",
+                    "Communication Data — messages, feedback, chat records",
+                    "Technical Data — IP address, browser, device, usage logs",
+                    "Transaction Data — payment details via secure third parties",
+                    "Usage Data — booking history, clicks, preferences"
+                ]
+            },
+            {
+                "num": "03",
+                "title": "How We Collect Data",
+                "bullets": [
+                    "Direct input — account creation, bookings, support queries",
+                    "Automated tools — cookies, analytics, tracking technologies",
+                    "Third parties — payment processors, analytics providers"
+                ]
+            },
+            {
+                "num": "04",
+                "title": "How We Use Your Data",
+                "bullets": [
+                    "Create and manage your account",
+                    "Provide, improve, and personalise services",
+                    "Process payments and transactions",
+                    "Send service updates and notifications",
+                    "Ensure security and prevent fraud",
+                    "Comply with legal obligations"
+                ]
+            },
+            {
+                "num": "05",
+                "title": "Cookies",
+                "content": "We use cookies to improve user experience, remember preferences, and analyse traffic. You can disable cookies via your browser settings."
+            },
+            {
+                "num": "06",
+                "title": "Sharing Your Data",
+                "content": "We share data with service professionals, trusted vendors, and legal authorities when required.",
+                "highlight": "We do not sell your personal data."
+            },
+            {
+                "num": "07",
+                "title": "Your Rights",
+                "bullets": [
+                    "Request access to your data",
+                    "Update or correct your data",
+                    "Opt out of marketing emails"
+                ]
+            },
+            {
+                "num": "08",
+                "title": "Account Deletion",
+                "content": "Request deletion of your account and data by emailing us. Processing may take up to 7 working days."
+            },
+            {
+                "num": "09",
+                "title": "Data Security",
+                "content": "We use encryption, secure servers, and access controls. You are responsible for keeping your login credentials safe."
+            },
+            {
+                "num": "10",
+                "title": "Data Retention",
+                "content": "We retain data as long as necessary to provide services and meet legal obligations."
+            },
+            {
+                "num": "11",
+                "title": "Business Transfers",
+                "content": "In case of a merger or acquisition, your data may be transferred as part of business assets."
+            },
+            {
+                "num": "12",
+                "title": "Policy Updates",
+                "content": "We may update this Policy. Continued use of our services means you accept the updated Policy."
+            },
+            {
+                "num": "13",
+                "title": "Contact & Grievance Officer",
+                "card": {
+                    "icon": "✉️",
+                    "label": "Questions or concerns?",
+                    "value": "homeheroin@gmail.com"
+                }
+            }
+        ]
+    }
+}
