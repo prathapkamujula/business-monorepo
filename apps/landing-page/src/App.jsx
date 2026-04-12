@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const WA_NUMBER = '918686779278';
+const WA_NUMBER = '919490599600';
 const WA_MESSAGE = encodeURIComponent("Hi! I'd like to book a home service.");
 const WA_MESSAGE_PRO = encodeURIComponent("Hi! I'd like to become a partner with your company.");
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
@@ -704,7 +704,7 @@ export default function App() {
                         className="inline-flex items-center gap-1.5 font-sans text-xs no-underline"
                         style={{ color: '#25D366' }}
                     >
-                        <WaIcon size={12} /> +91 8686 77 9278
+                        <WaIcon size={12} /> +91 9490 599 600
                     </a>
                 </footer>
             </div>
