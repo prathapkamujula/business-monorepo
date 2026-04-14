@@ -3,19 +3,21 @@ import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'rea
 import customAlert from '../utils/alert';
 import { authApi } from '../api/authApi';
 import { useGoogleSignIn } from '../utils/authHelper';
+import {useDispatch} from "react-redux";
+import {setUser} from "../store/slices/authSlice";
 
 const SignInScreen = ({ navigation }: any) => {
     const [loading, setLoading] = useState(false);
     const { signIn, loading: authLoading } = useGoogleSignIn();
-
+    const dispatch = useDispatch();
     const handleGoogleSignIn = async () => {
         setLoading(true);
         try {
             const idToken = await signIn();
-            if (!idToken) {
-                return;
-            }
-            await authApi.signInWithGoogle(idToken);
+            if (!idToken) return;
+
+            const { token, user } = await authApi.signInWithGoogle(idToken);
+            dispatch(setUser({ user, idToken: token }));
         } catch (error: any) {
             console.error('Sign in error:', error);
             customAlert('Error', error.message);

@@ -8,6 +8,8 @@ export const useGoogleSignIn = () => {
     const [request, response, promptAsync] = Google.useAuthRequest({
         webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
         androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
+        responseType: 'id_token',  // explicitly request id_token
+        usePKCE: false,            // required when using id_token on web
     });
 
     console.log('Redirect URI:', request?.redirectUri);
