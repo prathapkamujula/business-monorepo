@@ -3,6 +3,7 @@
     "name": "frontend-customer",
     "slug": "frontend-customer",
     "version": "1.0.0",
+    "scheme": "com.kprathapreddy1997.frontendcustomer",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
