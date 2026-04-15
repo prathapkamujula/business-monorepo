@@ -159,26 +159,26 @@ const PRIVACY_HTML = buildHtml(`
 // Web-platform native render  (no WebView / iframe needed)
 // ─────────────────────────────────────────────────────────────────────────────
 const Tag = ({ label }: { label: string }) => (
-    <View style={web.tag}>
-        <Text style={web.tagText}>{label}</Text>
+    <View className="bg-[#d8f3e8] py-1.25 px-3 rounded-full">
+        <Text className="text-[13px] font-medium text-[#2d6a4f]">{label}</Text>
     </View>
 );
 
 const CheckItem = ({ text }: { text: string }) => (
-    <View style={web.checkRow}>
-        <Text style={web.checkMark}>✓</Text>
-        <Text style={web.checkText}>{text}</Text>
+    <View className="flex-row items-start gap-2.5 mb-1.5">
+        <Text className="text-[#2d6a4f] font-bold text-sm mt-0.5">✓</Text>
+        <Text className="text-[#6b6b67] text-[15px] leading-6 flex-1">{text}</Text>
     </View>
 );
 
 const BulletList = ({ items }: { items: string[] }) => (
-    <View style={{ gap: 6, marginTop: 8 }}>
+    <View className="gap-1.5 mt-2">
         {items.map((item) => (
-            <View key={item} style={web.checkRow}>
-                <Text style={[web.checkMark, { color: C.muted, fontSize: 18, lineHeight: 20 }]}>
+            <View key={item} className="flex-row items-start gap-2.5 mb-1.5">
+                <Text className="text-[#6b6b67] font-bold text-lg leading-5 mt-0.5">
                     ·
                 </Text>
-                <Text style={[web.checkText, { fontSize: 14 }]}>{item}</Text>
+                <Text className="text-[#6b6b67] text-sm leading-6 flex-1">{item}</Text>
             </View>
         ))}
     </View>
@@ -193,12 +193,12 @@ const PrivacyItem = ({
     title: string;
     children: React.ReactNode;
 }) => (
-    <View style={web.privacyCard}>
-        <View style={web.privacyTitleRow}>
-            <View style={web.numBadge}>
-                <Text style={web.numText}>{num}</Text>
+    <View className="bg-white border border-[#e8e8e4] rounded-[12px] p-5">
+        <View className="flex-row items-center gap-2.5 mb-2">
+            <View className="bg-[#d8f3e8] py-[3px] px-2 rounded-full">
+                <Text className="text-[11px] font-medium text-[#2d6a4f]">{num}</Text>
             </View>
-            <Text style={web.privacyTitle}>{title}</Text>
+            <Text className="text-[17px] font-normal text-[#1a1a18] flex-1">{title}</Text>
         </View>
         {children}
     </View>
@@ -206,15 +206,15 @@ const PrivacyItem = ({
 
 const WebAboutUs = () => (
     <ScrollView
-        style={web.scroll}
-        contentContainerStyle={web.content}
+        className="flex-1 bg-[#fafaf8]"
+        contentContainerClassName="p-6 pb-[64px] max-w-[640px] self-center w-full"
         showsVerticalScrollIndicator={false}
     >
-        <View style={web.hero}>
-            <Text style={web.eyebrow}>{content.about.eyebrow}</Text>
-            <Text style={web.h1}>{content.about.title}</Text>
-            <Text style={web.heroSub}>{content.about.sub}</Text>
-            <View style={web.tags}>
+        <View className="mb-9 pb-7 border-b border-[#e8e8e4]">
+            <Text className="text-[11px] font-medium tracking-[1.5px] uppercase text-[#2d6a4f] mb-3">{content.about.eyebrow}</Text>
+            <Text className="text-[32px] font-normal text-[#1a1a18] leading-[38px] mb-3.5">{content.about.title}</Text>
+            <Text className="text-[15px] text-[#6b6b67] leading-[26px]">{content.about.sub}</Text>
+            <View className="flex-row flex-wrap gap-2 mt-3.5">
                 {content.about.tags.map((t) => (
                     <Tag key={t} label={t} />
                 ))}
@@ -224,13 +224,10 @@ const WebAboutUs = () => (
         {content.about.sections.map((s, idx) => (
             <View
                 key={idx}
-                style={[
-                    web.section,
-                    idx === content.about.sections.length - 1 && { marginBottom: 0 },
-                ]}
+                className={`mb-8 ${idx === content.about.sections.length - 1 ? 'mb-0' : ''}`}
             >
-                <Text style={web.h2}>{s.title}</Text>
-                {s.content && <Text style={web.p}>{s.content}</Text>}
+                <Text className="text-xl font-normal text-[#1a1a18] mb-2.5">{s.title}</Text>
+                {s.content && <Text className="text-[15px] text-[#6b6b67] leading-[26px]">{s.content}</Text>}
                 {s.items && s.items.map((item) => <CheckItem key={item} text={item} />)}
             </View>
         ))}
@@ -239,36 +236,36 @@ const WebAboutUs = () => (
 
 const WebPrivacyPolicy = () => (
     <ScrollView
-        style={web.scroll}
-        contentContainerStyle={web.content}
+        className="flex-1 bg-[#fafaf8]"
+        contentContainerClassName="p-6 pb-[64px] max-w-[640px] self-center w-full"
         showsVerticalScrollIndicator={false}
     >
-        <View style={web.hero}>
-            <Text style={web.eyebrow}>{content.privacy.eyebrow}</Text>
-            <Text style={web.h1}>{content.privacy.title}</Text>
-            <Text style={web.heroSub}>{content.privacy.sub}</Text>
+        <View className="mb-9 pb-7 border-b border-[#e8e8e4]">
+            <Text className="text-[11px] font-medium tracking-[1.5px] uppercase text-[#2d6a4f] mb-3">{content.privacy.eyebrow}</Text>
+            <Text className="text-[32px] font-normal text-[#1a1a18] leading-[38px] mb-3.5">{content.privacy.title}</Text>
+            <Text className="text-[15px] text-[#6b6b67] leading-[26px]">{content.privacy.sub}</Text>
         </View>
 
-        <View style={web.badge}>
-            <Text style={web.badgeText}>{content.privacy.badge}</Text>
+        <View className="self-start bg-[#e8e8e4] py-1 px-2.5 rounded-full mb-5">
+            <Text className="text-xs text-[#6b6b67]">{content.privacy.badge}</Text>
         </View>
 
-        <View style={{ gap: 16 }}>
+        <View className="gap-4">
             {content.privacy.items.map((item) => (
                 <PrivacyItem key={item.num} num={item.num} title={item.title}>
-                    {item.content && <Text style={web.privacyBody}>{item.content}</Text>}
+                    {item.content && <Text className="text-sm text-[#6b6b67] leading-[22px]">{item.content}</Text>}
                     {item.highlight && (
-                        <Text style={[web.privacyBody, { color: C.text, fontWeight: '500' }]}>
+                        <Text className="text-sm text-[#1a1a18] font-medium leading-[22px]">
                             {item.highlight}
                         </Text>
                     )}
                     {item.bullets && <BulletList items={item.bullets} />}
                     {item.card && (
-                        <View style={web.contactCard}>
+                        <View className="flex-row items-center gap-3.5 mt-3.5 bg-white border border-[#e8e8e4] rounded-[12px] p-4">
                             <Text style={{ fontSize: 22 }}>{item.card.icon}</Text>
                             <View>
-                                <Text style={web.contactLabel}>{item.card.label}</Text>
-                                <Text style={web.contactValue}>{item.card.value}</Text>
+                                <Text className="text-xs text-[#6b6b67] mb-0.5">{item.card.label}</Text>
+                                <Text className="text-sm font-medium text-[#2d6a4f]">{item.card.value}</Text>
                             </View>
                         </View>
                     )}
@@ -294,16 +291,19 @@ const WebViewScreen = () => {
 
     // ── Shared header ────────────────────────────────────────────────────────
     const Header = (
-        <View style={[styles.header, { paddingTop: insets.top > 0 ? insets.top + 8 : 16 }]}>
-            <Text style={styles.headerTitle}>{title}</Text>
+        <View
+            className="flex-row items-center justify-between px-5 pb-3.5 border-b border-[#e8e8e4] bg-[#fafaf8]"
+            style={{ paddingTop: insets.top > 0 ? insets.top + 8 : 16 }}
+        >
+            <Text className="text-[15px] font-semibold text-[#1a1a18] tracking-tight">{title}</Text>
             <TouchableOpacity
-                style={styles.closeBtn}
+                className="w-8 h-8 rounded-full bg-[#f0f0ec] justify-center items-center"
                 onPress={handleClose}
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 accessibilityLabel="Close"
                 accessibilityRole="button"
             >
-                <Text style={styles.closeIcon}>✕</Text>
+                <Text className="text-[13px] color-[#6b6b67] font-semibold">✕</Text>
             </TouchableOpacity>
         </View>
     );
@@ -318,11 +318,11 @@ const WebViewScreen = () => {
             ) : null;
 
         return (
-            <View style={styles.container}>
+            <View className="flex-1 bg-[#fafaf8]">
                 {Header}
                 {WebContent ?? (
-                    <View style={styles.center}>
-                        <Text style={styles.soon}>Coming Soon</Text>
+                    <View className="flex-1 justify-center items-center">
+                        <Text className="text-base text-[#6b6b67]">Coming Soon</Text>
                     </View>
                 )}
             </View>
@@ -333,16 +333,16 @@ const WebViewScreen = () => {
     const fallbackHtml = `<html><body style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:system-ui;color:#999;background:#fafaf8">Coming Soon</body></html>`;
 
     return (
-        <View style={styles.container}>
+        <View className="flex-1 bg-[#fafaf8]">
             {Header}
             {WebView ? (
                 <WebView
                     source={{ html: htmlContent ?? fallbackHtml }}
-                    style={styles.webview}
+                    className="flex-1 bg-[#fafaf8]"
                     startInLoadingState
                     renderLoading={() => (
-                        <View style={styles.loading}>
-                            <ActivityIndicator size="large" color={C.accent} />
+                        <View className="absolute inset-0 justify-center items-center bg-[#fafaf8]">
+                            <ActivityIndicator size="large" color="#2d6a4f" />
                         </View>
                     )}
                     showsVerticalScrollIndicator={false}
@@ -355,122 +355,3 @@ const WebViewScreen = () => {
 };
 
 export default WebViewScreen;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Styles — shared native + web
-// ─────────────────────────────────────────────────────────────────────────────
-const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: C.bg },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        paddingBottom: 14,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: C.border,
-        backgroundColor: C.bg,
-    },
-    headerTitle: { fontSize: 15, fontWeight: '600', color: C.text, letterSpacing: -0.2 },
-    closeBtn: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
-        backgroundColor: '#f0f0ec',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    closeIcon: { fontSize: 13, color: C.muted, fontWeight: '600' },
-    webview: { flex: 1, backgroundColor: C.bg },
-    loading: {
-        ...StyleSheet.absoluteFillObject,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: C.bg,
-    },
-    center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-    soon: { fontSize: 16, color: C.muted },
-});
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Styles — web-only ScrollView render
-// ─────────────────────────────────────────────────────────────────────────────
-const web = StyleSheet.create({
-    scroll: { flex: 1, backgroundColor: C.bg },
-    content: { padding: 24, paddingBottom: 64, maxWidth: 640, alignSelf: 'center', width: '100%' },
-
-    hero: {
-        marginBottom: 36,
-        paddingBottom: 28,
-        borderBottomWidth: 1,
-        borderBottomColor: C.border,
-    },
-    eyebrow: {
-        fontSize: 11,
-        fontWeight: '500',
-        letterSpacing: 1.5,
-        textTransform: 'uppercase',
-        color: C.accent,
-        marginBottom: 12,
-    },
-    h1: { fontSize: 32, fontWeight: '400', color: C.text, lineHeight: 38, marginBottom: 14 },
-    heroSub: { fontSize: 15, color: C.muted, lineHeight: 26 },
-    tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 14 },
-    tag: {
-        backgroundColor: C.accentLight,
-        paddingVertical: 5,
-        paddingHorizontal: 12,
-        borderRadius: 100,
-    },
-    tagText: { fontSize: 13, fontWeight: '500', color: C.accent },
-
-    section: { marginBottom: 32 },
-    h2: { fontSize: 20, fontWeight: '400', color: C.text, marginBottom: 10 },
-    p: { fontSize: 15, color: C.muted, lineHeight: 26 },
-
-    checkRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 10, marginBottom: 6 },
-    checkMark: { color: C.accent, fontWeight: '700', fontSize: 14, marginTop: 2 },
-    checkText: { color: C.muted, fontSize: 15, lineHeight: 24, flex: 1 },
-
-    badge: {
-        alignSelf: 'flex-start',
-        backgroundColor: C.border,
-        paddingVertical: 4,
-        paddingHorizontal: 10,
-        borderRadius: 100,
-        marginBottom: 20,
-    },
-    badgeText: { fontSize: 12, color: C.muted },
-
-    privacyCard: {
-        backgroundColor: C.surface,
-        borderWidth: 1,
-        borderColor: C.border,
-        borderRadius: 12,
-        padding: 20,
-    },
-    privacyTitleRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 },
-    numBadge: {
-        backgroundColor: C.accentLight,
-        paddingVertical: 3,
-        paddingHorizontal: 8,
-        borderRadius: 100,
-    },
-    numText: { fontSize: 11, fontWeight: '500', color: C.accent },
-    privacyTitle: { fontSize: 17, fontWeight: '400', color: C.text, flex: 1 },
-    privacyBody: { fontSize: 14, color: C.muted, lineHeight: 22 },
-
-    contactCard: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 14,
-        marginTop: 12,
-        backgroundColor: C.surface,
-        borderWidth: 1,
-        borderColor: C.border,
-        borderRadius: 12,
-        padding: 16,
-    },
-    contactLabel: { fontSize: 12, color: C.muted, marginBottom: 2 },
-    contactValue: { fontSize: 14, fontWeight: '500', color: C.accent },
-});

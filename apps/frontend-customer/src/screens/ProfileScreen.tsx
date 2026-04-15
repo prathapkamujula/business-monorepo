@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-    StyleSheet,
     Text,
     View,
     TouchableOpacity,
@@ -90,20 +89,20 @@ const ProfileScreen = () => {
     };
 
     const ProfileItem = ({ icon: Icon, label, value, editable = false, onChangeText }: any) => (
-        <View style={styles.itemContainer}>
-            <View style={styles.itemHeader}>
-                <Icon size={20} color="#666" style={styles.itemIcon} />
-                <Text style={styles.itemLabel}>{label}</Text>
+        <View className="py-[15px] border-b border-[#f0f0f0]">
+            <View className="flex-row items-center mb-1">
+                <Icon size={20} color="#666" className="mr-2.5" />
+                <Text className="text-sm text-[#888] font-medium">{label}</Text>
             </View>
             {isEditing && editable ? (
                 <TextInput
-                    style={styles.itemInput}
+                    className="text-base text-[#333] pl-[30px] py-1 border-b border-[#5856D6]"
                     value={value}
                     onChangeText={onChangeText}
                     placeholder={`Enter ${label}`}
                 />
             ) : (
-                <Text style={[styles.itemValue, !value && styles.placeholderText]}>
+                <Text className={`text-base text-[#333] pl-[30px] ${!value ? 'text-[#ccc] italic' : ''}`}>
                     {value || `No ${label} provided`}
                 </Text>
             )}
@@ -111,10 +110,10 @@ const ProfileScreen = () => {
     );
 
     const LinkItem = ({ icon: Icon, label, onPress, color = '#333' }: any) => (
-        <TouchableOpacity style={styles.linkItem} onPress={onPress}>
-            <View style={styles.linkLeft}>
-                <Icon size={20} color={color} style={styles.itemIcon} />
-                <Text style={[styles.linkLabel, { color }]}>{label}</Text>
+        <TouchableOpacity className="flex-row items-center justify-between py-[15px] border-b border-[#f0f0f0]" onPress={onPress}>
+            <View className="flex-row items-center">
+                <Icon size={20} color={color} className="mr-2.5" />
+                <Text className="text-base font-medium" style={{ color }}>{label}</Text>
             </View>
             <ChevronRight size={20} color="#ccc" />
         </TouchableOpacity>
@@ -122,35 +121,35 @@ const ProfileScreen = () => {
 
     if (fetching) {
         return (
-            <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+            <View className="flex-1 bg-[#f8f9fa] justify-center items-center">
                 <ActivityIndicator size="large" color="#5856D6" />
             </View>
         );
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView className="flex-1 bg-[#f8f9fa]">
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.header}>
+                <View className="items-center p-[30px] bg-white border-b border-[#eee]">
                     {photoUrl ? (
-                        <Image source={{ uri: photoUrl }} style={styles.profilePic} />
+                        <Image source={{ uri: photoUrl }} className="w-[100px] h-[100px] rounded-full mb-[15px] bg-[#eee]" />
                     ) : (
-                        <View style={[styles.profilePic, styles.placeholderPic]}>
+                        <View className="w-[100px] h-[100px] rounded-full mb-[15px] bg-[#F2F2F7] justify-center items-center">
                             <User size={50} color="#8E8E93" />
                         </View>
                     )}
-                    <Text style={styles.userName}>{name || 'User'}</Text>
+                    <Text className="text-[22px] font-bold text-[#333] mb-2.5">{name || 'User'}</Text>
                     <TouchableOpacity
-                        style={styles.editButton}
+                        className="px-5 py-2 rounded-full bg-[#F0F0FF] border border-[#5856D6]"
                         onPress={() => (isEditing ? handleUpdateProfile() : setIsEditing(true))}
                     >
-                        <Text style={styles.editButtonText}>
+                        <Text className="text-[#5856D6] font-semibold">
                             {isEditing ? 'Save Changes' : 'Edit Profile'}
                         </Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.section}>
+                <View className="bg-white mt-5 px-5 border-y border-[#eee]">
                     <ProfileItem
                         icon={User}
                         label="Name"
@@ -166,10 +165,10 @@ const ProfileScreen = () => {
                         onChangeText={setPhoneNumber}
                     />
                     <ProfileItem icon={Mail} label="Email" value={email} editable={false} />
-                    <Text style={styles.infoText}>Email cannot be updated</Text>
+                    <Text className="text-xs text-[#999] text-right mt-1 mb-2.5">Email cannot be updated</Text>
                 </View>
 
-                <View style={styles.section}>
+                <View className="bg-white mt-5 px-5 border-y border-[#eee]">
                     <LinkItem
                         icon={Shield}
                         label="Privacy Policy"
@@ -193,9 +192,9 @@ const ProfileScreen = () => {
                     />
                 </View>
 
-                <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
-                    <LogOut size={20} color="#FF3B30" style={{ marginRight: 10 }} />
-                    <Text style={styles.signOutText}>Logout</Text>
+                <TouchableOpacity className="flex-row bg-[#F2F2F7] mx-5 mt-[30px] p-[15px] rounded-[12px] justify-center items-center" onPress={handleSignOut}>
+                    <LogOut size={20} color="#FF3B30" className="mr-2.5" />
+                    <Text className="text-[#FF3B30] font-bold text-base">Logout</Text>
                 </TouchableOpacity>
 
                 <View style={{ height: 40 }} />
@@ -203,130 +202,5 @@ const ProfileScreen = () => {
         </SafeAreaView>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f8f9fa',
-    },
-    header: {
-        alignItems: 'center',
-        padding: 30,
-        backgroundColor: '#fff',
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-    },
-    profilePic: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        marginBottom: 15,
-        backgroundColor: '#eee',
-    },
-    placeholderPic: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F2F2F7',
-    },
-    userName: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: '#333',
-        marginBottom: 10,
-    },
-    editButton: {
-        paddingHorizontal: 20,
-        paddingVertical: 8,
-        borderRadius: 20,
-        backgroundColor: '#F0F0FF',
-        borderWidth: 1,
-        borderColor: '#5856D6',
-    },
-    editButtonText: {
-        color: '#5856D6',
-        fontWeight: '600',
-    },
-    section: {
-        backgroundColor: '#fff',
-        marginTop: 20,
-        paddingHorizontal: 20,
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
-        borderColor: '#eee',
-    },
-    itemContainer: {
-        paddingVertical: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
-    },
-    itemHeader: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 5,
-    },
-    itemIcon: {
-        marginRight: 10,
-    },
-    itemLabel: {
-        fontSize: 14,
-        color: '#888',
-        fontWeight: '500',
-    },
-    itemValue: {
-        fontSize: 16,
-        color: '#333',
-        paddingLeft: 30,
-    },
-    itemInput: {
-        fontSize: 16,
-        color: '#333',
-        paddingLeft: 30,
-        paddingVertical: 5,
-        borderBottomWidth: 1,
-        borderBottomColor: '#5856D6',
-    },
-    placeholderText: {
-        color: '#ccc',
-        fontStyle: 'italic',
-    },
-    infoText: {
-        fontSize: 12,
-        color: '#999',
-        textAlign: 'right',
-        marginTop: 5,
-        marginBottom: 10,
-    },
-    linkItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
-    },
-    linkLeft: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    linkLabel: {
-        fontSize: 16,
-        fontWeight: '500',
-    },
-    signOutButton: {
-        flexDirection: 'row',
-        backgroundColor: '#F2F2F7',
-        marginHorizontal: 20,
-        marginTop: 30,
-        padding: 15,
-        borderRadius: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    signOutText: {
-        color: '#FF3B30',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-});
 
 export default ProfileScreen;
