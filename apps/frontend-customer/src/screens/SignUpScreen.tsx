@@ -18,7 +18,7 @@ const SignUpScreen = ({ navigation }: any) => {
                 setLoading(false);
                 return;
             }
-            const idToken = await user.getIdToken();
+            const idToken = await signIn();
 
             // Integrate with backend
             try {
