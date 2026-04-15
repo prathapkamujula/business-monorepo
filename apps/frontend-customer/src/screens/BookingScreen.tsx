@@ -27,30 +27,36 @@ const BookingItem = ({ item }: { item: any }) => {
     });
 
     return (
-        <TouchableOpacity className="flex-row items-center justify-between bg-white rounded-[12px] p-[15px] mb-[15px] border border-[#f0f0f0] shadow-sm shadow-black/5 elevation-2">
+        <TouchableOpacity className="elevation-2 mb-[15px] flex-row items-center justify-between rounded-[12px] border border-[#f0f0f0] bg-white p-[15px] shadow-sm shadow-black/5">
             <View className="flex-row items-center">
-                <View className="w-[50px] h-[50px] bg-[#F0F0FF] rounded-[10px] justify-center items-center mr-[15px]">
+                <View className="mr-[15px] h-[50px] w-[50px] items-center justify-center rounded-[10px] bg-[#F0F0FF]">
                     <Text className="text-lg font-bold text-[#5856D6]">{date.getDate()}</Text>
                     <Text className="text-[10px] font-bold text-[#5856D6]">
                         {date.toLocaleString('en-US', { month: 'short' }).toUpperCase()}
                     </Text>
                 </View>
                 <View className="flex-1">
-                    <Text className="text-base font-bold text-[#333] mb-1">{item.serviceName}</Text>
-                    <View className="flex-row items-center mb-1">
+                    <Text className="mb-1 text-base font-bold text-[#333]">{item.serviceName}</Text>
+                    <View className="mb-1 flex-row items-center">
                         <Clock size={14} color="#666" className="mr-1" />
                         <Text className="text-[13px] text-[#666]">{formattedTime}</Text>
                     </View>
                     <View
-                        className={`self-start px-2 py-0.5 rounded-[10px] ${
-                            item.status === 'CANCELLED' ? 'bg-[#FFF0F0]' :
-                            item.status === 'CONFIRMED' ? 'bg-[#F0FFF0]' : 'bg-[#FFF9F0]'
+                        className={`self-start rounded-[10px] px-2 py-0.5 ${
+                            item.status === 'CANCELLED'
+                                ? 'bg-[#FFF0F0]'
+                                : item.status === 'CONFIRMED'
+                                  ? 'bg-[#F0FFF0]'
+                                  : 'bg-[#FFF9F0]'
                         }`}
                     >
                         <Text
                             className={`text-[11px] font-bold ${
-                                item.status === 'CANCELLED' ? 'text-[#FF3B30]' :
-                                item.status === 'CONFIRMED' ? 'text-[#34C759]' : 'text-[#FF9500]'
+                                item.status === 'CANCELLED'
+                                    ? 'text-[#FF3B30]'
+                                    : item.status === 'CONFIRMED'
+                                      ? 'text-[#34C759]'
+                                      : 'text-[#FF9500]'
                             }`}
                         >
                             {item.status}
@@ -92,7 +98,7 @@ const BookingList = ({ type }: { type: 'current' | 'past' }) => {
 
     if (loading) {
         return (
-            <View className="flex-1 justify-center items-center">
+            <View className="flex-1 items-center justify-center">
                 <ActivityIndicator size="large" color="#5856D6" />
             </View>
         );
@@ -112,7 +118,7 @@ const BookingList = ({ type }: { type: 'current' | 'past' }) => {
                 />
             }
             ListEmptyComponent={
-                <View className="flex-1 justify-center items-center mt-[100px]">
+                <View className="mt-[100px] flex-1 items-center justify-center">
                     <Calendar size={48} color="#ccc" />
                     <Text className="mt-2.5 text-base text-[#999]">No {type} bookings found</Text>
                 </View>

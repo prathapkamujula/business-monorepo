@@ -159,26 +159,24 @@ const PRIVACY_HTML = buildHtml(`
 // Web-platform native render  (no WebView / iframe needed)
 // ─────────────────────────────────────────────────────────────────────────────
 const Tag = ({ label }: { label: string }) => (
-    <View className="bg-[#d8f3e8] py-1.25 px-3 rounded-full">
+    <View className="py-1.25 rounded-full bg-[#d8f3e8] px-3">
         <Text className="text-[13px] font-medium text-[#2d6a4f]">{label}</Text>
     </View>
 );
 
 const CheckItem = ({ text }: { text: string }) => (
-    <View className="flex-row items-start gap-2.5 mb-1.5">
-        <Text className="text-[#2d6a4f] font-bold text-sm mt-0.5">✓</Text>
-        <Text className="text-[#6b6b67] text-[15px] leading-6 flex-1">{text}</Text>
+    <View className="mb-1.5 flex-row items-start gap-2.5">
+        <Text className="mt-0.5 text-sm font-bold text-[#2d6a4f]">✓</Text>
+        <Text className="flex-1 text-[15px] leading-6 text-[#6b6b67]">{text}</Text>
     </View>
 );
 
 const BulletList = ({ items }: { items: string[] }) => (
-    <View className="gap-1.5 mt-2">
+    <View className="mt-2 gap-1.5">
         {items.map((item) => (
-            <View key={item} className="flex-row items-start gap-2.5 mb-1.5">
-                <Text className="text-[#6b6b67] font-bold text-lg leading-5 mt-0.5">
-                    ·
-                </Text>
-                <Text className="text-[#6b6b67] text-sm leading-6 flex-1">{item}</Text>
+            <View key={item} className="mb-1.5 flex-row items-start gap-2.5">
+                <Text className="mt-0.5 text-lg font-bold leading-5 text-[#6b6b67]">·</Text>
+                <Text className="flex-1 text-sm leading-6 text-[#6b6b67]">{item}</Text>
             </View>
         ))}
     </View>
@@ -193,12 +191,12 @@ const PrivacyItem = ({
     title: string;
     children: React.ReactNode;
 }) => (
-    <View className="bg-white border border-[#e8e8e4] rounded-[12px] p-5">
-        <View className="flex-row items-center gap-2.5 mb-2">
-            <View className="bg-[#d8f3e8] py-[3px] px-2 rounded-full">
+    <View className="rounded-[12px] border border-[#e8e8e4] bg-white p-5">
+        <View className="mb-2 flex-row items-center gap-2.5">
+            <View className="rounded-full bg-[#d8f3e8] px-2 py-[3px]">
                 <Text className="text-[11px] font-medium text-[#2d6a4f]">{num}</Text>
             </View>
-            <Text className="text-[17px] font-normal text-[#1a1a18] flex-1">{title}</Text>
+            <Text className="flex-1 text-[17px] font-normal text-[#1a1a18]">{title}</Text>
         </View>
         {children}
     </View>
@@ -210,11 +208,15 @@ const WebAboutUs = () => (
         contentContainerClassName="p-6 pb-[64px] max-w-[640px] self-center w-full"
         showsVerticalScrollIndicator={false}
     >
-        <View className="mb-9 pb-7 border-b border-[#e8e8e4]">
-            <Text className="text-[11px] font-medium tracking-[1.5px] uppercase text-[#2d6a4f] mb-3">{content.about.eyebrow}</Text>
-            <Text className="text-[32px] font-normal text-[#1a1a18] leading-[38px] mb-3.5">{content.about.title}</Text>
-            <Text className="text-[15px] text-[#6b6b67] leading-[26px]">{content.about.sub}</Text>
-            <View className="flex-row flex-wrap gap-2 mt-3.5">
+        <View className="mb-9 border-b border-[#e8e8e4] pb-7">
+            <Text className="mb-3 text-[11px] font-medium uppercase tracking-[1.5px] text-[#2d6a4f]">
+                {content.about.eyebrow}
+            </Text>
+            <Text className="mb-3.5 text-[32px] font-normal leading-[38px] text-[#1a1a18]">
+                {content.about.title}
+            </Text>
+            <Text className="text-[15px] leading-[26px] text-[#6b6b67]">{content.about.sub}</Text>
+            <View className="mt-3.5 flex-row flex-wrap gap-2">
                 {content.about.tags.map((t) => (
                     <Tag key={t} label={t} />
                 ))}
@@ -226,8 +228,10 @@ const WebAboutUs = () => (
                 key={idx}
                 className={`mb-8 ${idx === content.about.sections.length - 1 ? 'mb-0' : ''}`}
             >
-                <Text className="text-xl font-normal text-[#1a1a18] mb-2.5">{s.title}</Text>
-                {s.content && <Text className="text-[15px] text-[#6b6b67] leading-[26px]">{s.content}</Text>}
+                <Text className="mb-2.5 text-xl font-normal text-[#1a1a18]">{s.title}</Text>
+                {s.content && (
+                    <Text className="text-[15px] leading-[26px] text-[#6b6b67]">{s.content}</Text>
+                )}
                 {s.items && s.items.map((item) => <CheckItem key={item} text={item} />)}
             </View>
         ))}
@@ -240,32 +244,44 @@ const WebPrivacyPolicy = () => (
         contentContainerClassName="p-6 pb-[64px] max-w-[640px] self-center w-full"
         showsVerticalScrollIndicator={false}
     >
-        <View className="mb-9 pb-7 border-b border-[#e8e8e4]">
-            <Text className="text-[11px] font-medium tracking-[1.5px] uppercase text-[#2d6a4f] mb-3">{content.privacy.eyebrow}</Text>
-            <Text className="text-[32px] font-normal text-[#1a1a18] leading-[38px] mb-3.5">{content.privacy.title}</Text>
-            <Text className="text-[15px] text-[#6b6b67] leading-[26px]">{content.privacy.sub}</Text>
+        <View className="mb-9 border-b border-[#e8e8e4] pb-7">
+            <Text className="mb-3 text-[11px] font-medium uppercase tracking-[1.5px] text-[#2d6a4f]">
+                {content.privacy.eyebrow}
+            </Text>
+            <Text className="mb-3.5 text-[32px] font-normal leading-[38px] text-[#1a1a18]">
+                {content.privacy.title}
+            </Text>
+            <Text className="text-[15px] leading-[26px] text-[#6b6b67]">{content.privacy.sub}</Text>
         </View>
 
-        <View className="self-start bg-[#e8e8e4] py-1 px-2.5 rounded-full mb-5">
+        <View className="mb-5 self-start rounded-full bg-[#e8e8e4] px-2.5 py-1">
             <Text className="text-xs text-[#6b6b67]">{content.privacy.badge}</Text>
         </View>
 
         <View className="gap-4">
             {content.privacy.items.map((item) => (
                 <PrivacyItem key={item.num} num={item.num} title={item.title}>
-                    {item.content && <Text className="text-sm text-[#6b6b67] leading-[22px]">{item.content}</Text>}
+                    {item.content && (
+                        <Text className="text-sm leading-[22px] text-[#6b6b67]">
+                            {item.content}
+                        </Text>
+                    )}
                     {item.highlight && (
-                        <Text className="text-sm text-[#1a1a18] font-medium leading-[22px]">
+                        <Text className="text-sm font-medium leading-[22px] text-[#1a1a18]">
                             {item.highlight}
                         </Text>
                     )}
                     {item.bullets && <BulletList items={item.bullets} />}
                     {item.card && (
-                        <View className="flex-row items-center gap-3.5 mt-3.5 bg-white border border-[#e8e8e4] rounded-[12px] p-4">
+                        <View className="mt-3.5 flex-row items-center gap-3.5 rounded-[12px] border border-[#e8e8e4] bg-white p-4">
                             <Text style={{ fontSize: 22 }}>{item.card.icon}</Text>
                             <View>
-                                <Text className="text-xs text-[#6b6b67] mb-0.5">{item.card.label}</Text>
-                                <Text className="text-sm font-medium text-[#2d6a4f]">{item.card.value}</Text>
+                                <Text className="mb-0.5 text-xs text-[#6b6b67]">
+                                    {item.card.label}
+                                </Text>
+                                <Text className="text-sm font-medium text-[#2d6a4f]">
+                                    {item.card.value}
+                                </Text>
                             </View>
                         </View>
                     )}
@@ -292,18 +308,18 @@ const WebViewScreen = () => {
     // ── Shared header ────────────────────────────────────────────────────────
     const Header = (
         <View
-            className="flex-row items-center justify-between px-5 pb-3.5 border-b border-[#e8e8e4] bg-[#fafaf8]"
+            className="flex-row items-center justify-between border-b border-[#e8e8e4] bg-[#fafaf8] px-5 pb-3.5"
             style={{ paddingTop: insets.top > 0 ? insets.top + 8 : 16 }}
         >
-            <Text className="text-[15px] font-semibold text-[#1a1a18] tracking-tight">{title}</Text>
+            <Text className="text-[15px] font-semibold tracking-tight text-[#1a1a18]">{title}</Text>
             <TouchableOpacity
-                className="w-8 h-8 rounded-full bg-[#f0f0ec] justify-center items-center"
+                className="h-8 w-8 items-center justify-center rounded-full bg-[#f0f0ec]"
                 onPress={handleClose}
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 accessibilityLabel="Close"
                 accessibilityRole="button"
             >
-                <Text className="text-[13px] color-[#6b6b67] font-semibold">✕</Text>
+                <Text className="text-[13px] font-semibold color-[#6b6b67]">✕</Text>
             </TouchableOpacity>
         </View>
     );
@@ -321,7 +337,7 @@ const WebViewScreen = () => {
             <View className="flex-1 bg-[#fafaf8]">
                 {Header}
                 {WebContent ?? (
-                    <View className="flex-1 justify-center items-center">
+                    <View className="flex-1 items-center justify-center">
                         <Text className="text-base text-[#6b6b67]">Coming Soon</Text>
                     </View>
                 )}
@@ -341,7 +357,7 @@ const WebViewScreen = () => {
                     className="flex-1 bg-[#fafaf8]"
                     startInLoadingState
                     renderLoading={() => (
-                        <View className="absolute inset-0 justify-center items-center bg-[#fafaf8]">
+                        <View className="absolute inset-0 items-center justify-center bg-[#fafaf8]">
                             <ActivityIndicator size="large" color="#2d6a4f" />
                         </View>
                     )}

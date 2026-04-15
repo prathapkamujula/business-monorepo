@@ -89,20 +89,22 @@ const ProfileScreen = () => {
     };
 
     const ProfileItem = ({ icon: Icon, label, value, editable = false, onChangeText }: any) => (
-        <View className="py-[15px] border-b border-[#f0f0f0]">
-            <View className="flex-row items-center mb-1">
+        <View className="border-b border-[#f0f0f0] py-[15px]">
+            <View className="mb-1 flex-row items-center">
                 <Icon size={20} color="#666" className="mr-2.5" />
-                <Text className="text-sm text-[#888] font-medium">{label}</Text>
+                <Text className="text-sm font-medium text-[#888]">{label}</Text>
             </View>
             {isEditing && editable ? (
                 <TextInput
-                    className="text-base text-[#333] pl-[30px] py-1 border-b border-[#5856D6]"
+                    className="border-b border-[#5856D6] py-1 pl-[30px] text-base text-[#333]"
                     value={value}
                     onChangeText={onChangeText}
                     placeholder={`Enter ${label}`}
                 />
             ) : (
-                <Text className={`text-base text-[#333] pl-[30px] ${!value ? 'text-[#ccc] italic' : ''}`}>
+                <Text
+                    className={`pl-[30px] text-base text-[#333] ${!value ? 'italic text-[#ccc]' : ''}`}
+                >
                     {value || `No ${label} provided`}
                 </Text>
             )}
@@ -110,10 +112,15 @@ const ProfileScreen = () => {
     );
 
     const LinkItem = ({ icon: Icon, label, onPress, color = '#333' }: any) => (
-        <TouchableOpacity className="flex-row items-center justify-between py-[15px] border-b border-[#f0f0f0]" onPress={onPress}>
+        <TouchableOpacity
+            className="flex-row items-center justify-between border-b border-[#f0f0f0] py-[15px]"
+            onPress={onPress}
+        >
             <View className="flex-row items-center">
                 <Icon size={20} color={color} className="mr-2.5" />
-                <Text className="text-base font-medium" style={{ color }}>{label}</Text>
+                <Text className="text-base font-medium" style={{ color }}>
+                    {label}
+                </Text>
             </View>
             <ChevronRight size={20} color="#ccc" />
         </TouchableOpacity>
@@ -121,7 +128,7 @@ const ProfileScreen = () => {
 
     if (fetching) {
         return (
-            <View className="flex-1 bg-[#f8f9fa] justify-center items-center">
+            <View className="flex-1 items-center justify-center bg-[#f8f9fa]">
                 <ActivityIndicator size="large" color="#5856D6" />
             </View>
         );
@@ -130,26 +137,31 @@ const ProfileScreen = () => {
     return (
         <SafeAreaView className="flex-1 bg-[#f8f9fa]">
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View className="items-center p-[30px] bg-white border-b border-[#eee]">
+                <View className="items-center border-b border-[#eee] bg-white p-[30px]">
                     {photoUrl ? (
-                        <Image source={{ uri: photoUrl }} className="w-[100px] h-[100px] rounded-full mb-[15px] bg-[#eee]" />
+                        <Image
+                            source={{ uri: photoUrl }}
+                            className="mb-[15px] h-[100px] w-[100px] rounded-full bg-[#eee]"
+                        />
                     ) : (
-                        <View className="w-[100px] h-[100px] rounded-full mb-[15px] bg-[#F2F2F7] justify-center items-center">
+                        <View className="mb-[15px] h-[100px] w-[100px] items-center justify-center rounded-full bg-[#F2F2F7]">
                             <User size={50} color="#8E8E93" />
                         </View>
                     )}
-                    <Text className="text-[22px] font-bold text-[#333] mb-2.5">{name || 'User'}</Text>
+                    <Text className="mb-2.5 text-[22px] font-bold text-[#333]">
+                        {name || 'User'}
+                    </Text>
                     <TouchableOpacity
-                        className="px-5 py-2 rounded-full bg-[#F0F0FF] border border-[#5856D6]"
+                        className="rounded-full border border-[#5856D6] bg-[#F0F0FF] px-5 py-2"
                         onPress={() => (isEditing ? handleUpdateProfile() : setIsEditing(true))}
                     >
-                        <Text className="text-[#5856D6] font-semibold">
+                        <Text className="font-semibold text-[#5856D6]">
                             {isEditing ? 'Save Changes' : 'Edit Profile'}
                         </Text>
                     </TouchableOpacity>
                 </View>
 
-                <View className="bg-white mt-5 px-5 border-y border-[#eee]">
+                <View className="mt-5 border-y border-[#eee] bg-white px-5">
                     <ProfileItem
                         icon={User}
                         label="Name"
@@ -165,10 +177,12 @@ const ProfileScreen = () => {
                         onChangeText={setPhoneNumber}
                     />
                     <ProfileItem icon={Mail} label="Email" value={email} editable={false} />
-                    <Text className="text-xs text-[#999] text-right mt-1 mb-2.5">Email cannot be updated</Text>
+                    <Text className="mb-2.5 mt-1 text-right text-xs text-[#999]">
+                        Email cannot be updated
+                    </Text>
                 </View>
 
-                <View className="bg-white mt-5 px-5 border-y border-[#eee]">
+                <View className="mt-5 border-y border-[#eee] bg-white px-5">
                     <LinkItem
                         icon={Shield}
                         label="Privacy Policy"
@@ -192,9 +206,12 @@ const ProfileScreen = () => {
                     />
                 </View>
 
-                <TouchableOpacity className="flex-row bg-[#F2F2F7] mx-5 mt-[30px] p-[15px] rounded-[12px] justify-center items-center" onPress={handleSignOut}>
+                <TouchableOpacity
+                    className="mx-5 mt-[30px] flex-row items-center justify-center rounded-[12px] bg-[#F2F2F7] p-[15px]"
+                    onPress={handleSignOut}
+                >
                     <LogOut size={20} color="#FF3B30" className="mr-2.5" />
-                    <Text className="text-[#FF3B30] font-bold text-base">Logout</Text>
+                    <Text className="text-base font-bold text-[#FF3B30]">Logout</Text>
                 </TouchableOpacity>
 
                 <View style={{ height: 40 }} />

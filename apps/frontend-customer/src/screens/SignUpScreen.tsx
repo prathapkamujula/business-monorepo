@@ -41,24 +41,26 @@ const SignUpScreen = ({ navigation }: any) => {
     const isButtonDisabled = loading || authLoading;
 
     return (
-        <View className="flex-1 justify-center p-5 bg-white">
-            <Text className="text-[28px] font-bold mb-2.5 text-center">Create Account</Text>
-            <Text className="text-base text-[#666] mb-[30px] text-center">Join us today</Text>
+        <View className="flex-1 justify-center bg-white p-5">
+            <Text className="mb-2.5 text-center text-[28px] font-bold">Create Account</Text>
+            <Text className="mb-[30px] text-center text-base text-[#666]">Join us today</Text>
 
             <TouchableOpacity
-                className="bg-[#DB4437] p-[15px] rounded-lg items-center flex-row justify-center"
+                className="flex-row items-center justify-center rounded-lg bg-[#DB4437] p-[15px]"
                 onPress={handleGoogleSignUp}
                 disabled={isButtonDisabled}
             >
                 {loading ? (
                     <ActivityIndicator color="#fff" />
                 ) : (
-                    <Text className="text-white font-bold text-base">Sign up with Google</Text>
+                    <Text className="text-base font-bold text-white">Sign up with Google</Text>
                 )}
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
-                <Text className="mt-5 text-[#007AFF] text-center">Already have an account? Sign In</Text>
+                <Text className="mt-5 text-center text-[#007AFF]">
+                    Already have an account? Sign In
+                </Text>
             </TouchableOpacity>
         </View>
     );
