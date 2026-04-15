@@ -8,8 +8,8 @@ import {
     FlatList,
     Dimensions,
     Image,
-    SafeAreaView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useNavigation } from '@react-navigation/native';
@@ -151,8 +151,13 @@ const HomeScreen = () => {
     }
 
     return (
-        <SafeAreaView className="flex-1 bg-white">
-            <ScrollView showsVerticalScrollIndicator={false}>
+        <SafeAreaView className="flex-1 bg-white" style={{ flex: 1 }}>
+            <ScrollView
+                className="flex-1"
+                style={{ flex: 1 }}
+                contentContainerStyle={{ flexGrow: 1 }}
+                showsVerticalScrollIndicator={false}
+            >
                 <View className="flex-row items-center justify-between px-5 py-5">
                     <View>
                         <Text className="text-base text-[#8E8E93]">{getGreeting()},</Text>
@@ -172,7 +177,7 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                <View className="flex-1">
+                <View>
                     <View className="mb-[15px] mt-[25px] flex-row items-center justify-between px-5">
                         <Text className="text-xl font-bold text-[#1C1C1E]">Featured Services</Text>
                         <TouchableOpacity
@@ -195,7 +200,7 @@ const HomeScreen = () => {
                         keyExtractor={(item) => item.id}
                         snapToInterval={CARD_WIDTH + 20}
                         decelerationRate="fast"
-                        contentContainerClassName="pl-5 pr-[10px]"
+                        contentContainerStyle={{ paddingLeft: 20, paddingRight: 10 }}
                         renderItem={({ item }) => <ServiceCard item={item} />}
                     />
 
@@ -208,7 +213,7 @@ const HomeScreen = () => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(item) => item.id}
-                        contentContainerClassName="pl-5 pr-[10px]"
+                        contentContainerStyle={{ paddingLeft: 20, paddingRight: 10 }}
                         renderItem={({ item }) => <OfferCard item={item} />}
                     />
 

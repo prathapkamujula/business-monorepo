@@ -7,8 +7,8 @@ import {
     TextInput,
     ScrollView,
     ActivityIndicator,
-    SafeAreaView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import customAlert from '../utils/alert';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
@@ -135,8 +135,13 @@ const ProfileScreen = () => {
     }
 
     return (
-        <SafeAreaView className="flex-1 bg-[#f8f9fa]">
-            <ScrollView showsVerticalScrollIndicator={false}>
+        <SafeAreaView className="flex-1 bg-[#f8f9fa]" style={{ flex: 1 }}>
+            <ScrollView
+                className="flex-1"
+                style={{ flex: 1 }}
+                contentContainerStyle={{ flexGrow: 1 }}
+                showsVerticalScrollIndicator={false}
+            >
                 <View className="items-center border-b border-[#eee] bg-white p-[30px]">
                     {photoUrl ? (
                         <Image

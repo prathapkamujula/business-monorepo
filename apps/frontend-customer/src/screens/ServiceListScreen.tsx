@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-    Text,
-    View,
-    FlatList,
-    TouchableOpacity,
-    SafeAreaView,
-    Image,
-    Dimensions,
-} from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ArrowLeft, Star } from 'lucide-react-native';
 import * as LucideIcons from 'lucide-react-native';
@@ -70,7 +63,7 @@ const ServiceListScreen = () => {
     );
 
     return (
-        <SafeAreaView className="flex-1 bg-white">
+        <SafeAreaView className="flex-1 bg-white" style={{ flex: 1 }}>
             <View className="flex-row items-center justify-between border-b border-[#F2F2F7] px-2.5 py-[15px]">
                 <TouchableOpacity onPress={() => navigation.goBack()} className="p-2.5">
                     <ArrowLeft color="#1C1C1E" size={24} />
@@ -80,10 +73,12 @@ const ServiceListScreen = () => {
             </View>
 
             <FlatList
+                className="flex-1"
+                style={{ flex: 1 }}
                 data={data}
                 keyExtractor={(item) => item.id}
                 renderItem={type === 'bestSellers' ? renderBestSellerItem : renderServiceItem}
-                contentContainerClassName="p-5"
+                contentContainerStyle={{ padding: 20, flexGrow: 1 }}
                 showsVerticalScrollIndicator={false}
             />
         </SafeAreaView>

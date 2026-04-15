@@ -205,7 +205,15 @@ const PrivacyItem = ({
 const WebAboutUs = () => (
     <ScrollView
         className="flex-1 bg-[#fafaf8]"
-        contentContainerClassName="p-6 pb-[64px] max-w-[640px] self-center w-full"
+        style={{ flex: 1 }}
+        contentContainerStyle={{
+            padding: 24,
+            paddingBottom: 64,
+            maxWidth: 640,
+            alignSelf: 'center',
+            width: '100%',
+            flexGrow: 1,
+        }}
         showsVerticalScrollIndicator={false}
     >
         <View className="mb-9 border-b border-[#e8e8e4] pb-7">
@@ -241,7 +249,15 @@ const WebAboutUs = () => (
 const WebPrivacyPolicy = () => (
     <ScrollView
         className="flex-1 bg-[#fafaf8]"
-        contentContainerClassName="p-6 pb-[64px] max-w-[640px] self-center w-full"
+        style={{ flex: 1 }}
+        contentContainerStyle={{
+            padding: 24,
+            paddingBottom: 64,
+            maxWidth: 640,
+            alignSelf: 'center',
+            width: '100%',
+            flexGrow: 1,
+        }}
         showsVerticalScrollIndicator={false}
     >
         <View className="mb-9 border-b border-[#e8e8e4] pb-7">

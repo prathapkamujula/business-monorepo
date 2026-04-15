@@ -22,20 +22,22 @@ const AppNavigator = () => {
     }
 
     return (
-        <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-                {user ? (
-                    // Protected Routes
-                    <Stack.Screen name="Main" component={MainTabNavigator} />
-                ) : (
-                    // Auth Routes
-                    <>
-                        <Stack.Screen name="SignIn" component={SignInScreen} />
-                        <Stack.Screen name="SignUp" component={SignUpScreen} />
-                    </>
-                )}
-            </Stack.Navigator>
-        </NavigationContainer>
+        <View style={{ flex: 1 }}>
+            <NavigationContainer>
+                <Stack.Navigator screenOptions={{ headerShown: false }}>
+                    {user ? (
+                        // Protected Routes
+                        <Stack.Screen name="Main" component={MainTabNavigator} />
+                    ) : (
+                        // Auth Routes
+                        <>
+                            <Stack.Screen name="SignIn" component={SignInScreen} />
+                            <Stack.Screen name="SignUp" component={SignUpScreen} />
+                        </>
+                    )}
+                </Stack.Navigator>
+            </NavigationContainer>
+        </View>
     );
 };
 

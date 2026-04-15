@@ -6,8 +6,8 @@ import {
     ActivityIndicator,
     TouchableOpacity,
     RefreshControl,
-    SafeAreaView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import axiosInstance from '../api/axiosInstance';
 import { Calendar, Clock, MapPin, ChevronRight } from 'lucide-react-native';
@@ -106,10 +106,12 @@ const BookingList = ({ type }: { type: 'current' | 'past' }) => {
 
     return (
         <FlatList
+            className="flex-1"
+            style={{ flex: 1 }}
             data={bookings}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <BookingItem item={item} />}
-            contentContainerClassName="p-[15px]"
+            contentContainerStyle={{ padding: 15, flexGrow: 1 }}
             refreshControl={
                 <RefreshControl
                     refreshing={refreshing}
@@ -129,7 +131,7 @@ const BookingList = ({ type }: { type: 'current' | 'past' }) => {
 
 const BookingScreen = () => {
     return (
-        <SafeAreaView className="flex-1 bg-white">
+        <SafeAreaView className="flex-1 bg-white" style={{ flex: 1 }}>
             <Tab.Navigator
                 screenOptions={{
                     tabBarActiveTintColor: '#5856D6',
