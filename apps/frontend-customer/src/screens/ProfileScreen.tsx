@@ -27,6 +27,8 @@ import {
 } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
 import axiosInstance from '../api/axiosInstance';
+import { getAuth, signOut } from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const ProfileScreen = () => {
     const navigation = useNavigation<any>();
@@ -82,7 +84,6 @@ const ProfileScreen = () => {
     };
 
     const handleSignOut = () => {
-        console.log('Sign out clicked');
         customAlert('Sign Out', 'Are you sure you want to sign out?', [
             { text: 'Cancel', style: 'cancel' },
             {
@@ -91,6 +92,9 @@ const ProfileScreen = () => {
                 onPress: async () => {
                     try {
                         await authApi.signOut();
+                        await signOut(getAuth());           // sign out from Firebase
+                        await GoogleSignin.revokeAccess();  // force account picker on next sign-in
+                        await GoogleSignin.signOut();       // clear Google session
                         dispatch(logout());
                     } catch (error) {
                         console.error('Logout error:', error);

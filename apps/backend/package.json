@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "nodemon --exec ts-node src/index.ts",
         "build": "tsc",
+        "format": "prettier --write .",
         "start": "node dist/index.js",
         "prisma:generate": "prisma generate",
         "prisma:migrate": "prisma migrate dev",
@@ -27,6 +28,7 @@
         "firebase-admin": "^13.7.0",
         "google-auth-library": "^10.6.2",
         "nodemon": "^3.1.14",
+        "prettier-plugin-tailwindcss": "^0.7.2",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.1"
     },

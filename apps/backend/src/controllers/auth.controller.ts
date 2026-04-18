@@ -4,6 +4,7 @@ import { authService } from '../services/auth.service';
 export class AuthController {
     async googleSignin(req: Request, res: Response) {
         const { idToken } = req.body;
+        console.log('Received ID token:', idToken);
         try {
             const result = await authService.handleGoogleSignin(idToken);
             res.json({ token: idToken, user: result });
@@ -15,6 +16,7 @@ export class AuthController {
 
     async googleSignup(req: Request, res: Response) {
         const { idToken } = req.body;
+        console.log('Received ID token:', idToken);
         try {
             const result = await authService.handleGoogleSignup(idToken);
             res.json({ token: idToken, user: result });

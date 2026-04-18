@@ -1,0 +1,47 @@
+{
+    "project_info": {
+        "project_number": "98285628340",
+        "project_id": "mern-bill-payment-tracker",
+        "storage_bucket": "mern-bill-payment-tracker.firebasestorage.app"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:98285628340:android:cf8653e6c6611ce6e4e0e1",
+                "android_client_info": {
+                    "package_name": "com.kprathapreddy1997.frontendcustomer"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "98285628340-nvjl8b1op49c8t076apep3l13hllv02d.apps.googleusercontent.com",
+                    "client_type": 1,
+                    "android_info": {
+                        "package_name": "com.kprathapreddy1997.frontendcustomer",
+                        "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+                    }
+                },
+                {
+                    "client_id": "98285628340-1tqtcfrdccbg14bti31oplq3kd7kt41v.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyAiWc23cPV8JW5w1olqJKHThRr4GmDgJe0"
+                }
+            ],
+            "services": {
+                "appinvite_service": {
+                    "other_platform_oauth_client": [
+                        {
+                            "client_id": "98285628340-1tqtcfrdccbg14bti31oplq3kd7kt41v.apps.googleusercontent.com",
+                            "client_type": 3
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}

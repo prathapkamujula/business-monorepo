@@ -1,44 +1,46 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
-import customAlert from '../../utils/alert';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { getAuth, signInWithCredential, GoogleAuthProvider } from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { authApi } from '../../api/authApi';
-import { useGoogleSignIn } from '../../utils/authHelper';
+import customAlert from '../../utils/alert';
+
+GoogleSignin.configure({
+    webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
+});
 
 const SignUpScreen = ({ navigation }: any) => {
     const [loading, setLoading] = useState(false);
-    const { signIn, loading: authLoading } = useGoogleSignIn();
 
     const handleGoogleSignUp = async () => {
         setLoading(true);
         try {
-            const user = await signIn();
-            if (!user) {
-                setLoading(false);
-                return;
-            }
-            const idToken = await signIn();
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
+
+            const idToken = userInfo?.data?.idToken;
+            if (!idToken) throw new Error('No ID token received');
+
+            const credential = GoogleAuthProvider.credential(idToken);
+            const { user } = await signInWithCredential(getAuth(), credential);
 
             // Integrate with backend
             try {
                 await authApi.signUpWithGoogle(idToken);
-            } catch (backendError) {
+                customAlert('Success', 'Account created successfully');
+            } catch (backendError: any) {
+                console.error('Backend sign up error:', backendError);
                 // If backend integration fails, sign out from Firebase
-                await signOut(auth);
+                await getAuth().signOut();
                 throw backendError;
             }
-
-            customAlert('Success', 'Account created successfully');
         } catch (error: any) {
             console.error('Sign up error:', error);
-            customAlert('Error', error.message);
+            customAlert('Error', error.message || 'Something went wrong during sign up');
         } finally {
             setLoading(false);
         }
     };
-
-    const isButtonDisabled = loading || authLoading;
 
     return (
         <View className="flex-1 justify-center bg-white p-5">
@@ -48,7 +50,7 @@ const SignUpScreen = ({ navigation }: any) => {
             <TouchableOpacity
                 className="flex-row items-center justify-center rounded-lg bg-[#DB4437] p-[15px]"
                 onPress={handleGoogleSignUp}
-                disabled={isButtonDisabled}
+                disabled={loading}
             >
                 {loading ? (
                     <ActivityIndicator color="#fff" />

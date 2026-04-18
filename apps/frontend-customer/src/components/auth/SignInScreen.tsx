@@ -1,26 +1,40 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
-import customAlert from '../../utils/alert';
+import {getAuth, signInWithCredential, GoogleAuthProvider, getIdToken, signOut} from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { authApi } from '../../api/authApi';
-import { useGoogleSignIn } from '../../utils/authHelper';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../store/slices/authSlice';
+
+GoogleSignin.configure({
+    webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
+});
 
 const SignInScreen = ({ navigation }: any) => {
     const [loading, setLoading] = useState(false);
-    const { signIn, loading: authLoading } = useGoogleSignIn();
-    const dispatch = useDispatch();
+
     const handleGoogleSignIn = async () => {
         setLoading(true);
         try {
-            const idToken = await signIn();
-            if (!idToken) return;
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
 
-            const { token, user } = await authApi.signInWithGoogle(idToken);
-            dispatch(setUser({ user, idToken: token }));
+            const googleIdToken = userInfo?.data?.idToken;
+            if (!googleIdToken) throw new Error('No ID token received');
+
+            const credential = GoogleAuthProvider.credential(googleIdToken);
+            const { user } = await signInWithCredential(getAuth(), credential);
+
+            // Get the Firebase ID token from the signed-in user
+            const firebaseIdToken = await getIdToken(user);
+
+            try {
+                await authApi.signInWithGoogle(firebaseIdToken);
+            } catch (backendError: any) {
+                console.error('Backend sign in error:', backendError);
+                await signOut(getAuth());
+                throw backendError;
+            }
         } catch (error: any) {
             console.error('Sign in error:', error);
-            customAlert('Error', error.message);
         } finally {
             setLoading(false);
         }
@@ -34,7 +48,7 @@ const SignInScreen = ({ navigation }: any) => {
             <TouchableOpacity
                 className="flex-row items-center justify-center rounded-lg bg-[#DB4437] p-[15px]"
                 onPress={handleGoogleSignIn}
-                disabled={loading || authLoading}
+                disabled={loading}
             >
                 {loading ? (
                     <ActivityIndicator color="#fff" />

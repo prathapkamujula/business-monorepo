@@ -3,13 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
-import SignInScreen from '../screens/onboarding/SignInScreen';
-import SignUpScreen from '../screens/onboarding/SignUpScreen';
-import SplashScreen from '../screens/onboarding/SplashScreen';
-import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
+import SignInScreen from '../components/auth/SignInScreen';
+import SignUpScreen from '../components/auth/SignUpScreen';
+import SplashScreen from '../components/onboarding/SplashScreen';
+import OnboardingScreen from '../components/onboarding/OnboardingScreen';
 import MainTabNavigator from './MainTabNavigator';
 import { ActivityIndicator, View, useWindowDimensions, Platform } from 'react-native';
-import BlockadeScreen from '../screens/shared/BlockadeScreen';
+import BlockadeScreen from '../components/shared/BlockadeScreen';
 
 const Stack = createStackNavigator();
 
