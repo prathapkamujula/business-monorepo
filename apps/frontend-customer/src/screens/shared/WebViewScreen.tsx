@@ -26,7 +26,7 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import content from './webViewContent.json';
+import content from '../../utils/webViewContent.json';
 
 // react-native-webview is only used on native; avoid the import on web
 // to prevent bundler errors when the package isn't installed for web.

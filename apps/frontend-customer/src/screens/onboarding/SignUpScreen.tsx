@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
-import customAlert from '../utils/alert';
+import customAlert from '../../utils/alert';
 import { signOut } from 'firebase/auth';
-import { auth } from '../config/firebase';
-import { authApi } from '../api/authApi';
-import { useGoogleSignIn } from '../utils/authHelper';
+import { auth } from '../../config/firebase';
+import { authApi } from '../../api/authApi';
+import { useGoogleSignIn } from '../../utils/authHelper';
 
 const SignUpScreen = ({ navigation }: any) => {
     const [loading, setLoading] = useState(false);

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, ActivityIndicator, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+import { RootState } from '../../store';
 
 const SplashScreen = ({ navigation }: any) => {
     const { user, loading } = useSelector((state: RootState) => state.auth);
@@ -40,14 +40,12 @@ const SplashScreen = ({ navigation }: any) => {
         <View className="flex-1 items-center justify-center bg-[#4F46E5]">
             {/* Logo */}
             <Image
-                source={require('../../assets/icon.png')}
+                source={require('../../../assets/icon.png')}
                 style={{ width: 90, height: 90, marginBottom: 20 }}
                 resizeMode="contain"
             />
 
-            <Text className="text-xl font-bold text-white">
-                YourApp
-            </Text>
+            <Text className="text-xl font-bold text-white">YourApp</Text>
 
             <ActivityIndicator color="#fff" style={{ marginTop: 20 }} />
         </View>

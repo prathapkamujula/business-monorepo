@@ -3,20 +3,27 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
-import SignInScreen from '../screens/SignInScreen';
-import SignUpScreen from '../screens/SignUpScreen';
-import SplashScreen from '../screens/SplashScreen';
-import OnboardingScreen from '../screens/OnboardingScreen';
+import SignInScreen from '../screens/onboarding/SignInScreen';
+import SignUpScreen from '../screens/onboarding/SignUpScreen';
+import SplashScreen from '../screens/onboarding/SplashScreen';
+import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import MainTabNavigator from './MainTabNavigator';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, View, useWindowDimensions, Platform } from 'react-native';
+import BlockadeScreen from '../screens/shared/BlockadeScreen';
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
     const { user } = useSelector((state: RootState) => state.auth);
+    const { width } = useWindowDimensions();
+    const isLargeScreen = Platform.OS === 'web' && width > 768;
+
+    if (isLargeScreen) {
+        return <BlockadeScreen />;
+    }
 
     return (
-        <View style={{ flex: 1 }}>
+        <View className="flex-1">
             <NavigationContainer>
                 <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Splash">
                     <Stack.Screen name="Splash" component={SplashScreen} />
