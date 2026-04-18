@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
-import customAlert from '../utils/alert';
-import { authApi } from '../api/authApi';
-import { useGoogleSignIn } from '../utils/authHelper';
+import customAlert from '../../utils/alert';
+import { authApi } from '../../api/authApi';
+import { useGoogleSignIn } from '../../utils/authHelper';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../store/slices/authSlice';
+import { setUser } from '../../store/slices/authSlice';
 
 const SignInScreen = ({ navigation }: any) => {
     const [loading, setLoading] = useState(false);

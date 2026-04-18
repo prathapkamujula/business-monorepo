@@ -9,19 +9,19 @@ const slides = [
         id: '1',
         title: 'Book Services Instantly',
         desc: 'Find trusted professionals in seconds',
-        image: require('../../assets/icon.png'),
+        image: require('../../../assets/icon.png'),
     },
     {
         id: '2',
         title: 'Trusted Experts',
         desc: 'Verified and highly rated professionals',
-        image: require('../../assets/icon.png'),
+        image: require('../../../assets/icon.png'),
     },
     {
         id: '3',
         title: 'At Your Doorstep',
         desc: 'Fast, reliable and on-demand service',
-        image: require('../../assets/icon.png'),
+        image: require('../../../assets/icon.png'),
     },
 ];
 
