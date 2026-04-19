@@ -5,7 +5,7 @@ import { Home, Calendar, User } from 'lucide-react-native';
 import HomeScreen from '../screens/HomeScreen';
 import BookingScreen from '../screens/BookingScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import WebViewScreen from '../components/shared/WebViewScreen';
+import WebViewScreen from '../components/shared/WebViewScreen/index';
 import ServiceListScreen from '../components/shared/ServiceListScreen';
 
 const Tab = createBottomTabNavigator();
