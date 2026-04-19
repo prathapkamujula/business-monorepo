@@ -23,33 +23,31 @@ const ProfileItem = memo(
         keyboardType = 'default',
         maxLength,
     }: ProfileItemProps) => (
-        <View className="border-b border-[#f0f0f0] py-[15px]">
-            <View className="mb-1 flex-row items-center">
-                <View style={{ width: 24, alignItems: 'center', marginRight: 8 }}>
-                    <Icon size={20} color="#666" />
-                </View>
-                <Text className="text-sm font-medium text-[#888]">{label}</Text>
+        <View className="flex-row items-center border-b border-[#f0f0f0] py-[15px]">
+            <View style={{ width: 28, alignItems: 'center', marginRight: 12 }}>
+                <Icon size={24} color="#666" />
             </View>
-            {isEditing && editable ? (
-                <TextInput
-                    key={`${label}-input`}
-                    className="border-b border-[#5856D6] py-1 text-base text-[#333]"
-                    style={{ paddingLeft: 32 }}
-                    value={value}
-                    onChangeText={onChangeText}
-                    placeholder={`Enter ${label}`}
-                    keyboardType={keyboardType}
-                    maxLength={maxLength}
-                />
-            ) : (
-                <Text
-                    key={`${label}-text`}
-                    className={`text-base text-[#333] ${!value ? 'italic text-[#ccc]' : ''}`}
-                    style={{ paddingLeft: 32 }}
-                >
-                    {value || `No ${label} provided`}
-                </Text>
-            )}
+            <View className="flex-1">
+                <Text className="mb-0.5 text-sm font-medium text-[#888]">{label}</Text>
+                {isEditing && editable ? (
+                    <TextInput
+                        key={`${label}-input`}
+                        className="border-b border-[#5856D6] py-1 text-base text-[#333]"
+                        value={value}
+                        onChangeText={onChangeText}
+                        placeholder={`Enter ${label}`}
+                        keyboardType={keyboardType}
+                        maxLength={maxLength}
+                    />
+                ) : (
+                    <Text
+                        key={`${label}-text`}
+                        className={`text-base text-[#333] ${!value ? 'italic text-[#ccc]' : ''}`}
+                    >
+                        {value || `No ${label} provided`}
+                    </Text>
+                )}
+            </View>
         </View>
     )
 );

@@ -133,7 +133,12 @@ const HomeScreen = () => {
                         keyExtractor={(item) => item.id}
                         snapToInterval={CARD_WIDTH + 20}
                         decelerationRate="fast"
-                        contentContainerStyle={{ paddingLeft: 20, paddingRight: 10 }}
+                        contentContainerStyle={{
+                            paddingLeft: 20,
+                            paddingRight: 10,
+                            marginBottom: 10,
+                            marginTop: 10,
+                        }}
                         renderItem={({ item }) => <ServiceCard item={item} width={CARD_WIDTH} />}
                     />
 

@@ -230,8 +230,8 @@ const ProfileScreen = () => {
                     className="mx-5 mt-[30px] flex-row items-center justify-center rounded-[12px] bg-[#F2F2F7] p-[15px]"
                     onPress={handleSignOut}
                 >
-                    <View style={{ width: 24, alignItems: 'center', marginRight: 8 }}>
-                        <LogOut size={20} color="#FF3B30" />
+                    <View style={{ width: 28, alignItems: 'center', marginRight: 12 }}>
+                        <LogOut size={24} color="#FF3B30" />
                     </View>
                     <Text className="text-base font-bold text-[#FF3B30]">Logout</Text>
                 </TouchableOpacity>
