@@ -37,7 +37,31 @@ const ProfileScreen = () => {
     const [fetching, setFetching] = useState(true);
 
     const handleSetName = React.useCallback((text: string) => setName(text), []);
-    const handleSetPhoneNumber = React.useCallback((text: string) => setPhoneNumber(text), []);
+    const formatPhoneNumber = (text: string) => {
+        const cleaned = text.replace(/\D/g, '');
+        const match = cleaned.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
+        if (match) {
+            const part1 = match[1];
+            const part2 = match[2];
+            const part3 = match[3];
+
+            if (part3) {
+                return `(${part1}) ${part2}-${part3}`;
+            } else if (part2) {
+                return `(${part1}) ${part2}`;
+            } else if (part1) {
+                return `(${part1}`;
+            }
+        }
+        return text;
+    };
+
+    const handleSetPhoneNumber = React.useCallback((text: string) => {
+        const cleaned = text.replace(/\D/g, '');
+        if (cleaned.length <= 10) {
+            setPhoneNumber(formatPhoneNumber(cleaned));
+        }
+    }, []);
 
     useEffect(() => {
         fetchProfile();
@@ -49,7 +73,7 @@ const ProfileScreen = () => {
             const response = await axiosInstance.get('/customers/profile');
             const customer = response.data;
             setName(customer.name || authUser?.displayName || '');
-            setPhoneNumber(customer.phoneNumber || '');
+            setPhoneNumber(formatPhoneNumber(customer.phoneNumber || ''));
             setEmail(customer.email || authUser?.email || '');
             setPhotoUrl(customer.photoUrl || authUser?.photoURL || '');
         } catch (error) {
@@ -68,7 +92,7 @@ const ProfileScreen = () => {
         try {
             await axiosInstance.put('/customers/profile', {
                 name,
-                phoneNumber,
+                phoneNumber: phoneNumber.replace(/\D/g, ''),
             });
             customAlert('Profile Updated', 'Your profile has been updated successfully.');
             setIsEditing(false);
@@ -157,6 +181,8 @@ const ProfileScreen = () => {
                         isEditing={isEditing}
                         editable={true}
                         onChangeText={handleSetPhoneNumber}
+                        keyboardType="phone-pad"
+                        maxLength={14}
                     />
                     <ProfileItem
                         key="email"

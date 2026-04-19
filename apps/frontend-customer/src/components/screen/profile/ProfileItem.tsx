@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, KeyboardTypeOptions } from 'react-native';
 
 interface ProfileItemProps {
     icon: any;
@@ -8,10 +8,21 @@ interface ProfileItemProps {
     isEditing: boolean;
     editable?: boolean;
     onChangeText?: (text: string) => void;
+    keyboardType?: KeyboardTypeOptions;
+    maxLength?: number;
 }
 
 const ProfileItem = memo(
-    ({ icon: Icon, label, value, isEditing, editable = false, onChangeText }: ProfileItemProps) => (
+    ({
+        icon: Icon,
+        label,
+        value,
+        isEditing,
+        editable = false,
+        onChangeText,
+        keyboardType = 'default',
+        maxLength,
+    }: ProfileItemProps) => (
         <View className="border-b border-[#f0f0f0] py-[15px]">
             <View className="mb-1 flex-row items-center">
                 <Icon size={20} color="#666" className="mr-2.5" />
@@ -24,6 +35,8 @@ const ProfileItem = memo(
                     value={value}
                     onChangeText={onChangeText}
                     placeholder={`Enter ${label}`}
+                    keyboardType={keyboardType}
+                    maxLength={maxLength}
                 />
             ) : (
                 <Text
