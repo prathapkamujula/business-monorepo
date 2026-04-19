@@ -31,9 +31,7 @@ const ServiceCard = ({ item, width }: ServiceCardProps) => {
                 </View>
                 <View className="flex-row items-center rounded-lg bg-[#FFFBE6] px-2 py-1">
                     <Star size={14} color="#FFD60A" fill="#FFD60A" />
-                    <Text className="ml-1 text-xs font-semibold text-[#FFD60A]">
-                        {item.rating}
-                    </Text>
+                    <Text className="ml-1 text-xs font-semibold text-[#FFD60A]">{item.rating}</Text>
                 </View>
             </View>
         </TouchableOpacity>

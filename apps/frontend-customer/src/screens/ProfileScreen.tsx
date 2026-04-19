@@ -36,6 +36,9 @@ const ProfileScreen = () => {
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(true);
 
+    const handleSetName = React.useCallback((text: string) => setName(text), []);
+    const handleSetPhoneNumber = React.useCallback((text: string) => setPhoneNumber(text), []);
+
     useEffect(() => {
         fetchProfile();
     }, []);
@@ -138,22 +141,25 @@ const ProfileScreen = () => {
 
                 <View className="mt-5 border-y border-[#eee] bg-white px-5">
                     <ProfileItem
+                        key="name"
                         icon={User}
                         label="Name"
                         value={name}
                         isEditing={isEditing}
                         editable={true}
-                        onChangeText={setName}
+                        onChangeText={handleSetName}
                     />
                     <ProfileItem
+                        key="phone"
                         icon={Phone}
                         label="Phone Number"
                         value={phoneNumber}
                         isEditing={isEditing}
                         editable={true}
-                        onChangeText={setPhoneNumber}
+                        onChangeText={handleSetPhoneNumber}
                     />
                     <ProfileItem
+                        key="email"
                         icon={Mail}
                         label="Email"
                         value={email}
