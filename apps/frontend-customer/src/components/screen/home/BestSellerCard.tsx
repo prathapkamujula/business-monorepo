@@ -1,14 +1,29 @@
 import React from 'react';
 import { TouchableOpacity, Image, View, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Star } from 'lucide-react-native';
 
 interface BestSellerCardProps {
     item: any;
 }
 
-const BestSellerCard = ({ item }: BestSellerCardProps) => (
-    <TouchableOpacity className="elevation-2 mb-[15px] flex-row overflow-hidden rounded-[20px] border border-[#F2F2F7] bg-white shadow-sm shadow-black/5">
-        <Image source={{ uri: item.image }} className="h-[100px] w-[100px]" />
+const BestSellerCard = ({ item }: BestSellerCardProps) => {
+    const navigation = useNavigation<any>();
+
+    const handlePress = () => {
+        navigation.navigate('WebView', {
+            title: item.name,
+            serviceId: item.id,
+            type: 'service',
+        });
+    };
+
+    return (
+        <TouchableOpacity
+            onPress={handlePress}
+            className="elevation-2 mb-[15px] flex-row overflow-hidden rounded-[20px] border border-[#F2F2F7] bg-white shadow-sm shadow-black/5"
+        >
+            <Image source={{ uri: item.image }} className="h-[100px] w-[100px]" />
         <View className="flex-1 justify-center p-[15px]">
             <Text className="mb-2 text-base font-bold text-[#1C1C1E]">{item.name}</Text>
             <View className="flex-row items-center justify-between">
@@ -25,6 +40,7 @@ const BestSellerCard = ({ item }: BestSellerCardProps) => (
             </View>
         </View>
     </TouchableOpacity>
-);
+    );
+};
 
 export default BestSellerCard;

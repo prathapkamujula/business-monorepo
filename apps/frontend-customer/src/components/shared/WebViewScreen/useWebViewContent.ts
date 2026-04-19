@@ -5,7 +5,7 @@ import { contentApi } from '../../../api/contentApi';
 export const useWebViewContent = () => {
     const route = useRoute<any>();
     const navigation = useNavigation<any>();
-    const { title } = route.params || { title: 'Page' };
+    const { title, serviceId, type } = route.params || { title: 'Page' };
 
     const [pageData, setPageData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
@@ -14,8 +14,13 @@ export const useWebViewContent = () => {
     const fetchContent = useCallback(async () => {
         try {
             setLoading(true);
-            const pageName = title === 'About Us' ? 'about' : 'privacy';
-            const data = await contentApi.getPageContent(pageName);
+            let data;
+            if (type === 'service' && serviceId) {
+                data = await contentApi.getServiceDetails(serviceId);
+            } else {
+                const pageName = title === 'About Us' ? 'about' : 'privacy';
+                data = await contentApi.getPageContent(pageName);
+            }
             setPageData(data);
             setError(false);
         } catch (err) {
@@ -24,7 +29,7 @@ export const useWebViewContent = () => {
         } finally {
             setLoading(false);
         }
-    }, [title]);
+    }, [title, serviceId, type]);
 
     useEffect(() => {
         fetchContent();

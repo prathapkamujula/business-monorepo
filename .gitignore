@@ -3,3 +3,4 @@
 /apps/frontend-admin/node_modules/
 /apps/frontend-customer/.env
 /apps/backend/.env
+!/apps/backend/src/generated/src/

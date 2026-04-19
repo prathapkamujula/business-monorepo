@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, View, Platform } from 'react-native';
+import { ScrollView, Text, View, Platform, TouchableOpacity, Alert } from 'react-native';
 
 const Tag = ({ label }: { label: string }) => (
     <View className="rounded-full bg-[#d8f3e8] px-3 py-1">
@@ -146,3 +146,79 @@ export const WebViewContentPrivacyPolicy = ({ data }: { data: any }) => (
         </View>
     </Container>
 );
+
+export const WebViewContentService = ({ data }: { data: any }) => {
+    const handleBookNow = () => {
+        Alert.alert('Booking', `Proceeding to book ${data.name}`);
+    };
+
+    const details = data.details?.content || {};
+
+    return (
+        <View className="flex-1 bg-white">
+            <Container>
+                <View className="mb-6">
+                    <Text className="text-[32px] font-bold text-[#1a1a18]">{data.name}</Text>
+                    <View className="mt-2 flex-row items-center">
+                        <Text className="text-2xl font-bold text-[#5856D6]">₹{data.price}</Text>
+                        <Text className="ml-3 text-lg text-[#8E8E93] line-through">₹{data.mrp}</Text>
+                    </View>
+                </View>
+
+                {details.description && (
+                    <View className="mb-8">
+                        <Text className="mb-2 text-xl font-bold text-[#1a1a18]">Description</Text>
+                        <Text className="text-[15px] leading-[26px] text-[#6b6b67]">
+                            {details.description}
+                        </Text>
+                    </View>
+                )}
+
+                {details.benefits && details.benefits.length > 0 && (
+                    <View className="mb-8">
+                        <Text className="mb-2 text-xl font-bold text-[#1a1a18]">Benefits</Text>
+                        {details.benefits.map((benefit: string, idx: number) => (
+                            <CheckItem key={idx} text={benefit} />
+                        ))}
+                    </View>
+                )}
+
+                {details.howItWorks && details.howItWorks.length > 0 && (
+                    <View className="mb-8">
+                        <Text className="mb-2 text-xl font-bold text-[#1a1a18]">How it Works</Text>
+                        {details.howItWorks.map((step: string, idx: number) => (
+                            <PrivacyItem key={idx} num={idx + 1} title={step}>
+                                <View />
+                            </PrivacyItem>
+                        ))}
+                    </View>
+                )}
+
+                {details.faqs && details.faqs.length > 0 && (
+                    <View className="mb-8">
+                        <Text className="mb-2 text-xl font-bold text-[#1a1a18]">FAQs</Text>
+                        {details.faqs.map((faq: any, idx: number) => (
+                            <View key={idx} className="mb-4">
+                                <Text className="text-base font-semibold text-[#1a1a18]">
+                                    Q: {faq.question}
+                                </Text>
+                                <Text className="mt-1 text-[15px] text-[#6b6b67]">
+                                    A: {faq.answer}
+                                </Text>
+                            </View>
+                        ))}
+                    </View>
+                )}
+            </Container>
+
+            <View className="border-t border-[#e8e8e4] bg-white p-5 pb-8">
+                <TouchableOpacity
+                    onPress={handleBookNow}
+                    className="h-14 items-center justify-center rounded-2xl bg-[#5856D6]"
+                >
+                    <Text className="text-lg font-bold text-white">Book this service</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+};

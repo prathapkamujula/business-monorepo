@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import * as LucideIcons from 'lucide-react-native';
 import { Star } from 'lucide-react-native';
 
@@ -9,9 +10,20 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ item, width }: ServiceCardProps) => {
+    const navigation = useNavigation<any>();
     const Icon = (LucideIcons as any)[item.icon] || LucideIcons.Home;
+
+    const handlePress = () => {
+        navigation.navigate('WebView', {
+            title: item.name,
+            serviceId: item.id,
+            type: 'service',
+        });
+    };
+
     return (
         <TouchableOpacity
+            onPress={handlePress}
             className="elevation-5 mb-2.5 mr-5 rounded-[20px] bg-white p-5 shadow-lg shadow-black"
             style={{ width }}
         >

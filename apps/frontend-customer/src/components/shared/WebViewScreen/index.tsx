@@ -2,7 +2,11 @@ import React from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useWebViewContent } from './useWebViewContent';
-import { WebViewContentAboutUs, WebViewContentPrivacyPolicy } from './WebViewContent';
+import {
+    WebViewContentAboutUs,
+    WebViewContentPrivacyPolicy,
+    WebViewContentService,
+} from './WebViewContent';
 
 const WebViewScreen = () => {
     const { title, pageData, loading, error, handleClose, navigation } = useWebViewContent();
@@ -58,6 +62,8 @@ const WebViewScreen = () => {
             <WebViewContentAboutUs data={pageData} />
         ) : title === 'Privacy Policy' ? (
             <WebViewContentPrivacyPolicy data={pageData} />
+        ) : pageData?.category ? (
+            <WebViewContentService data={pageData} />
         ) : (
             <View className="flex-1 items-center justify-center">
                 <Text className="text-base text-[#6b6b67]">Coming Soon</Text>

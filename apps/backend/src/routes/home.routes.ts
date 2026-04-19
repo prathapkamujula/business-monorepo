@@ -37,4 +37,25 @@ router.get('/data', homeController.getHomeData);
  */
 router.get('/offers/:id', homeController.getOfferDetails);
 
+/**
+ * @swagger
+ * /home/services/{id}:
+ *   get:
+ *     summary: Returns details for a specific service
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Service details
+ *       404:
+ *         description: Service not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/services/:id', homeController.getServiceDetails);
+
 export default router;

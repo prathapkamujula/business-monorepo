@@ -9,4 +9,8 @@ export const contentApi = {
         const response = await axiosInstance.get(`/home/offers/${offerId}`);
         return response.data;
     },
+    getServiceDetails: async (serviceId: string) => {
+        const response = await axiosInstance.get(`/home/services/${serviceId}`);
+        return response.data;
+    },
 };
