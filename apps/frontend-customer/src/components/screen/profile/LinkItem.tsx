@@ -15,7 +15,9 @@ const LinkItem = ({ icon: Icon, label, onPress, color = '#333' }: LinkItemProps)
         onPress={onPress}
     >
         <View className="flex-row items-center">
-            <Icon size={20} color={color} className="mr-2.5" />
+            <View style={{ width: 24, alignItems: 'center', marginRight: 8 }}>
+                <Icon size={20} color={color} />
+            </View>
             <Text className="text-base font-medium" style={{ color }}>
                 {label}
             </Text>

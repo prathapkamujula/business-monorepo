@@ -25,13 +25,16 @@ const ProfileItem = memo(
     }: ProfileItemProps) => (
         <View className="border-b border-[#f0f0f0] py-[15px]">
             <View className="mb-1 flex-row items-center">
-                <Icon size={20} color="#666" className="mr-2.5" />
+                <View style={{ width: 24, alignItems: 'center', marginRight: 8 }}>
+                    <Icon size={20} color="#666" />
+                </View>
                 <Text className="text-sm font-medium text-[#888]">{label}</Text>
             </View>
             {isEditing && editable ? (
                 <TextInput
                     key={`${label}-input`}
-                    className="border-b border-[#5856D6] py-1 pl-[30px] text-base text-[#333]"
+                    className="border-b border-[#5856D6] py-1 text-base text-[#333]"
+                    style={{ paddingLeft: 32 }}
                     value={value}
                     onChangeText={onChangeText}
                     placeholder={`Enter ${label}`}
@@ -41,7 +44,8 @@ const ProfileItem = memo(
             ) : (
                 <Text
                     key={`${label}-text`}
-                    className={`pl-[30px] text-base text-[#333] ${!value ? 'italic text-[#ccc]' : ''}`}
+                    className={`text-base text-[#333] ${!value ? 'italic text-[#ccc]' : ''}`}
+                    style={{ paddingLeft: 32 }}
                 >
                     {value || `No ${label} provided`}
                 </Text>

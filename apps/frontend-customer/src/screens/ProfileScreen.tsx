@@ -7,6 +7,7 @@ import {
     TextInput,
     ScrollView,
     ActivityIndicator,
+    Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import customAlert from '../utils/alert';
@@ -35,6 +36,10 @@ const ProfileScreen = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(true);
+
+    const WA_NUMBER = '919490599600';
+    const WA_MESSAGE = encodeURIComponent("Hi! I'd like to book a home service.");
+    const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 
     const handleSetName = React.useCallback((text: string) => setName(text), []);
     const formatPhoneNumber = (text: string) => {
@@ -206,26 +211,28 @@ const ProfileScreen = () => {
                     <LinkItem
                         icon={HelpCircle}
                         label="Help & Support"
-                        onPress={() => navigation.navigate('WebView', { title: 'Help & Support' })}
+                        onPress={() => Linking.openURL(WA_URL)}
                     />
                     <LinkItem
                         icon={Info}
                         label="About Us"
                         onPress={() => navigation.navigate('WebView', { title: 'About Us' })}
                     />
-                    <LinkItem
-                        icon={Trash2}
-                        label="Request Account Deletion"
-                        onPress={() => {}}
-                        color="#FF3B30"
-                    />
+                    {/*<LinkItem*/}
+                    {/*    icon={Trash2}*/}
+                    {/*    label="Request Account Deletion"*/}
+                    {/*    onPress={() => {}}*/}
+                    {/*    color="#FF3B30"*/}
+                    {/*/>*/}
                 </View>
 
                 <TouchableOpacity
                     className="mx-5 mt-[30px] flex-row items-center justify-center rounded-[12px] bg-[#F2F2F7] p-[15px]"
                     onPress={handleSignOut}
                 >
-                    <LogOut size={20} color="#FF3B30" className="mr-2.5" />
+                    <View style={{ width: 24, alignItems: 'center', marginRight: 8 }}>
+                        <LogOut size={20} color="#FF3B30" />
+                    </View>
                     <Text className="text-base font-bold text-[#FF3B30]">Logout</Text>
                 </TouchableOpacity>
 
