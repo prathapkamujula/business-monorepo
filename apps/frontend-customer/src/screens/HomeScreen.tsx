@@ -18,6 +18,8 @@ import { User } from 'lucide-react-native';
 import ServiceCard from '../components/screen/home/ServiceCard';
 import OfferCard from '../components/screen/home/OfferCard';
 import BestSellerCard from '../components/screen/home/BestSellerCard';
+import OfferDetailModal from '../components/homeScreen/OfferDetailModal';
+import { contentApi } from '../api/contentApi';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.7;
@@ -34,6 +36,8 @@ const HomeScreen = () => {
     const [offers, setOffers] = useState<any[]>([]);
     const [bestSellers, setBestSellers] = useState<any[]>([]);
     const [recentlyViewed, setRecentlyViewed] = useState<any[]>([]);
+    const [selectedOffer, setSelectedOffer] = useState<any>(null);
+    const [offerModalVisible, setOfferModalVisible] = useState(false);
 
     useFocusEffect(
         useCallback(() => {
@@ -72,6 +76,18 @@ const HomeScreen = () => {
         if (hour < 12) return 'Good Morning';
         if (hour < 17) return 'Good Afternoon';
         return 'Good Evening';
+    };
+
+    const handleOfferPress = async (offer: any) => {
+        try {
+            // Fetch fresh data for the offer to ensure we have all details
+            const freshOffer = await contentApi.getOfferDetails(offer.id);
+            setSelectedOffer(freshOffer || offer);
+        } catch (error) {
+            console.error('Error fetching offer details:', error);
+            setSelectedOffer(offer);
+        }
+        setOfferModalVisible(true);
     };
 
     if (fetching) {
@@ -144,6 +160,18 @@ const HomeScreen = () => {
 
                     <View className="mb-[15px] mt-[25px] flex-row items-center justify-between px-5">
                         <Text className="text-xl font-bold text-[#1C1C1E]">Top Offers</Text>
+                        <TouchableOpacity
+                            onPress={() =>
+                                navigation.navigate('ServiceList', {
+                                    title: 'All Offers',
+                                    data: offers,
+                                    type: 'offers',
+                                    onOfferPress: handleOfferPress,
+                                })
+                            }
+                        >
+                            <Text className="text-sm font-semibold text-[#5856D6]">See All</Text>
+                        </TouchableOpacity>
                     </View>
 
                     <FlatList
@@ -152,21 +180,40 @@ const HomeScreen = () => {
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(item) => item.id}
                         contentContainerStyle={{ paddingLeft: 20, paddingRight: 10 }}
-                        renderItem={({ item }) => <OfferCard item={item} width={width * 0.7} />}
+                        renderItem={({ item }) => (
+                            <OfferCard
+                                item={item}
+                                width={width * 0.7}
+                                onPress={() => handleOfferPress(item)}
+                            />
+                        )}
                     />
 
-                    <View className="m-5 h-[140px] flex-row overflow-hidden rounded-[20px] bg-[#5856D6] p-5">
+                    <TouchableOpacity
+                        onPress={() =>
+                            navigation.navigate('ServiceList', {
+                                title: 'All Offers',
+                                data: offers,
+                                type: 'offers',
+                                onOfferPress: handleOfferPress,
+                            })
+                        }
+                        activeOpacity={0.9}
+                        className="m-5 h-[140px] flex-row overflow-hidden rounded-[20px] bg-[#5856D6] p-5"
+                    >
                         <View className="flex-1 justify-center">
-                            <Text className="text-[28px] font-extrabold text-white">₹150 OFF</Text>
-                            <Text className="mb-[15px] text-base text-white/80">
-                                On your first booking
+                            <Text className="text-[24px] font-extrabold text-white">
+                                Many More Offers!
                             </Text>
-                            <TouchableOpacity className="self-start rounded-[10px] bg-white px-[15px] py-2">
-                                <Text className="text-sm font-bold text-[#5856D6]">Book Now</Text>
-                            </TouchableOpacity>
+                            <Text className="mb-[15px] text-base text-white/80">
+                                Click here to see all available offers
+                            </Text>
+                            <View className="self-start rounded-[10px] bg-white px-[15px] py-2">
+                                <Text className="text-sm font-bold text-[#5856D6]">View All</Text>
+                            </View>
                         </View>
                         <View className="absolute -right-[30px] -top-[30px] h-[150px] w-[150px] rounded-full bg-white/10" />
-                    </View>
+                    </TouchableOpacity>
 
                     <View className="mb-[15px] mt-[25px] flex-row items-center justify-between px-5">
                         <Text className="text-xl font-bold text-[#1C1C1E]">Best Sellers</Text>
@@ -210,6 +257,12 @@ const HomeScreen = () => {
                     )}
                 </View>
             </ScrollView>
+
+            <OfferDetailModal
+                visible={offerModalVisible}
+                onClose={() => setOfferModalVisible(false)}
+                offer={selectedOffer}
+            />
         </SafeAreaView>
     );
 };

@@ -11,4 +11,20 @@ export const homeController = {
             res.status(500).json({ error: 'Internal server error' });
         }
     },
+    async getOfferDetails(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            if (typeof id !== 'string') {
+                return res.status(400).json({ error: 'Invalid offer ID' });
+            }
+            const offer = await homeService.getOfferDetails(id);
+            if (!offer) {
+                return res.status(404).json({ error: 'Offer not found' });
+            }
+            res.json(offer);
+        } catch (error) {
+            console.error('Error in getOfferDetails controller:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    },
 };

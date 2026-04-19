@@ -62,6 +62,35 @@ const ServiceListScreen = () => {
         </TouchableOpacity>
     );
 
+    const renderOfferItem = ({ item }: { item: any }) => (
+        <TouchableOpacity
+            onPress={() => (route.params as any).onOfferPress?.(item)}
+            activeOpacity={0.8}
+            className="mb-[15px] flex-row items-center justify-between rounded-[20px] p-5"
+            style={{ backgroundColor: item.color }}
+        >
+            <View className="mr-2 flex-1">
+                <Text className="text-xl font-bold text-white" numberOfLines={1}>
+                    {item.title}
+                </Text>
+                <Text className="mt-1 text-[13px] text-white/90" numberOfLines={1}>
+                    {item.subtitle}
+                </Text>
+            </View>
+            <View className="rounded-[10px] bg-white px-3 py-2">
+                <Text className="text-xs font-bold" style={{ color: item.color }}>
+                    {item.code}
+                </Text>
+            </View>
+        </TouchableOpacity>
+    );
+
+    const getRenderItem = () => {
+        if (type === 'bestSellers') return renderBestSellerItem;
+        if (type === 'offers') return renderOfferItem;
+        return renderServiceItem;
+    };
+
     return (
         <SafeAreaView className="flex-1 bg-white" style={{ flex: 1 }}>
             <View className="flex-row items-center justify-between border-b border-[#F2F2F7] px-2.5 py-[15px]">
@@ -77,7 +106,7 @@ const ServiceListScreen = () => {
                 style={{ flex: 1 }}
                 data={data}
                 keyExtractor={(item) => item.id}
-                renderItem={type === 'bestSellers' ? renderBestSellerItem : renderServiceItem}
+                renderItem={getRenderItem()}
                 contentContainerStyle={{ padding: 20, flexGrow: 1 }}
                 showsVerticalScrollIndicator={false}
             />

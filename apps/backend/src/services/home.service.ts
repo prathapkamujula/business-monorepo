@@ -5,7 +5,11 @@ export const homeService = {
         try {
             const [services, offers, bestSellers] = await Promise.all([
                 prisma.service.findMany(),
-                prisma.offer.findMany(),
+                prisma.offer.findMany({
+                    include: {
+                        details: true,
+                    },
+                }),
                 prisma.bestSeller.findMany(),
             ]);
 
@@ -81,6 +85,26 @@ export const homeService = {
                               subtitle: 'On bookings above ₹500',
                               code: 'SAVE100',
                               color: '#FF2D55',
+                              details: {
+                                  content: {
+                                      description: 'Get flat ₹100 off on all services above ₹500.',
+                                      terms: [
+                                          'Valid once per user',
+                                          'Minimum booking value ₹500',
+                                          'Valid till end of month',
+                                      ],
+                                      faqs: [
+                                          {
+                                              question: 'How to use?',
+                                              answer: 'Apply code SAVE100 at checkout.',
+                                          },
+                                          {
+                                              question: 'Is it valid for all services?',
+                                              answer: 'Yes, on all services above ₹500.',
+                                          },
+                                      ],
+                                  },
+                              },
                           },
                           {
                               id: 'o2',
@@ -88,6 +112,22 @@ export const homeService = {
                               subtitle: 'On Beauty Services',
                               code: 'BOGO',
                               color: '#5856D6',
+                              details: {
+                                  content: {
+                                      description:
+                                          'Buy one beauty service and get another one free.',
+                                      terms: [
+                                          'Valid on selected beauty services',
+                                          'Cheaper service will be free',
+                                      ],
+                                      faqs: [
+                                          {
+                                              question: 'Which services?',
+                                              answer: 'All salon and beauty services.',
+                                          },
+                                      ],
+                                  },
+                              },
                           },
                           {
                               id: 'o3',
@@ -95,6 +135,18 @@ export const homeService = {
                               subtitle: 'On your first Haircut',
                               code: 'FIRST50',
                               color: '#34C759',
+                              details: {
+                                  content: {
+                                      description: 'First time users get 50% off on haircut.',
+                                      terms: ['New users only', 'Maximum discount ₹200'],
+                                      faqs: [
+                                          {
+                                              question: 'Is it for kids?',
+                                              answer: 'Yes, valid for all age groups.',
+                                          },
+                                      ],
+                                  },
+                              },
                           },
                       ];
 
@@ -130,5 +182,13 @@ export const homeService = {
             console.error('Error fetching home data:', error);
             throw error;
         }
+    },
+    async getOfferDetails(id: string) {
+        return prisma.offer.findUnique({
+            where: { id },
+            include: {
+                details: true,
+            },
+        });
     },
 };

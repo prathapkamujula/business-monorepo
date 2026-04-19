@@ -62,15 +62,26 @@ model Service {
 }
 
 model Offer {
-  id        String   @id @default(uuid())
+  id        String       @id @default(uuid())
   title     String
   subtitle  String
   code      String
   color     String // Hex color
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  details   OfferDetail?
 
   @@map("offers")
+}
+
+model OfferDetail {
+  id        String   @id @default(uuid())
+  offerId   String   @unique
+  offer     Offer    @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  content   Json // Stores {description, terms, faqs}
+  updatedAt DateTime @updatedAt @default(now())
+
+  @@map("offer_details")
 }
 
 model BestSeller {
