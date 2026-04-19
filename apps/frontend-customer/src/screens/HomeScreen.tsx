@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
     Text,
     View,
@@ -12,7 +12,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect, useScrollToTop } from '@react-navigation/native';
 import axiosInstance from '../api/axiosInstance';
 import { User } from 'lucide-react-native';
 import ServiceCard from '../components/screen/home/ServiceCard';
@@ -24,6 +24,8 @@ const CARD_WIDTH = width * 0.7;
 
 const HomeScreen = () => {
     const navigation = useNavigation<any>();
+    const scrollRef = useRef<ScrollView>(null);
+    useScrollToTop(scrollRef);
     const { user: authUser } = useSelector((state: RootState) => state.auth);
     const [name, setName] = useState('');
     const [profilePic, setProfilePic] = useState('');
@@ -33,9 +35,11 @@ const HomeScreen = () => {
     const [bestSellers, setBestSellers] = useState<any[]>([]);
     const [recentlyViewed, setRecentlyViewed] = useState<any[]>([]);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            fetchData();
+        }, [])
+    );
 
     const fetchData = async () => {
         setFetching(true);
@@ -81,6 +85,7 @@ const HomeScreen = () => {
     return (
         <SafeAreaView className="flex-1 bg-white" style={{ flex: 1 }}>
             <ScrollView
+                ref={scrollRef}
                 className="flex-1"
                 style={{ flex: 1 }}
                 contentContainerStyle={{ flexGrow: 1 }}

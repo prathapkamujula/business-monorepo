@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     Text,
     View,
@@ -15,7 +15,7 @@ import { RootState } from '../store';
 import { logout } from '../store/slices/authSlice';
 import { authApi } from '../api/authApi';
 import { LogOut, User, Phone, Mail, Shield, HelpCircle, Info, Trash2 } from 'lucide-react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useScrollToTop } from '@react-navigation/native';
 import axiosInstance from '../api/axiosInstance';
 import { useAuth } from '../hooks/useAuth';
 import ProfileItem from '../components/screen/profile/ProfileItem';
@@ -23,6 +23,8 @@ import LinkItem from '../components/screen/profile/LinkItem';
 
 const ProfileScreen = () => {
     const navigation = useNavigation<any>();
+    const scrollRef = useRef<ScrollView>(null);
+    useScrollToTop(scrollRef);
     const dispatch = useDispatch();
     const { handleSignOut: handleAuthSignOut } = useAuth();
     const { user: authUser } = useSelector((state: RootState) => state.auth);
@@ -104,6 +106,7 @@ const ProfileScreen = () => {
     return (
         <SafeAreaView className="flex-1 bg-[#f8f9fa]" style={{ flex: 1 }}>
             <ScrollView
+                ref={scrollRef}
                 className="flex-1"
                 style={{ flex: 1 }}
                 contentContainerStyle={{ flexGrow: 1 }}
