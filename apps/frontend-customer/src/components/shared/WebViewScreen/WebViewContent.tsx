@@ -161,7 +161,9 @@ export const WebViewContentService = ({ data }: { data: any }) => {
                     <Text className="text-[32px] font-bold text-[#1a1a18]">{data.name}</Text>
                     <View className="mt-2 flex-row items-center">
                         <Text className="text-2xl font-bold text-[#5856D6]">₹{data.price}</Text>
-                        <Text className="ml-3 text-lg text-[#8E8E93] line-through">₹{data.mrp}</Text>
+                        <Text className="ml-3 text-lg text-[#8E8E93] line-through">
+                            ₹{data.mrp}
+                        </Text>
                     </View>
                 </View>
 

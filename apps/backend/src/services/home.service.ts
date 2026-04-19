@@ -38,7 +38,11 @@ export const homeService = {
                                   content: {
                                       description:
                                           'Professional haircut and styling by our expert barbers.',
-                                      benefits: ['Modern cuts', 'Expert styling', 'Premium products'],
+                                      benefits: [
+                                          'Modern cuts',
+                                          'Expert styling',
+                                          'Premium products',
+                                      ],
                                       howItWorks: [
                                           'Book your slot',
                                           'Visit the salon',
@@ -119,9 +123,60 @@ export const homeService = {
                               image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=200',
                               details: {
                                   content: {
-                                      description: 'Experience professional salon services at home.',
+                                      description:
+                                          'Experience professional salon services at home.',
                                       benefits: ['Convenient', 'Expert beauticians'],
-                                      howItWorks: ['Select service', 'Pro arrives', 'Relax at home'],
+                                      howItWorks: [
+                                          'Select service',
+                                          'Pro arrives',
+                                          'Relax at home',
+                                      ],
+                                  },
+                              },
+                          },
+                      ];
+
+            const finalOffers =
+                offers.length > 0
+                    ? offers
+                    : [
+                          {
+                              id: 'o1',
+                              title: 'Upto 50% Off',
+                              subtitle: 'on first booking',
+                              code: 'FIRST50',
+                              color: '#5856D6',
+                              details: {
+                                  content: {
+                                      description:
+                                          'Get up to 50% off on your first booking with us!',
+                                      terms: [
+                                          'Valid for first-time users only',
+                                          'Minimum booking value ₹500',
+                                          'Maximum discount ₹250',
+                                      ],
+                                      faqs: [
+                                          {
+                                              question: 'How do I use this?',
+                                              answer: 'Apply the code during checkout.',
+                                          },
+                                      ],
+                                  },
+                              },
+                          },
+                          {
+                              id: 'o2',
+                              title: 'Flat ₹100 Off',
+                              subtitle: 'on Salon services',
+                              code: 'SALON100',
+                              color: '#FF2D55',
+                              details: {
+                                  content: {
+                                      description: 'Flat ₹100 discount on all Salon services.',
+                                      terms: [
+                                          'Valid on Salon at home categories',
+                                          'Minimum booking value ₹999',
+                                      ],
                                   },
                               },
                           },

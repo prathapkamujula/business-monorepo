@@ -25,11 +25,11 @@ model Customer {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  @@map("customers")
+  bookings Booking[]
+
   @@index([createdAt])
   @@index([id])
-
-  bookings Booking[]
+  @@map("customers")
 }
 
 model Booking {
@@ -42,23 +42,36 @@ model Booking {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@map("bookings")
   @@index([customerId])
   @@index([createdAt])
+  @@map("bookings")
 }
 
 model Service {
-  id        String   @id @default(uuid())
+  id        String         @id @default(uuid())
   name      String
-  icon      String // Name of the lucide icon
-  color     String // Hex color
+  category  String         @default("featured") // e.g., "best-seller", "featured"
+  icon      String? // Name of the lucide icon
+  image     String? // URL of the image
+  color     String? // Hex color
   price     Float
   mrp       Float
   rating    Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  details   ServiceDetail?
 
   @@map("services")
+}
+
+model ServiceDetail {
+  id        String   @id @default(uuid())
+  serviceId String   @unique
+  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  content   Json // Stores {description, benefits, howItWorks, faqs}
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("service_details")
 }
 
 model Offer {
@@ -79,22 +92,9 @@ model OfferDetail {
   offerId   String   @unique
   offer     Offer    @relation(fields: [offerId], references: [id], onDelete: Cascade)
   content   Json // Stores {description, terms, faqs}
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@map("offer_details")
-}
-
-model BestSeller {
-  id        String   @id @default(uuid())
-  name      String
-  price     Float
-  mrp       Float
-  rating    Float
-  image     String // URL of the image
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("best_sellers")
 }
 
 model CMSPageContent {
@@ -105,6 +105,6 @@ model CMSPageContent {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("cms_page_content")
   @@index([pageName])
+  @@map("cms_page_content")
 }
