@@ -15,21 +15,21 @@ datasource db {
 }
 
 model Customer {
-  id             String    @id // Firebase UID
-  email          String    @unique
-  name           String?
-  photoUrl       String?
-  phoneNumber    String?
-  emailVerified  Boolean   @default(false)
-  lastLoginAt    DateTime?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id            String    @id // Firebase UID
+  email         String    @unique
+  name          String?
+  photoUrl      String?
+  phoneNumber   String?
+  emailVerified Boolean   @default(false)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@map("customers")
   @@index([createdAt])
   @@index([id])
 
-  bookings       Booking[]
+  bookings Booking[]
 }
 
 model Booking {
@@ -50,8 +50,8 @@ model Booking {
 model Service {
   id        String   @id @default(uuid())
   name      String
-  icon      String   // Name of the lucide icon
-  color     String   // Hex color
+  icon      String // Name of the lucide icon
+  color     String // Hex color
   price     Float
   mrp       Float
   rating    Float
@@ -66,7 +66,7 @@ model Offer {
   title     String
   subtitle  String
   code      String
-  color     String   // Hex color
+  color     String // Hex color
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -79,9 +79,21 @@ model BestSeller {
   price     Float
   mrp       Float
   rating    Float
-  image     String   // URL of the image
+  image     String // URL of the image
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("best_sellers")
+}
+
+model CMSPageContent {
+  id        String   @id @default(uuid())
+  pageName  String // e.g., "about", "privacy", "terms"
+  section   String // e.g., "hero", "sections", "faqs"
+  content   Json // Store JSON content (hero object, or list of sections)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cms_page_content")
+  @@index([pageName])
 }

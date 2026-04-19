@@ -14,7 +14,7 @@
  *   />
  */
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     Platform,
@@ -26,7 +26,7 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import content from '../../utils/webViewContent.json';
+import { contentApi } from '../../api/contentApi';
 
 // react-native-webview is only used on native; avoid the import on web
 // to prevent bundler errors when the package isn't installed for web.
@@ -55,6 +55,7 @@ const C = {
 const buildHtml = (body: string) => `<!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap');
@@ -103,43 +104,45 @@ const buildHtml = (body: string) => `<!DOCTYPE html>
 <body>${body}</body>
 </html>`;
 
-const ABOUT_HTML = buildHtml(`
+const getAboutHtml = (about: any) =>
+    buildHtml(`
   <div class="hero">
-    <div class="eyebrow">${content.about.eyebrow}</div>
-    <h1>${content.about.title}</h1>
-    <p class="sub">${content.about.sub}</p>
+    <div class="eyebrow">${about.hero.eyebrow}</div>
+    <h1>${about.hero.title}</h1>
+    <p class="sub">${about.hero.sub}</p>
     <div class="tags">
-      ${content.about.tags.map((tag) => `<span class="tag">${tag}</span>`).join('\n      ')}
+      ${about.hero.tags.map((tag: string) => `<span class="tag">${tag}</span>`).join('\n      ')}
     </div>
   </div>
-  ${content.about.sections
+  ${about.sections
       .map(
-          (s) => `
+          (s: any) => `
   <section>
     <h2>${s.title}</h2>
     ${s.content ? `<p>${s.content}</p>` : ''}
-    ${s.items ? `<ul>${s.items.map((item) => `<li>${item}</li>`).join('\n      ')}</ul>` : ''}
+    ${s.items ? `<ul>${s.items.map((item: string) => `<li>${item}</li>`).join('\n      ')}</ul>` : ''}
   </section>`
       )
       .join('')}
 `);
 
-const PRIVACY_HTML = buildHtml(`
+const getPrivacyHtml = (privacy: any) =>
+    buildHtml(`
   <div class="hero">
-    <div class="eyebrow">${content.privacy.eyebrow}</div>
-    <h1>${content.privacy.title}</h1>
-    <p class="sub">${content.privacy.sub}</p>
+    <div class="eyebrow">${privacy.hero.eyebrow}</div>
+    <h1>${privacy.hero.title || 'Privacy Policy'}</h1>
+    <p class="sub">${privacy.hero.sub}</p>
   </div>
-  <span class="badge">${content.privacy.badge}</span>
+  <span class="badge">${privacy.hero.badge}</span>
   <ol>
-    ${content.privacy.items
+    ${privacy.items
         .map(
-            (item) => `
+            (item: any) => `
     <li>
       <h3>${item.title}</h3>
       ${item.content ? `<p>${item.content}</p>` : ''}
       ${item.highlight ? `<p><strong>${item.highlight}</strong></p>` : ''}
-      ${item.bullets ? `<ul>${item.bullets.map((b) => `<li>${b}</li>`).join('')}</ul>` : ''}
+      ${item.bullets ? `<ul>${item.bullets.map((b: string) => `<li>${b}</li>`).join('')}</ul>` : ''}
       ${
           item.card
               ? `
@@ -202,7 +205,7 @@ const PrivacyItem = ({
     </View>
 );
 
-const WebAboutUs = () => (
+const WebAboutUs = ({ data }: { data: any }) => (
     <ScrollView
         className="flex-1 bg-[#fafaf8]"
         style={{ flex: 1 }}
@@ -218,35 +221,32 @@ const WebAboutUs = () => (
     >
         <View className="mb-9 border-b border-[#e8e8e4] pb-7">
             <Text className="mb-3 text-[11px] font-medium uppercase tracking-[1.5px] text-[#2d6a4f]">
-                {content.about.eyebrow}
+                {data.hero.eyebrow}
             </Text>
             <Text className="mb-3.5 text-[32px] font-normal leading-[38px] text-[#1a1a18]">
-                {content.about.title}
+                {data.hero.title}
             </Text>
-            <Text className="text-[15px] leading-[26px] text-[#6b6b67]">{content.about.sub}</Text>
+            <Text className="text-[15px] leading-[26px] text-[#6b6b67]">{data.hero.sub}</Text>
             <View className="mt-3.5 flex-row flex-wrap gap-2">
-                {content.about.tags.map((t) => (
+                {data.hero.tags.map((t: string) => (
                     <Tag key={t} label={t} />
                 ))}
             </View>
         </View>
 
-        {content.about.sections.map((s, idx) => (
-            <View
-                key={idx}
-                className={`mb-8 ${idx === content.about.sections.length - 1 ? 'mb-0' : ''}`}
-            >
+        {data.sections.map((s: any, idx: number) => (
+            <View key={idx} className={`mb-8 ${idx === data.sections.length - 1 ? 'mb-0' : ''}`}>
                 <Text className="mb-2.5 text-xl font-normal text-[#1a1a18]">{s.title}</Text>
                 {s.content && (
                     <Text className="text-[15px] leading-[26px] text-[#6b6b67]">{s.content}</Text>
                 )}
-                {s.items && s.items.map((item) => <CheckItem key={item} text={item} />)}
+                {s.items && s.items.map((item: string) => <CheckItem key={item} text={item} />)}
             </View>
         ))}
     </ScrollView>
 );
 
-const WebPrivacyPolicy = () => (
+const WebPrivacyPolicy = ({ data }: { data: any }) => (
     <ScrollView
         className="flex-1 bg-[#fafaf8]"
         style={{ flex: 1 }}
@@ -262,20 +262,20 @@ const WebPrivacyPolicy = () => (
     >
         <View className="mb-9 border-b border-[#e8e8e4] pb-7">
             <Text className="mb-3 text-[11px] font-medium uppercase tracking-[1.5px] text-[#2d6a4f]">
-                {content.privacy.eyebrow}
+                {data.hero.eyebrow}
             </Text>
             <Text className="mb-3.5 text-[32px] font-normal leading-[38px] text-[#1a1a18]">
-                {content.privacy.title}
+                {data.hero.title || 'Privacy Policy'}
             </Text>
-            <Text className="text-[15px] leading-[26px] text-[#6b6b67]">{content.privacy.sub}</Text>
+            <Text className="text-[15px] leading-[26px] text-[#6b6b67]">{data.hero.sub}</Text>
         </View>
 
         <View className="mb-5 self-start rounded-full bg-[#e8e8e4] px-2.5 py-1">
-            <Text className="text-xs text-[#6b6b67]">{content.privacy.badge}</Text>
+            <Text className="text-xs text-[#6b6b67]">{data.hero.badge}</Text>
         </View>
 
         <View className="gap-4">
-            {content.privacy.items.map((item) => (
+            {data.items.map((item: any) => (
                 <PrivacyItem key={item.num} num={item.num} title={item.title}>
                     {item.content && (
                         <Text className="text-sm leading-[22px] text-[#6b6b67]">
@@ -316,10 +316,75 @@ const WebViewScreen = () => {
     const insets = useSafeAreaInsets();
     const { title } = route.params || { title: 'Page' };
 
+    const [pageData, setPageData] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        const fetchContent = async () => {
+            try {
+                setLoading(true);
+                const pageName = title === 'About Us' ? 'about' : 'privacy';
+                const data = await contentApi.getPageContent(pageName);
+                setPageData(data);
+                setError(false);
+            } catch (err) {
+                console.error('Error fetching CMS content:', err);
+                setError(true);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchContent();
+    }, [title]);
+
     const handleClose = useCallback(() => navigation.goBack(), [navigation]);
 
+    if (loading) {
+        return (
+            <View className="flex-1 items-center justify-center bg-[#fafaf8]">
+                <ActivityIndicator size="large" color="#2d6a4f" />
+            </View>
+        );
+    }
+
+    if (error || !pageData) {
+        return (
+            <View className="flex-1 bg-[#fafaf8]">
+                <View
+                    className="flex-row items-center justify-between border-b border-[#e8e8e4] bg-[#fafaf8] px-5 pb-3.5"
+                    style={{ paddingTop: insets.top > 0 ? insets.top + 8 : 16 }}
+                >
+                    <Text className="text-[15px] font-semibold tracking-tight text-[#1a1a18]">
+                        {title}
+                    </Text>
+                    <TouchableOpacity
+                        className="h-8 w-8 items-center justify-center rounded-full bg-[#f0f0ec]"
+                        onPress={handleClose}
+                    >
+                        <Text className="text-[13px] font-semibold color-[#6b6b67]">✕</Text>
+                    </TouchableOpacity>
+                </View>
+                <View className="flex-1 items-center justify-center">
+                    <Text className="text-base text-[#6b6b67]">Failed to load content</Text>
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                        className="mt-4 rounded-full bg-[#2d6a4f] px-6 py-2"
+                    >
+                        <Text className="text-white">Go Back</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
+    }
+
     const htmlContent =
-        title === 'About Us' ? ABOUT_HTML : title === 'Privacy Policy' ? PRIVACY_HTML : undefined;
+        title === 'About Us'
+            ? getAboutHtml(pageData)
+            : title === 'Privacy Policy'
+              ? getPrivacyHtml(pageData)
+              : undefined;
 
     // ── Shared header ────────────────────────────────────────────────────────
     const Header = (
@@ -344,9 +409,9 @@ const WebViewScreen = () => {
     if (Platform.OS === 'web') {
         const WebContent =
             title === 'About Us' ? (
-                <WebAboutUs />
+                <WebAboutUs data={pageData} />
             ) : title === 'Privacy Policy' ? (
-                <WebPrivacyPolicy />
+                <WebPrivacyPolicy data={pageData} />
             ) : null;
 
         return (
@@ -369,6 +434,7 @@ const WebViewScreen = () => {
             {WebView ? (
                 <WebView
                     source={{ html: htmlContent ?? fallbackHtml }}
+                    originWhitelist={['*']}
                     className="flex-1 bg-[#fafaf8]"
                     startInLoadingState
                     renderLoading={() => (
