@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { getAuth, signInWithCredential, GoogleAuthProvider } from '@react-native-firebase/auth';
+import {getAuth, signInWithCredential, GoogleAuthProvider, getIdToken, signOut} from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { authApi } from '../../api/authApi';
-import customAlert from '../../utils/alert';
 
 GoogleSignin.configure({
     webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
@@ -18,25 +17,24 @@ const SignUpScreen = ({ navigation }: any) => {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
 
-            const idToken = userInfo?.data?.idToken;
-            if (!idToken) throw new Error('No ID token received');
+            const googleIdToken = userInfo?.data?.idToken;
+            if (!googleIdToken) throw new Error('No ID token received');
 
-            const credential = GoogleAuthProvider.credential(idToken);
+            const credential = GoogleAuthProvider.credential(googleIdToken);
             const { user } = await signInWithCredential(getAuth(), credential);
 
-            // Integrate with backend
+            // Get the Firebase ID token from the signed-in user
+            const firebaseIdToken = await getIdToken(user);
+
             try {
-                await authApi.signUpWithGoogle(idToken);
-                customAlert('Success', 'Account created successfully');
+                await authApi.signUpWithGoogle(firebaseIdToken);
             } catch (backendError: any) {
                 console.error('Backend sign up error:', backendError);
-                // If backend integration fails, sign out from Firebase
-                await getAuth().signOut();
+                await signOut(getAuth());
                 throw backendError;
             }
         } catch (error: any) {
             console.error('Sign up error:', error);
-            customAlert('Error', error.message || 'Something went wrong during sign up');
         } finally {
             setLoading(false);
         }
