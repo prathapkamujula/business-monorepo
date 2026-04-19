@@ -53,7 +53,6 @@ export class AuthService {
                     email: email,
                     photoUrl: picture,
                     emailVerified: email_verified,
-                    name: name || existingCustomer.name,
                 },
             });
         }
