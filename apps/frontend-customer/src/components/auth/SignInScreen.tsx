@@ -1,44 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
-import {getAuth, signInWithCredential, GoogleAuthProvider, getIdToken, signOut} from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { authApi } from '../../api/authApi';
-
-GoogleSignin.configure({
-    webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
-});
+import { useAuth } from '../../hooks/useAuth';
 
 const SignInScreen = ({ navigation }: any) => {
-    const [loading, setLoading] = useState(false);
-
-    const handleGoogleSignIn = async () => {
-        setLoading(true);
-        try {
-            await GoogleSignin.hasPlayServices();
-            const userInfo = await GoogleSignin.signIn();
-
-            const googleIdToken = userInfo?.data?.idToken;
-            if (!googleIdToken) throw new Error('No ID token received');
-
-            const credential = GoogleAuthProvider.credential(googleIdToken);
-            const { user } = await signInWithCredential(getAuth(), credential);
-
-            // Get the Firebase ID token from the signed-in user
-            const firebaseIdToken = await getIdToken(user);
-
-            try {
-                await authApi.signInWithGoogle(firebaseIdToken);
-            } catch (backendError: any) {
-                console.error('Backend sign in error:', backendError);
-                await signOut(getAuth());
-                throw backendError;
-            }
-        } catch (error: any) {
-            console.error('Sign in error:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const { loading, handleGoogleSignIn } = useAuth();
 
     return (
         <View className="flex-1 justify-center bg-white p-5">
