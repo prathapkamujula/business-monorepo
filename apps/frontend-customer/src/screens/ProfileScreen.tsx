@@ -33,15 +33,26 @@ const ProfileScreen = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [email, setEmail] = useState('');
     const [photoUrl, setPhotoUrl] = useState('');
+    const [originalName, setOriginalName] = useState('');
+    const [originalPhoneNumber, setOriginalPhoneNumber] = useState('');
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(true);
+    const [nameError, setNameError] = useState('');
+    const [phoneError, setPhoneError] = useState('');
 
     const WA_NUMBER = '919490599600';
     const WA_MESSAGE = encodeURIComponent("Hi! I'd like to book a home service.");
     const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 
-    const handleSetName = React.useCallback((text: string) => setName(text), []);
+    const handleSetName = React.useCallback((text: string) => {
+        // Only alphabets and spaces, max length 20
+        const filtered = text.replace(/[^a-zA-Z\s]/g, '');
+        if (filtered.length <= 20) {
+            setName(filtered);
+            setNameError('');
+        }
+    }, []);
     const formatPhoneNumber = (text: string) => {
         const cleaned = text.replace(/\D/g, '');
         const match = cleaned.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
@@ -65,6 +76,7 @@ const ProfileScreen = () => {
         const cleaned = text.replace(/\D/g, '');
         if (cleaned.length <= 10) {
             setPhoneNumber(formatPhoneNumber(cleaned));
+            setPhoneError('');
         }
     }, []);
 
@@ -77,14 +89,20 @@ const ProfileScreen = () => {
         try {
             const response = await axiosInstance.get('/customers/profile');
             const customer = response.data;
-            setName(customer.name || authUser?.displayName || '');
-            setPhoneNumber(formatPhoneNumber(customer.phoneNumber || ''));
+            const fetchedName = customer.name || authUser?.displayName || '';
+            const fetchedPhone = customer.phoneNumber || '';
+            setName(fetchedName);
+            setOriginalName(fetchedName);
+            setPhoneNumber(formatPhoneNumber(fetchedPhone));
+            setOriginalPhoneNumber(formatPhoneNumber(fetchedPhone));
             setEmail(customer.email || authUser?.email || '');
             setPhotoUrl(customer.photoUrl || authUser?.photoURL || '');
         } catch (error) {
             console.error('Error fetching profile:', error);
             // Fallback to authUser if DB fetch fails
-            setName(authUser?.displayName || '');
+            const fallbackName = authUser?.displayName || '';
+            setName(fallbackName);
+            setOriginalName(fallbackName);
             setEmail(authUser?.email || '');
             setPhotoUrl(authUser?.photoURL || '');
         } finally {
@@ -93,13 +111,40 @@ const ProfileScreen = () => {
     };
 
     const handleUpdateProfile = async () => {
+        const cleanedPhone = phoneNumber.replace(/\D/g, '');
+
+        // Check if no changes are made
+        if (name === originalName && cleanedPhone === originalPhoneNumber.replace(/\D/g, '')) {
+            setIsEditing(false);
+            return;
+        }
+
+        // Validation
+        let hasError = false;
+        if (!name.trim()) {
+            setNameError('Name is required');
+            hasError = true;
+        } else if (name.length > 20) {
+            setNameError('Name must be max 20 characters');
+            hasError = true;
+        }
+
+        if (cleanedPhone.length !== 10) {
+            setPhoneError('Phone number must be exactly 10 digits');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
         setLoading(true);
         try {
             await axiosInstance.put('/customers/profile', {
-                name,
-                phoneNumber: phoneNumber.replace(/\D/g, ''),
+                name: name.trim(),
+                phoneNumber: cleanedPhone,
             });
             customAlert('Profile Updated', 'Your profile has been updated successfully.');
+            setOriginalName(name.trim());
+            setOriginalPhoneNumber(phoneNumber);
             setIsEditing(false);
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -107,6 +152,14 @@ const ProfileScreen = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleCancel = () => {
+        setName(originalName);
+        setPhoneNumber(originalPhoneNumber);
+        setNameError('');
+        setPhoneError('');
+        setIsEditing(false);
     };
 
     const handleSignOut = () => {
@@ -158,14 +211,32 @@ const ProfileScreen = () => {
                     <Text className="mb-2.5 text-[22px] font-bold text-[#333]">
                         {name || 'User'}
                     </Text>
-                    <TouchableOpacity
-                        className="rounded-full border border-[#5856D6] bg-[#F0F0FF] px-5 py-2"
-                        onPress={() => (isEditing ? handleUpdateProfile() : setIsEditing(true))}
-                    >
-                        <Text className="font-semibold text-[#5856D6]">
-                            {isEditing ? 'Save Changes' : 'Edit Profile'}
-                        </Text>
-                    </TouchableOpacity>
+                    <View className="mt-4 flex-row items-center space-x-4">
+                        <TouchableOpacity
+                            className={`flex-1 rounded-xl px-6 py-3 shadow-sm ${
+                                isEditing ? 'bg-[#5856D6]' : 'bg-[#5856D6]'
+                            }`}
+                            onPress={() => (isEditing ? handleUpdateProfile() : setIsEditing(true))}
+                            activeOpacity={0.7}
+                        >
+                            {loading ? (
+                                <ActivityIndicator color="#FFFFFF" size="small" />
+                            ) : (
+                                <Text className="text-center font-bold text-white">
+                                    {isEditing ? 'Save Changes' : 'Edit Profile'}
+                                </Text>
+                            )}
+                        </TouchableOpacity>
+                        {isEditing && (
+                            <TouchableOpacity
+                                className="ml-2 flex-1 rounded-xl border border-[#C7C7CC] bg-white px-6 py-3 shadow-sm"
+                                onPress={handleCancel}
+                                activeOpacity={0.7}
+                            >
+                                <Text className="text-center font-bold text-[#8E8E93]">Cancel</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
                 </View>
 
                 <View className="mt-5 border-y border-[#eee] bg-white px-5">
@@ -178,6 +249,11 @@ const ProfileScreen = () => {
                         editable={true}
                         onChangeText={handleSetName}
                     />
+                    {nameError ? (
+                        <Text className="mb-2 ml-[40px] mt-[-5px] text-xs text-[#FF3B30]">
+                            {nameError}
+                        </Text>
+                    ) : null}
                     <ProfileItem
                         key="phone"
                         icon={Phone}
@@ -189,6 +265,11 @@ const ProfileScreen = () => {
                         keyboardType="phone-pad"
                         maxLength={14}
                     />
+                    {phoneError ? (
+                        <Text className="mb-2 ml-[40px] mt-[-5px] text-xs text-[#FF3B30]">
+                            {phoneError}
+                        </Text>
+                    ) : null}
                     <ProfileItem
                         key="email"
                         icon={Mail}
