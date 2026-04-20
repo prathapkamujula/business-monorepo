@@ -121,3 +121,14 @@ model ReferralBonus {
 
   @@map("referral_bonuses")
 }
+
+model SystemParameter {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("system_parameters")
+}

@@ -1,7 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, Text, View, Platform, TouchableOpacity, Alert, Share, Linking, ActivityIndicator } from 'react-native';
+import {
+    ScrollView,
+    Text,
+    View,
+    Platform,
+    TouchableOpacity,
+    Alert,
+    Share,
+    Linking,
+    ActivityIndicator,
+} from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { Copy, Share2, MessageCircle, MoreHorizontal, Wallet, Info as InfoIcon } from 'lucide-react-native';
+import {
+    Copy,
+    Share2,
+    MessageCircle,
+    MoreHorizontal,
+    Wallet,
+    Info as InfoIcon,
+} from 'lucide-react-native';
 import * as Clipboard from 'expo-clipboard';
 import axiosInstance from '../../../api/axiosInstance';
 
@@ -232,7 +249,10 @@ export const WebViewContentService = ({ data }: { data: any }) => {
 export const WebViewContentReferral = ({ data }: { data: any }) => {
     const route = useRoute<any>();
     const referralCode = route.params?.referralCode || 'NOTAVAIL';
-    const [referralBonus, setReferralBonus] = useState<{ amount: number; updatedAt: string } | null>(null);
+    const [referralBonus, setReferralBonus] = useState<{
+        amount: number;
+        updatedAt: string;
+    } | null>(null);
     const [loadingBonus, setLoadingBonus] = useState(true);
 
     useEffect(() => {
@@ -310,7 +330,11 @@ export const WebViewContentReferral = ({ data }: { data: any }) => {
                         </View>
                         {referralBonus?.updatedAt && (
                             <Text className="mb-4 text-xs text-[#8E8E93]">
-                                Updated: {new Date(referralBonus.updatedAt).toLocaleDateString()} at {new Date(referralBonus.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                Updated: {new Date(referralBonus.updatedAt).toLocaleDateString()} at{' '}
+                                {new Date(referralBonus.updatedAt).toLocaleTimeString([], {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                })}
                             </Text>
                         )}
                         <View className="flex-row items-center gap-1.5 rounded-lg bg-[#F2F2F7] px-3 py-1.5">
@@ -368,11 +392,11 @@ export const WebViewContentReferral = ({ data }: { data: any }) => {
 
             <View className="mb-10 gap-4">
                 <Text className="mb-1 text-lg font-bold text-[#1a1a18]">Share via</Text>
-                
+
                 <View className="flex-row flex-wrap gap-3">
                     <TouchableOpacity
                         onPress={onWhatsAppShare}
-                        className="flex-1 min-w-[100px] flex-row items-center justify-center gap-2 rounded-2xl bg-[#25D366] py-4"
+                        className="min-w-[100px] flex-1 flex-row items-center justify-center gap-2 rounded-2xl bg-[#25D366] py-4"
                     >
                         <MessageCircle size={20} color="white" />
                         <Text className="font-bold text-white">WhatsApp</Text>
@@ -380,7 +404,7 @@ export const WebViewContentReferral = ({ data }: { data: any }) => {
 
                     <TouchableOpacity
                         onPress={onMoreShare}
-                        className="flex-1 min-w-[100px] flex-row items-center justify-center gap-2 rounded-2xl bg-[#8E8E93] py-4"
+                        className="min-w-[100px] flex-1 flex-row items-center justify-center gap-2 rounded-2xl bg-[#8E8E93] py-4"
                     >
                         <MoreHorizontal size={20} color="white" />
                         <Text className="font-bold text-white">More</Text>
@@ -388,7 +412,7 @@ export const WebViewContentReferral = ({ data }: { data: any }) => {
 
                     <TouchableOpacity
                         onPress={onCopy}
-                        className="flex-1 min-w-[100px] flex-row items-center justify-center gap-2 rounded-2xl border border-[#e8e8e4] bg-white py-4"
+                        className="min-w-[100px] flex-1 flex-row items-center justify-center gap-2 rounded-2xl border border-[#e8e8e4] bg-white py-4"
                     >
                         <Copy size={20} color="#1a1a18" />
                         <Text className="font-bold text-[#1a1a18]">Copy</Text>

@@ -15,10 +15,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
 import { logout } from '../store/slices/authSlice';
 import { authApi } from '../api/authApi';
-import { LogOut, User, Phone, Mail, Shield, HelpCircle, Info, FileText, Gift, ChevronRight } from 'lucide-react-native';
+import {
+    LogOut,
+    User,
+    Phone,
+    Mail,
+    Shield,
+    HelpCircle,
+    Info,
+    FileText,
+    Gift,
+    ChevronRight,
+} from 'lucide-react-native';
 import { useNavigation, useScrollToTop } from '@react-navigation/native';
 import axiosInstance from '../api/axiosInstance';
 import { useAuth } from '../hooks/useAuth';
+import { useSystemParameters } from '../hooks/useSystemParameters';
 import ProfileItem from '../components/screen/profile/ProfileItem';
 import LinkItem from '../components/screen/profile/LinkItem';
 
@@ -28,6 +40,7 @@ const ProfileScreen = () => {
     useScrollToTop(scrollRef);
     const dispatch = useDispatch();
     const { handleSignOut: handleAuthSignOut } = useAuth();
+    const { isFeatureEnabled } = useSystemParameters();
     const { user: authUser } = useSelector((state: RootState) => state.auth);
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -286,7 +299,7 @@ const ProfileScreen = () => {
                 </View>
 
                 {/* Refer and Earn Banner */}
-                {!isEditing && (
+                {!isEditing && isFeatureEnabled('show_referral_flow') && (
                     <TouchableOpacity
                         onPress={() =>
                             navigation.navigate('WebViewProfile', {

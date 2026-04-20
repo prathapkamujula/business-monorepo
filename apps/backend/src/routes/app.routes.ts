@@ -17,6 +17,17 @@ router.get('/', appController.getHome);
 
 /**
  * @swagger
+ * /system-parameters:
+ *   get:
+ *     summary: Returns active system parameters
+ *     responses:
+ *       200:
+ *         description: System parameters object
+ */
+router.get('/system-parameters', appController.getSystemParameters);
+
+/**
+ * @swagger
  * /protected:
  *   get:
  *     summary: Returns a protected message

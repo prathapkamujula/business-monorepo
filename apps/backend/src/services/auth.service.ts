@@ -13,7 +13,10 @@ export class AuthService {
     }
 
     private async generateUniqueReferralCode(name: string): Promise<string> {
-        const base = (name || 'USER').toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 4);
+        const base = (name || 'USER')
+            .toUpperCase()
+            .replace(/[^A-Z0-9]/g, '')
+            .substring(0, 4);
         let code = '';
         let isUnique = false;
 
@@ -34,7 +37,8 @@ export class AuthService {
         const { uid, email, name, picture, phone_number, email_verified } = decodedToken;
 
         // Ensure providedReferralCode is a string and not an object
-        const referralCodeString = typeof providedReferralCode === 'string' ? providedReferralCode : undefined;
+        const referralCodeString =
+            typeof providedReferralCode === 'string' ? providedReferralCode : undefined;
 
         let existingCustomer = await prisma.customer.findUnique({
             where: { id: uid },
@@ -55,7 +59,9 @@ export class AuthService {
 
                     let referralCode = existingCustomer!.referralCode;
                     if (!referralCode) {
-                        referralCode = await this.generateUniqueReferralCode(name || existingCustomer!.name || 'USER');
+                        referralCode = await this.generateUniqueReferralCode(
+                            name || existingCustomer!.name || 'USER'
+                        );
                     }
 
                     return tx.customer.create({
@@ -83,7 +89,9 @@ export class AuthService {
                         email: email,
                         photoUrl: picture,
                         emailVerified: email_verified,
-                        referralCode: await this.generateUniqueReferralCode(name || existingCustomer.name || 'USER'),
+                        referralCode: await this.generateUniqueReferralCode(
+                            name || existingCustomer.name || 'USER'
+                        ),
                     },
                 });
             }

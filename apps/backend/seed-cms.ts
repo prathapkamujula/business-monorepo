@@ -13,6 +13,16 @@ async function seed() {
     await prisma.serviceDetail.deleteMany();
     await prisma.service.deleteMany();
     await prisma.cMSPageContent.deleteMany();
+    await prisma.systemParameter.deleteMany();
+
+    console.log('Seeding System Parameters...');
+    await prisma.systemParameter.create({
+        data: {
+            key: 'show_referral_flow',
+            value: 'true',
+            isActive: true,
+        },
+    });
 
     console.log('Seeding Offers...');
     const offers = [
@@ -22,17 +32,24 @@ async function seed() {
             code: 'WELCOME20',
             color: '#FF6B6B',
             details: {
-                description: 'Enjoy a flat 20% discount on any service you book for the first time on HomeHero.',
+                description:
+                    'Enjoy a flat 20% discount on any service you book for the first time on HomeHero.',
                 terms: [
                     'Valid for new users only.',
                     'Maximum discount of ₹200.',
                     'Cannot be combined with other offers.',
                 ],
                 faqs: [
-                    { q: 'How do I use this?', a: 'Apply the code WELCOME20 at the checkout page.' },
-                    { q: 'Is there a minimum booking value?', a: 'Yes, a minimum booking of ₹500 is required.' }
-                ]
-            }
+                    {
+                        q: 'How do I use this?',
+                        a: 'Apply the code WELCOME20 at the checkout page.',
+                    },
+                    {
+                        q: 'Is there a minimum booking value?',
+                        a: 'Yes, a minimum booking of ₹500 is required.',
+                    },
+                ],
+            },
         },
         {
             title: 'Summer Sale',
@@ -40,15 +57,19 @@ async function seed() {
             code: 'SUMMER15',
             color: '#4D96FF',
             details: {
-                description: 'Get your AC serviced and stay cool this summer with our special discount.',
+                description:
+                    'Get your AC serviced and stay cool this summer with our special discount.',
                 terms: [
                     'Valid on all AC repair and servicing categories.',
                     'Valid until May 31st, 2026.',
                 ],
                 faqs: [
-                    { q: 'Can I use it for multiple ACs?', a: 'Yes, the discount applies to the total booking amount.' }
-                ]
-            }
+                    {
+                        q: 'Can I use it for multiple ACs?',
+                        a: 'Yes, the discount applies to the total booking amount.',
+                    },
+                ],
+            },
         },
         {
             title: 'Weekend Special',
@@ -56,15 +77,19 @@ async function seed() {
             code: 'WEEKEND100',
             color: '#6BCB77',
             details: {
-                description: 'Book any service over the weekend and get an instant cashback of ₹100.',
+                description:
+                    'Book any service over the weekend and get an instant cashback of ₹100.',
                 terms: [
                     'Valid only for bookings made and scheduled for Saturday or Sunday.',
                     'Minimum booking value ₹799.',
                 ],
                 faqs: [
-                    { q: 'Is it valid for cleaning services?', a: 'Yes, it is valid across all service categories.' }
-                ]
-            }
+                    {
+                        q: 'Is it valid for cleaning services?',
+                        a: 'Yes, it is valid across all service categories.',
+                    },
+                ],
+            },
         },
         {
             title: 'Home Deep Cleaning',
@@ -72,32 +97,20 @@ async function seed() {
             code: 'CLEAN25',
             color: '#FFD93D',
             details: {
-                description: 'Professional deep cleaning for your entire home at unbeatable prices.',
+                description:
+                    'Professional deep cleaning for your entire home at unbeatable prices.',
                 terms: [
                     'Valid for 2BHK and larger apartments.',
                     'Includes bathroom and kitchen deep cleaning.',
                 ],
                 faqs: [
-                    { q: 'How long does it take?', a: 'Deep cleaning usually takes 4-6 hours depending on the house size.' }
-                ]
-            }
-        },
-        {
-            title: 'Referral Bonus',
-            subtitle: 'Invite friends and earn ₹50 each',
-            code: 'REFER50',
-            color: '#92A9BD',
-            details: {
-                description: 'Share the love! Invite your friends to HomeHero and earn rewards.',
-                terms: [
-                    'Bonus credited after friend\'s first successful booking.',
-                    'Unlimited referrals allowed.',
+                    {
+                        q: 'How long does it take?',
+                        a: 'Deep cleaning usually takes 4-6 hours depending on the house size.',
+                    },
                 ],
-                faqs: [
-                    { q: 'When do I get the credit?', a: 'The credit is added to your wallet within 24 hours of your friend\'s booking completion.' }
-                ]
-            }
-        }
+            },
+        },
     ];
 
     for (const offerData of offers) {
@@ -107,10 +120,10 @@ async function seed() {
                 ...offerBase,
                 details: {
                     create: {
-                        content: details
-                    }
-                }
-            }
+                        content: details,
+                    },
+                },
+            },
         });
     }
 
@@ -126,24 +139,31 @@ async function seed() {
             mrp: 3499,
             rating: 4.8,
             details: {
-                description: 'Experience a spotless home with our comprehensive deep cleaning service. Every nook and corner will be professionally cleaned and sanitized.',
+                description:
+                    'Experience a spotless home with our comprehensive deep cleaning service. Every nook and corner will be professionally cleaned and sanitized.',
                 benefits: [
                     'Dust-free and hygienic environment',
                     'Eco-friendly cleaning agents used',
                     'Trained and background-verified professionals',
-                    'Removal of tough stains and grime'
+                    'Removal of tough stains and grime',
                 ],
                 howItWorks: [
                     'Choose your home size (1BHK, 2BHK, etc.)',
                     'Select a convenient time slot',
                     'Our experts arrive with all necessary equipment',
-                    'Thorough cleaning of all rooms, kitchen, and bathrooms'
+                    'Thorough cleaning of all rooms, kitchen, and bathrooms',
                 ],
                 faqs: [
-                    { q: 'Do I need to provide cleaning supplies?', a: 'No, our team brings all specialized equipment and cleaning chemicals.' },
-                    { q: 'How long will it take?', a: 'Depending on the house size, it takes between 4 to 8 hours.' }
-                ]
-            }
+                    {
+                        q: 'Do I need to provide cleaning supplies?',
+                        a: 'No, our team brings all specialized equipment and cleaning chemicals.',
+                    },
+                    {
+                        q: 'How long will it take?',
+                        a: 'Depending on the house size, it takes between 4 to 8 hours.',
+                    },
+                ],
+            },
         },
         {
             name: 'AC Servicing (Split)',
@@ -155,24 +175,31 @@ async function seed() {
             mrp: 899,
             rating: 4.9,
             details: {
-                description: 'Keep your AC running efficiently and save on electricity bills with our expert AC servicing.',
+                description:
+                    'Keep your AC running efficiently and save on electricity bills with our expert AC servicing.',
                 benefits: [
                     'Improved cooling efficiency',
                     'Lower electricity consumption',
                     'Extended appliance lifespan',
-                    'Cleaner air circulation'
+                    'Cleaner air circulation',
                 ],
                 howItWorks: [
                     'Filter and cooling coil cleaning',
                     'Drain tray and pipe cleaning',
                     'Outdoor unit (condenser) jet wash',
-                    'Gas pressure check and final testing'
+                    'Gas pressure check and final testing',
                 ],
                 faqs: [
-                    { q: 'What if spare parts are needed?', a: 'Spare parts are charged extra based on the rate card.' },
-                    { q: 'Is gas filling included?', a: 'Gas pressure check is included, but gas charging/refilling is extra if needed.' }
-                ]
-            }
+                    {
+                        q: 'What if spare parts are needed?',
+                        a: 'Spare parts are charged extra based on the rate card.',
+                    },
+                    {
+                        q: 'Is gas filling included?',
+                        a: 'Gas pressure check is included, but gas charging/refilling is extra if needed.',
+                    },
+                ],
+            },
         },
         {
             name: 'Professional Pest Control',
@@ -184,24 +211,31 @@ async function seed() {
             mrp: 1299,
             rating: 4.7,
             details: {
-                description: 'Get rid of unwanted pests like cockroaches, ants, and termites with our odorless and safe pest control treatments.',
+                description:
+                    'Get rid of unwanted pests like cockroaches, ants, and termites with our odorless and safe pest control treatments.',
                 benefits: [
                     'Odorless and non-toxic chemicals',
                     'Long-lasting protection',
                     'Safe for children and pets',
-                    'Expert technicians'
+                    'Expert technicians',
                 ],
                 howItWorks: [
                     'Inspection of infested areas',
                     'Gel application and spray treatment',
                     'Sealing of entry points (if possible)',
-                    'Advice on maintenance'
+                    'Advice on maintenance',
                 ],
                 faqs: [
-                    { q: 'Is it safe for kids?', a: 'Yes, we use government-approved, odorless, and eco-friendly chemicals.' },
-                    { q: 'Do I need to empty my kitchen?', a: 'Generally no, but some specific treatments might require clearing cabinets.' }
-                ]
-            }
+                    {
+                        q: 'Is it safe for kids?',
+                        a: 'Yes, we use government-approved, odorless, and eco-friendly chemicals.',
+                    },
+                    {
+                        q: 'Do I need to empty my kitchen?',
+                        a: 'Generally no, but some specific treatments might require clearing cabinets.',
+                    },
+                ],
+            },
         },
         {
             name: 'Bathroom Deep Cleaning',
@@ -213,23 +247,27 @@ async function seed() {
             mrp: 799,
             rating: 4.6,
             details: {
-                description: 'Restore the shine and hygiene of your bathrooms with our intensive deep cleaning service.',
+                description:
+                    'Restore the shine and hygiene of your bathrooms with our intensive deep cleaning service.',
                 benefits: [
                     'Removal of hard water stains',
                     'Disinfection of all surfaces',
                     'Shining of chrome fittings',
-                    'Odor removal'
+                    'Odor removal',
                 ],
                 howItWorks: [
                     'Cleaning of wall tiles and floor',
                     'Scrubbing of washbasin and toilet',
                     'Polishing of taps and showers',
-                    'Cleaning of exhaust fan and mirror'
+                    'Cleaning of exhaust fan and mirror',
                 ],
                 faqs: [
-                    { q: 'Will it remove old stains?', a: 'We use professional chemicals that remove most tough stains, though very old ones might partially remain.' }
-                ]
-            }
+                    {
+                        q: 'Will it remove old stains?',
+                        a: 'We use professional chemicals that remove most tough stains, though very old ones might partially remain.',
+                    },
+                ],
+            },
         },
         {
             name: 'Sofa Spa (4 Seater)',
@@ -241,24 +279,28 @@ async function seed() {
             mrp: 1599,
             rating: 4.7,
             details: {
-                description: 'Give your sofa a new life with our specialized vacuuming and shampooing service.',
+                description:
+                    'Give your sofa a new life with our specialized vacuuming and shampooing service.',
                 benefits: [
                     'Removes dust, mites, and allergens',
                     'Stain removal (where possible)',
                     'Fresher smell and look',
-                    'Fabric protection'
+                    'Fabric protection',
                 ],
                 howItWorks: [
                     'Dry vacuuming to remove dust',
                     'Shampoo scrubbing for deep cleaning',
                     'Wet vacuuming to extract dirt',
-                    'Final grooming'
+                    'Final grooming',
                 ],
                 faqs: [
-                    { q: 'How long does it take to dry?', a: 'It usually takes 4-6 hours to dry completely under a ceiling fan.' }
-                ]
-            }
-        }
+                    {
+                        q: 'How long does it take to dry?',
+                        a: 'It usually takes 4-6 hours to dry completely under a ceiling fan.',
+                    },
+                ],
+            },
+        },
     ];
 
     for (const serviceData of services) {
@@ -268,10 +310,10 @@ async function seed() {
                 ...serviceBase,
                 details: {
                     create: {
-                        content: details
-                    }
-                }
-            }
+                        content: details,
+                    },
+                },
+            },
         });
     }
 
@@ -322,7 +364,7 @@ async function seed() {
             content: privacy.items,
         },
     });
-    
+
     // Terms Page
     const terms = data.terms;
     const termsHero = {

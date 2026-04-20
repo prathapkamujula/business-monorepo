@@ -9,7 +9,7 @@ import MainTabNavigator from './MainTabNavigator';
 import WebViewScreenProfile from '../components/shared/WebViewScreenProfile';
 import { ActivityIndicator, View, useWindowDimensions, Platform } from 'react-native';
 import BlockadeScreen from '../components/shared/BlockadeScreen';
-import AuthScreen from "../components/auth/AuthScreen";
+import AuthScreen from '../components/auth/AuthScreen';
 
 const Stack = createStackNavigator();
 
