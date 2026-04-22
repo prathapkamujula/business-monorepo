@@ -24,6 +24,19 @@ export class AdminContentController {
             res.status(500).json({ message: 'Error updating content' });
         }
     }
+
+    async saveContent(req: Request, res: Response) {
+        const { id, content } = req.body;
+        try {
+            const updated = await prisma.cMSPageContent.update({
+                where: { id: id as string },
+                data: { content },
+            });
+            res.json(updated);
+        } catch (error) {
+            res.status(500).json({ message: 'Error saving content' });
+        }
+    }
 }
 
 export const adminContentController = new AdminContentController();

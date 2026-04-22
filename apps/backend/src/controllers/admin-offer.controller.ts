@@ -31,6 +31,33 @@ export class AdminOfferController {
             res.status(500).json({ message: 'Error creating offer' });
         }
     }
+
+    async updateOffer(req: Request, res: Response) {
+        const id = req.params.id as string;
+        const { title, subtitle, code, color, details } = req.body;
+        try {
+            const offer = await prisma.offer.update({
+                where: { id },
+                data: {
+                    title,
+                    subtitle,
+                    code,
+                    color,
+                    details: details ? {
+                        upsert: {
+                            create: { content: details },
+                            update: { content: details }
+                        }
+                    } : undefined,
+                },
+                include: { details: true },
+            });
+            res.json(offer);
+        } catch (error) {
+            console.error('Error updating offer:', error);
+            res.status(500).json({ message: 'Error updating offer' });
+        }
+    }
 }
 
 export const adminOfferController = new AdminOfferController();

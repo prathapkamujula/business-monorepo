@@ -13,8 +13,13 @@ export const adminApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Profile', 'Content', 'Offers'],
+  tagTypes: ['Profile', 'Content', 'Offers', 'Services', 'Dashboard'],
   endpoints: (builder) => ({
+    // Dashboard
+    getDashboardStats: builder.query<any[], void>({
+      query: () => '/admin/dashboard/stats',
+      providesTags: ['Dashboard'],
+    }),
     // Auth
     login: builder.mutation({
       query: (credentials) => ({
@@ -50,6 +55,14 @@ export const adminApi = createApi({
       }),
       invalidatesTags: ['Content'],
     }),
+    saveContent: builder.mutation({
+      query: ({ id, content }) => ({
+        url: '/admin/content/save',
+        method: 'POST',
+        body: { id, content },
+      }),
+      invalidatesTags: ['Content'],
+    }),
 
     // Offers
     getAllOffers: builder.query({
@@ -64,15 +77,42 @@ export const adminApi = createApi({
       }),
       invalidatesTags: ['Offers'],
     }),
+    updateOffer: builder.mutation({
+      query: ({ id, ...update }) => ({
+        url: `/admin/offers/${id}`,
+        method: 'PUT',
+        body: update,
+      }),
+      invalidatesTags: ['Offers'],
+    }),
+
+    // Services
+    getAllServices: builder.query({
+      query: () => '/admin/services',
+      providesTags: ['Services'],
+    }),
+    updateService: builder.mutation({
+      query: ({ id, ...update }) => ({
+        url: `/admin/services/${id}`,
+        method: 'PUT',
+        body: update,
+      }),
+      invalidatesTags: ['Services'],
+    }),
   }),
 });
 
 export const {
+  useGetDashboardStatsQuery,
   useLoginMutation,
   useGetProfileQuery,
   useChangePasswordMutation,
   useGetAllContentQuery,
   useUpdateContentMutation,
+  useSaveContentMutation,
   useGetAllOffersQuery,
   useCreateOfferMutation,
+  useUpdateOfferMutation,
+  useGetAllServicesQuery,
+  useUpdateServiceMutation,
 } = adminApi;
