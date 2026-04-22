@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  Tag, 
-  Settings, 
-  UserCircle, 
-  FileText, 
-  Menu, 
+import {
+  LayoutDashboard,
+  Tag,
+  Settings,
+  UserCircle,
+  FileText,
+  Menu,
   X,
   ChevronLeft,
   ChevronRight,
-  LogOut
+  LogOut,
+  Moon,
+  Sun,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTheme } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import { useAppDispatch } from '@/hooks/redux';
 import { logout } from '@/store/slices/authSlice';
@@ -28,6 +31,7 @@ const menuItems = [
 export default function AdminLayout() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -37,15 +41,15 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="bg-background flex h-screen">
       {/* Sidebar for Desktop */}
       <aside
         className={cn(
-          "hidden border-r bg-card transition-all duration-300 md:flex flex-col",
-          isCollapsed ? "w-16" : "w-64"
+          'bg-card hidden flex-col border-r transition-all duration-300 md:flex',
+          isCollapsed ? 'w-16' : 'w-64'
         )}
       >
-        <div className="flex h-16 items-center justify-between px-4 border-b">
+        <div className="flex h-16 items-center justify-between border-b px-4">
           {!isCollapsed && <span className="text-xl font-bold">Admin</span>}
           <Button
             variant="ghost"
@@ -53,7 +57,11 @@ export default function AdminLayout() {
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="ml-auto"
           >
-            {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+            {isCollapsed ? (
+              <ChevronRight size={20} />
+            ) : (
+              <ChevronLeft size={20} />
+            )}
           </Button>
         </div>
 
@@ -64,14 +72,14 @@ export default function AdminLayout() {
               to={item.path}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                  isActive 
-                    ? "bg-primary text-primary-foreground" 
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
-                  isCollapsed && "justify-center px-0"
+                  'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                  isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+                  isCollapsed && 'justify-center px-0'
                 )
               }
-              title={isCollapsed ? item.label : ""}
+              title={isCollapsed ? item.label : ''}
             >
               <item.icon size={20} />
               {!isCollapsed && <span>{item.label}</span>}
@@ -80,11 +88,11 @@ export default function AdminLayout() {
         </nav>
 
         <div className="border-t p-2">
-           <Button
+          <Button
             variant="ghost"
             className={cn(
-              "w-full flex items-center gap-3 justify-start text-muted-foreground hover:text-destructive",
-              isCollapsed && "justify-center px-0"
+              'text-muted-foreground hover:text-destructive flex w-full items-center justify-start gap-3',
+              isCollapsed && 'justify-center px-0'
             )}
             onClick={handleLogout}
           >
@@ -96,8 +104,8 @@ export default function AdminLayout() {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm md:hidden"
+        <div
+          className="bg-background/80 fixed inset-0 z-40 backdrop-blur-sm md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
@@ -105,13 +113,17 @@ export default function AdminLayout() {
       {/* Sidebar for Mobile */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 transform border-r bg-card transition-transform duration-300 md:hidden",
-          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          'bg-card fixed inset-y-0 left-0 z-50 w-64 transform border-r transition-transform duration-300 md:hidden',
+          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
-        <div className="flex h-16 items-center justify-between px-4 border-b">
+        <div className="flex h-16 items-center justify-between border-b px-4">
           <span className="text-xl font-bold">Admin</span>
-          <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             <X size={20} />
           </Button>
         </div>
@@ -123,10 +135,10 @@ export default function AdminLayout() {
               onClick={() => setIsMobileMenuOpen(false)}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                  isActive 
-                    ? "bg-primary text-primary-foreground" 
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                  isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                 )
               }
             >
@@ -150,6 +162,20 @@ export default function AdminLayout() {
           </Button>
           <div className="ml-4 md:ml-0">
             <h2 className="text-lg font-semibold">Admin Panel</h2>
+          </div>
+          <div className="ml-auto flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              title="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
+            </Button>
           </div>
         </header>
 
