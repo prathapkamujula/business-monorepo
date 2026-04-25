@@ -29,12 +29,14 @@ export class AdminServiceController {
                     icon,
                     image,
                     color,
-                    details: details ? {
-                        upsert: {
-                            create: { content: details },
-                            update: { content: details }
-                        }
-                    } : undefined,
+                    details: details
+                        ? {
+                              upsert: {
+                                  create: { content: details },
+                                  update: { content: details },
+                              },
+                          }
+                        : undefined,
                 },
                 include: { details: true },
             });

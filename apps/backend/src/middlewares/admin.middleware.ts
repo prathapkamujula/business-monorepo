@@ -16,7 +16,8 @@ export const adminAuthenticate = (req: Request, res: Response, next: NextFunctio
         // If it's a temporary token, only allow password change
         if (decoded.temp && req.path !== '/change-password') {
             return res.status(403).json({
-                message: 'Password reset required. You are only authorized to change your password.',
+                message:
+                    'Password reset required. You are only authorized to change your password.',
                 resetPasswordRequired: true,
             });
         }

@@ -234,7 +234,7 @@ export const WebViewContentService = ({ data }: { data: any }) => {
                 )}
             </Container>
 
-            <View className="border-t border-[#e8e8e4] bg-white p-5 pb-8">
+            <View className="border-t border-[#e8e8e4] bg-white p-4">
                 <TouchableOpacity
                     onPress={handleBookNow}
                     className="h-14 items-center justify-center rounded-2xl bg-[#5856D6]"

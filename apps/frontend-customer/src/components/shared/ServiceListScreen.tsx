@@ -105,7 +105,7 @@ const ServiceListScreen = () => {
     };
 
     return (
-        <SafeAreaView className="flex-1 bg-white" style={{ flex: 1 }}>
+        <SafeAreaView className="flex-1 bg-white" style={{ flex: 1 }} edges={['top']}>
             <View
                 className="flex-row items-center justify-between border-b border-[#F2F2F7] bg-white px-2.5 py-[18px] shadow-sm shadow-black/10"
                 style={{ elevation: 3 }}

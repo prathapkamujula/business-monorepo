@@ -111,7 +111,7 @@ const HomeScreen = () => {
     }
 
     return (
-        <SafeAreaView className="flex-1 bg-white" style={{ flex: 1 }}>
+        <SafeAreaView className="flex-1 bg-white" style={{ flex: 1 }} edges={['top']}>
             <ScrollView
                 ref={scrollRef}
                 className="flex-1"

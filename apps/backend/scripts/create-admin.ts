@@ -1,5 +1,4 @@
-import {adminService} from "../src/services/admin.service";
-
+import { adminService } from '../src/services/admin.service';
 
 // Note:
 // Run this script to create an admin user
@@ -9,7 +8,7 @@ async function main() {
         const admin = await adminService.createAdmin({
             email: 'kprathapreddy1997@gmail.com',
             name: 'System Admin',
-            role: 'SUPERADMIN' // Optional
+            role: 'SUPERADMIN', // Optional
         });
         console.log('Admin created successfully:', admin);
     } catch (error) {

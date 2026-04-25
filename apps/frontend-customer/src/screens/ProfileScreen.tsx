@@ -204,7 +204,7 @@ const ProfileScreen = () => {
     }
 
     return (
-        <SafeAreaView className="flex-1 bg-[#f8f9fa]" style={{ flex: 1 }}>
+        <SafeAreaView edges={['top']} className="flex-1 bg-[#f8f9fa]" style={{ flex: 1 }}>
             <ScrollView
                 ref={scrollRef}
                 className="flex-1"

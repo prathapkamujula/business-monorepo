@@ -7,7 +7,7 @@ const Tab = createMaterialTopTabNavigator();
 
 const BookingScreen = () => {
     return (
-        <SafeAreaView className="flex-1 bg-[#F8F8FC]" edges={['top']} style={{ flex: 1 }}>
+        <SafeAreaView className="flex-1 bg-[#f8f9fa]" edges={['top']} style={{ flex: 1 }}>
             <Tab.Navigator
                 screenOptions={{
                     tabBarActiveTintColor: '#5856D6',
