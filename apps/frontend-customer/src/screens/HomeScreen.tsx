@@ -125,7 +125,10 @@ const HomeScreen = () => {
                         <Text className="text-base text-[#8E8E93]">{getGreeting()},</Text>
                         <Text className="text-2xl font-bold text-[#1C1C1E]">{name}</Text>
                     </View>
-                    <TouchableOpacity className="p-1">
+                    <TouchableOpacity
+                        className="p-1"
+                        onPress={() => navigation.navigate('Profile')}
+                    >
                         {profilePic ? (
                             <Image
                                 source={{ uri: profilePic }}
