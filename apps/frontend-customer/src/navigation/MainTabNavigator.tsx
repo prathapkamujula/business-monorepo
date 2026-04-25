@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Home, Calendar, User } from 'lucide-react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeScreen from '../screens/HomeScreen';
 import BookingScreen from '../screens/BookingScreen';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -39,6 +40,8 @@ const ProfileStackScreen = () => (
 );
 
 const MainTabNavigator = () => {
+    const insets = useSafeAreaInsets();
+
     return (
         <Tab.Navigator
             screenOptions={{
@@ -46,8 +49,8 @@ const MainTabNavigator = () => {
                 tabBarActiveTintColor: '#5856D6',
                 tabBarInactiveTintColor: '#8E8E93',
                 tabBarStyle: {
-                    paddingBottom: 5,
-                    height: 60,
+                    paddingBottom: insets.bottom || 5,
+                    height: 60 + insets.bottom,
                 },
             }}
         >
