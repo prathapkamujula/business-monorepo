@@ -89,24 +89,24 @@ export default function App() {
 
     const reviews = [
         {
-            name: 'Sarah K.',
+            name: 'Lakshmi P.',
             role: 'Homeowner',
-            text: 'Booking was effortless and the cleaner was absolutely fantastic. Will use again.',
+            text: 'Booking process was very smooth and the cleaner did excellent work. Very happy with the service.',
         },
         {
-            name: 'John D.',
+            name: 'Ramesh K.',
             role: 'Landlord',
-            text: 'The electrician arrived on time and finished ahead of schedule. Outstanding.',
+            text: 'The electrician came on time and completed the work very quickly. Very professional service.',
         },
         {
-            name: 'Mia R.',
+            name: 'Sravani M.',
             role: 'Tenant',
-            text: 'Super professional plumber. Fixed the issue in under an hour.',
+            text: 'The plumber was very skilled and fixed the problem within one hour. Really satisfied.',
         },
         {
-            name: 'Alex T.',
+            name: 'Praveen R.',
             role: 'Manager',
-            text: 'Reliable, fast, and fairly priced. Exactly what I was looking for.',
+            text: 'Service was reliable, quick, and charges were reasonable. Exactly what we needed.',
         },
     ];
 
