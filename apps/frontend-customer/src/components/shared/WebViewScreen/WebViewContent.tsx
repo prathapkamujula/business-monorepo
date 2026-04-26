@@ -21,6 +21,13 @@ import {
 } from 'lucide-react-native';
 import * as Clipboard from 'expo-clipboard';
 import axiosInstance from '../../../api/axiosInstance';
+import Animated, {
+    FadeInDown,
+    useAnimatedStyle,
+    useSharedValue,
+    withSpring,
+    withDelay,
+} from 'react-native-reanimated';
 
 const Tag = ({ label }: { label: string }) => (
     <View className="rounded-full bg-[#d8f3e8] px-3 py-1">
@@ -208,12 +215,44 @@ export const WebViewContentService = ({ data }: { data: any }) => {
 
                 {details.howItWorks && details.howItWorks.length > 0 && (
                     <View className="mb-8">
-                        <Text className="mb-2 text-xl font-bold text-[#1a1a18]">How it Works</Text>
-                        {details.howItWorks.map((step: string, idx: number) => (
-                            <PrivacyItem key={idx} num={idx + 1} title={step}>
-                                <View />
-                            </PrivacyItem>
-                        ))}
+                        <Animated.Text
+                            entering={FadeInDown.delay(100).duration(400).springify()}
+                            className="mb-4 text-xl font-bold text-[#1a1a18]"
+                        >
+                            How it Works
+                        </Animated.Text>
+
+                        {details.howItWorks.map((step: string, idx: number) => {
+                            const isLast = idx === details.howItWorks.length - 1;
+                            return (
+                                <Animated.View
+                                    key={idx}
+                                    entering={FadeInDown.delay(150 + idx * 80)
+                                        .duration(400)
+                                        .springify()}
+                                    className="flex-row"
+                                >
+                                    {/* Left: step indicator + connecting line */}
+                                    <View className="mr-4 items-center">
+                                        <View className="h-7 w-7 items-center justify-center rounded-full bg-[#1a1a18]">
+                                            <Text className="text-xs font-bold text-white">
+                                                {idx + 1}
+                                            </Text>
+                                        </View>
+                                        {!isLast && (
+                                            <View className="my-1 w-[2px] flex-1 bg-[#e0e0e0]" />
+                                        )}
+                                    </View>
+
+                                    {/* Right: step text */}
+                                    <View className="flex-1 pb-6">
+                                        <Text className="text-sm leading-5 text-[#444442]">
+                                            {step}
+                                        </Text>
+                                    </View>
+                                </Animated.View>
+                            );
+                        })}
                     </View>
                 )}
 
