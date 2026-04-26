@@ -9,11 +9,10 @@ import {
 } from './WebViewContent';
 
 const WebViewScreen = () => {
-    const { title, pageData, loading, error, handleClose, navigation } = useWebViewContent();
+    const { title, pageData, loading, error, handleClose, navigation, image } = useWebViewContent();
     const insets = useSafeAreaInsets();
 
     const headerPaddingTop = insets.top > 0 ? insets.top + 8 : 16;
-
     const Header = (
         <View
             className="flex-row items-center justify-between border-b border-[#e8e8e4] bg-[#fafaf8] px-5 pb-3.5"

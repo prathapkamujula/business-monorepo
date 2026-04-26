@@ -23,7 +23,7 @@ import OfferDetailModal from '../components/homeScreen/OfferDetailModal';
 import { contentApi } from '../api/contentApi';
 
 const { width } = Dimensions.get('window');
-const CARD_WIDTH = width * 0.7;
+const CARD_WIDTH = width * 0.5;
 
 const HomeScreen = () => {
     const navigation = useNavigation<any>();

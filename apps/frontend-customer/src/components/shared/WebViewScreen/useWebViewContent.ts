@@ -6,6 +6,7 @@ export const useWebViewContent = () => {
     const route = useRoute<any>();
     const navigation = useNavigation<any>();
     const { title, serviceId, type } = route.params || { title: 'Page' };
+    const image = route.params?.image || '';
 
     const [pageData, setPageData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
@@ -45,6 +46,7 @@ export const useWebViewContent = () => {
 
     return {
         title,
+        image,
         pageData,
         loading,
         error,

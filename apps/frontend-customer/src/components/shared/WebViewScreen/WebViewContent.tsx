@@ -8,7 +8,7 @@ import {
     Alert,
     Share,
     Linking,
-    ActivityIndicator,
+    ActivityIndicator, Image, Dimensions,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import {
@@ -28,6 +28,8 @@ import Animated, {
     withSpring,
     withDelay,
 } from 'react-native-reanimated';
+
+const { width } = Dimensions.get('window');
 
 const Tag = ({ label }: { label: string }) => (
     <View className="rounded-full bg-[#d8f3e8] px-3 py-1">
@@ -181,6 +183,7 @@ export const WebViewContentService = ({ data }: { data: any }) => {
     };
 
     const details = data.details?.content || {};
+    const imageLink = data?.image;
 
     return (
         <View className="flex-1 bg-white">
@@ -194,6 +197,13 @@ export const WebViewContentService = ({ data }: { data: any }) => {
                         </Text>
                     </View>
                 </View>
+
+                <Image
+                    source={{ uri: imageLink }}
+                    className="w-full rounded-[5px]"
+                    style={{ height: width * 0.65, marginBottom: 20 }}
+                    resizeMode="cover"
+                />
 
                 {details.description && (
                     <View className="mb-8">
