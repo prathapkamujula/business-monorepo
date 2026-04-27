@@ -19,6 +19,29 @@ export const WA_MESSAGE_PRO = encodeURIComponent("Hi! I'd like to become a partn
 export const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 export const WA_URL_PRO = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE_PRO}`;
 
+export const navLinks = [
+    { name: 'Services', href: '#services' },
+    { name: 'How it works', href: '#how-it-works' },
+    { name: 'Reviews', href: '#reviews' },
+    { name: 'FAQ', href: '#faq' },
+];
+
+export const heroStats = [
+    { value: '5k+', label: 'Happy Homes' },
+    { value: '4.9/5', label: 'Service Rating' },
+    { value: '45min', label: 'Fast Arrival' },
+];
+
+export const footerData = {
+    description: "Bringing professional, reliable, and verified home services to every Indian household. Excellence in every corner.",
+    contact: {
+        phone: "+91 9490 599 600",
+        address: "Nellore, Andhra Pradesh",
+        country: "India"
+    },
+    copyright: "© 2026 Home Hero. Built with ❤️ for India."
+};
+
 export const services = [
     { name: 'Cleaning', icon: '✦', live: true },
     { name: 'Plumbing', icon: '◈', live: true },
