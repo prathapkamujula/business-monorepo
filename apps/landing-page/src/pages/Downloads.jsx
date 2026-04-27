@@ -9,25 +9,11 @@ const IOS_VERSIONS = [];
 
 const ANDROID_VERSIONS = [
     {
-        version: '3.2.0',
-        date: '2025-04-10',
-        notes: 'Material You redesign, push notification improvements',
-        tag: 'latest',
-        link: 'https://play.google.com/store/your-app',
-    },
-    {
-        version: '3.1.8',
-        date: '2025-03-03',
-        notes: 'Crash fixes on Android 14',
+        version: '1.0.4',
+        date: '2026-04-26',
+        notes: 'Performance improvements',
         tag: 'stable',
-        link: 'https://play.google.com/store/your-app',
-    },
-    {
-        version: '3.1.5',
-        date: '2025-01-28',
-        notes: 'Performance improvements for older devices',
-        tag: 'stable',
-        link: 'https://play.google.com/store/your-app',
+        link: 'https://drive.google.com/uc?export=download&id=1v0THlNltNc8u1lbng444pglIySY10HIs',
     },
 ];
 
@@ -108,13 +94,7 @@ export default function Downloads() {
                 <p className="text-xl font-sans text-primary-900/60">Get the best home services at your fingertips.</p>
             </div>
 
-            <Collapsible title="iOS App" icon={Apple} requirement="Requires iOS 14.0 or later" defaultOpen>
-                {IOS_VERSIONS.map((v, i) => (
-                    <VersionCard key={v.version} v={v} isLatest={i === 0 && v.tag === 'latest'} buttonClass="bg-black text-white" buttonLabel="Download" buttonIcon={Apple} />
-                ))}
-            </Collapsible>
-
-            <Collapsible title="Android App" icon={Smartphone} requirement="Requires Android 8.0 or later">
+            <Collapsible title="Android App" icon={Smartphone} requirement="Requires Android 8.0 or later" defaultOpen>
                 {ANDROID_VERSIONS.map((v, i) => (
                     <VersionCard
                         key={v.version}
@@ -124,6 +104,12 @@ export default function Downloads() {
                         buttonLabel="Download"
                         buttonIcon={Smartphone}
                     />
+                ))}
+            </Collapsible>
+
+            <Collapsible title="iOS App" icon={Apple} requirement="Requires iOS 14.0 or later">
+                {IOS_VERSIONS.map((v, i) => (
+                    <VersionCard key={v.version} v={v} isLatest={i === 0 && v.tag === 'latest'} buttonClass="bg-black text-white" buttonLabel="Download" buttonIcon={Apple} />
                 ))}
             </Collapsible>
         </div>
