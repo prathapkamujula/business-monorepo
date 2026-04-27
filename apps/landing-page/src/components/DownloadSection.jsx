@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Apple, Smartphone } from 'lucide-react';
+import android2 from '../assets/appCaptures/android1.png'
 
 export default function DownloadSection() {
     return (
@@ -57,7 +58,7 @@ export default function DownloadSection() {
                 >
                     <div className="relative z-10 w-[280px] md:w-[320px] mx-auto aspect-[9/19] bg-gray-900 rounded-[3rem] border-[8px] border-gray-800 shadow-2xl overflow-hidden">
                         <img 
-                            src="https://drive.google.com/thumbnail?id=1BCzp2wF8IMDVQ_dedSK0Tl8b0VSiC5Ft&sz=w800" 
+                            src={android2}
                             alt="App Screenshot" 
                             className="w-full h-full object-cover"
                         />

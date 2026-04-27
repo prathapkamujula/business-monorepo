@@ -2,22 +2,25 @@ import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import { WA_URL, WA_URL_PRO, heroStats } from "../utils/content.js";
 import { WaIcon } from './Common.jsx';
+import service1 from "../assets/services/service1.png"
+import service2 from "../assets/services/service2.png";
+import service3 from "../assets/services/service3.png";
 
 // content.js additions
 const heroImages = [
     {
         id: "service1",
-        src: "https://drive.google.com/thumbnail?id=1CEbb6so72_qQs6FgKSEmX3_5a20Kae5s&sz=w600",
+        src: service1,
         alt: "Home Service 1",
     },
     {
         id: "service2",
-        src: "https://drive.google.com/thumbnail?id=1IDmVJb-GXwJnORgkcl5G-5_UcspQosR_&sz=w600",
+        src: service2,
         alt: "Home Service 2",
     },
     {
         id: "service3",
-        src: "https://drive.google.com/thumbnail?id=1jOlVZIPmbaAl5tCLybUmdIYHuab4FkVr&sz=w600",
+        src: service3,
         alt: "Home Service 3",
     },
 ];
