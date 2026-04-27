@@ -25,7 +25,7 @@ const PATH_D =
 // ─── Preset configurations ────────────────────────────────────────────────────
 const PRESETS = {
     favicon:  { size: 32,   showLabel: false, padding: 0 },
-    logo:     { size: 200,  showLabel: false, padding: 0.05 },
+    logo:     { size: 48,  showLabel: false, padding: 0.1 },
     appIcon:  { size: 1024, showLabel: false, padding: 0.1  },
     splash:   { size: 512,  showLabel: false, padding: 0.2  },
 };
