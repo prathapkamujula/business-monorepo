@@ -7,7 +7,7 @@ import { C } from './utils/content.js';
 
 const Main = () => {
     useEffect(() => {
-        injectFavicon(C.p600);
+        injectFavicon(C.p600, 'white');
     }, []);
 
     return (

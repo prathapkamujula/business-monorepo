@@ -50,6 +50,7 @@ export default function BuildingLogo({
 
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width={resolvedSize} height={resolvedSize} viewBox={viewBox} aria-label="Building logo" role="img" {...rest}>
+            {preset === 'splash' && <rect width="1024" height="1024" fill="white" />}
             <path d={PATH_D} fill={color} fillRule="evenodd" stroke="none" />
         </svg>
     );
@@ -82,10 +83,11 @@ export function SplashLogo(props) {
  * Returns a data URI string you can assign to a <link rel="icon"> href.
  *
  * @param {string} [color="#000000"]
+ * @param {string} [bgColor="transparent"]
  * @returns {string}  "data:image/svg+xml;base64,..."
  */
-export function getFaviconDataUri(color = '#000000') {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path d="${PATH_D}" fill="${color}" fill-rule="evenodd"/></svg>`;
+export function getFaviconDataUri(color = '#000000', bgColor = 'transparent') {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><rect width="1024" height="1024" fill="${bgColor}"/><path d="${PATH_D}" fill="${color}" fill-rule="evenodd"/></svg>`;
     return `data:image/svg+xml;base64,${btoa(svg)}`;
 }
 
@@ -94,8 +96,9 @@ export function getFaviconDataUri(color = '#000000') {
  * Call once on app boot, e.g. in index.js / main.jsx.
  *
  * @param {string} [color="#000000"]
+ * @param {string} [bgColor="transparent"]
  */
-export function injectFavicon(color = '#000000') {
+export function injectFavicon(color = '#000000', bgColor = 'transparent') {
     if (typeof document === 'undefined') return;
     let link = document.querySelector("link[rel~='icon']");
     if (!link) {
@@ -104,5 +107,5 @@ export function injectFavicon(color = '#000000') {
         document.head.appendChild(link);
     }
     link.type = 'image/svg+xml';
-    link.href = getFaviconDataUri(color);
+    link.href = getFaviconDataUri(color, bgColor);
 }
