@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { WebsiteLogo } from '../utils/logo.jsx';
 import { navLinks, footerData } from "../utils/content.js";
 import { WaIcon } from './Common.jsx';
@@ -37,8 +38,8 @@ export default function Footer() {
             <div className="max-w-7xl mx-auto pt-8 border-t border-primary-800/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-primary-200/50 font-sans text-sm">
                 <span className="text-center sm:text-left">{footerData.copyright}</span>
                 <div className="flex gap-8">
-                    <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+                    <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                    <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
                 </div>
             </div>
         </footer>

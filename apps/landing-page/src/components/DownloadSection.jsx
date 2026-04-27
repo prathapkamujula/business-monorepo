@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Apple, Smartphone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import android2 from '../assets/appCaptures/android1.png'
 
 export default function DownloadSection() {
@@ -22,31 +23,33 @@ export default function DownloadSection() {
                     </p>
                     
                     <div className="flex flex-wrap justify-center md:justify-start gap-4">
-                        <motion.a
-                            whileHover={{ y: -4 }}
-                            whileTap={{ scale: 0.98 }}
-                            href="#"
-                            className="flex items-center gap-4 bg-primary-700 text-white px-7 py-4 rounded-2xl transition-all hover:bg-primary-800 shadow-lg shadow-primary-200"
-                        >
-                            <Apple size={28} />
-                            <div className="text-left">
-                                <p className="text-[10px] uppercase font-sans font-bold tracking-wider opacity-80 leading-none">Download on</p>
-                                <p className="text-lg font-sans font-bold leading-none mt-1">App Store</p>
-                            </div>
-                        </motion.a>
+                        <Link to="/downloads">
+                            <motion.div
+                                whileHover={{ y: -4 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="flex items-center gap-4 bg-primary-700 text-white px-7 py-4 rounded-2xl transition-all hover:bg-primary-800 shadow-lg shadow-primary-200 cursor-pointer"
+                            >
+                                <Apple size={28} />
+                                <div className="text-left">
+                                    <p className="text-[10px] uppercase font-sans font-bold tracking-wider opacity-80 leading-none">Download on</p>
+                                    <p className="text-lg font-sans font-bold leading-none mt-1">App Store</p>
+                                </div>
+                            </motion.div>
+                        </Link>
                         
-                        <motion.a
-                            whileHover={{ y: -4 }}
-                            whileTap={{ scale: 0.98 }}
-                            href="#"
-                            className="flex items-center gap-4 bg-primary-700 text-white px-7 py-4 rounded-2xl transition-all hover:bg-primary-800 shadow-lg shadow-primary-200"
-                        >
-                            <Smartphone size={28} />
-                            <div className="text-left">
-                                <p className="text-[10px] uppercase font-sans font-bold tracking-wider opacity-80 leading-none">Get it on</p>
-                                <p className="text-lg font-sans font-bold leading-none mt-1">Google Play</p>
-                            </div>
-                        </motion.a>
+                        <Link to="/downloads">
+                            <motion.div
+                                whileHover={{ y: -4 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="flex items-center gap-4 bg-primary-700 text-white px-7 py-4 rounded-2xl transition-all hover:bg-primary-800 shadow-lg shadow-primary-200 cursor-pointer"
+                            >
+                                <Smartphone size={28} />
+                                <div className="text-left">
+                                    <p className="text-[10px] uppercase font-sans font-bold tracking-wider opacity-80 leading-none">Get it on</p>
+                                    <p className="text-lg font-sans font-bold leading-none mt-1">Google Play</p>
+                                </div>
+                            </motion.div>
+                        </Link>
                     </div>
                 </motion.div>
 

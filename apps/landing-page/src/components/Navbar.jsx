@@ -1,33 +1,59 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import { WebsiteLogo } from '../utils/logo.jsx';
 import { WA_URL, C, navLinks } from "../utils/content.js";
 import { WaIcon } from './Common.jsx';
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const location = useLocation();
+
+    const isHome = location.pathname === '/';
+
+    const renderLink = (l, mobile = false) => {
+        const className = mobile
+            ? "font-sans text-lg font-medium text-gray-700"
+            : "font-sans text-sm font-medium tracking-wide text-gray-600 hover:text-primary-600 transition-colors";
+
+        if (isHome) {
+            return (
+                <a
+                    key={l.name}
+                    href={l.href}
+                    className={className}
+                    onClick={() => mobile && setMenuOpen(false)}
+                >
+                    {l.name}
+                </a>
+            );
+        } else {
+            return (
+                <Link
+                    key={l.name}
+                    to={`/${l.href}`}
+                    className={className}
+                    onClick={() => mobile && setMenuOpen(false)}
+                >
+                    {l.name}
+                </Link>
+            );
+        }
+    };
 
     return (
         <nav className="sticky top-0 z-50 flex items-center justify-between px-6 md:px-16 py-3 bg-primary-50/90 backdrop-blur-md border-b border-primary-100">
-            <div className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
                 <WebsiteLogo size={16} color={C.p600} />
                 <span className="font-serif text-xl font-bold tracking-tight text-primary-700">
                     Home <span className="text-primary-400 italic">Hero</span>
                 </span>
-            </div>
+            </Link>
 
             {/* Desktop links */}
             <div className="hidden md:flex items-center gap-10">
-                {navLinks.map((l) => (
-                    <a
-                        key={l.name}
-                        href={l.href}
-                        className="font-sans text-sm font-medium tracking-wide text-gray-600 hover:text-primary-600 transition-colors"
-                    >
-                        {l.name}
-                    </a>
-                ))}
+                {navLinks.map((l) => renderLink(l))}
             </div>
 
             <div className="hidden md:flex items-center gap-4">
@@ -61,16 +87,7 @@ export default function Navbar() {
                         className="absolute top-full left-0 right-0 bg-white border-b border-primary-100 overflow-hidden md:hidden"
                     >
                         <div className="flex flex-col p-6 gap-4">
-                            {navLinks.map((l) => (
-                                <a
-                                    key={l.name}
-                                    href={l.href}
-                                    className="font-sans text-lg font-medium text-gray-700"
-                                    onClick={() => setMenuOpen(false)}
-                                >
-                                    {l.name}
-                                </a>
-                            ))}
+                            {navLinks.map((l) => renderLink(l, true))}
                             <hr className="border-primary-50" />
                             <a
                                 href={WA_URL}
