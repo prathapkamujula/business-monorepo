@@ -17,6 +17,7 @@
  */
 
 import React from 'react';
+import { C } from './content';
 
 // ─── Core path data (original viewBox 0 0 1024 1024) ─────────────────────────
 const PATH_D =
@@ -34,7 +35,7 @@ const PRESETS = {
 export default function BuildingLogo({
     // Core customisation
     size = 64,
-    color = 'currentColor',
+    color = C.p600,
     // Preset overrides everything above if provided
     preset,
     // Extra SVG props forwarded to the root element
@@ -43,6 +44,10 @@ export default function BuildingLogo({
     const cfg = preset ? PRESETS[preset] : null;
     const resolvedSize = cfg ? cfg.size : size;
 
+    // Background logic
+    const showBg = preset === 'splash' || preset === 'favicon';
+    const resolvedBgColor = preset === 'favicon' ? 'white' : (preset === 'splash' ? 'white' : 'transparent');
+
     // Padding shrinks the icon inside the viewBox to give breathing room
     const pad = cfg ? cfg.padding * 1024 : 0;
     const vbSize = 1024;
@@ -50,7 +55,7 @@ export default function BuildingLogo({
 
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width={resolvedSize} height={resolvedSize} viewBox={viewBox} aria-label="Building logo" role="img" {...rest}>
-            {preset === 'splash' && <rect width="1024" height="1024" fill="white" />}
+            {showBg && <rect width="1024" height="1024" fill={resolvedBgColor} />}
             <path d={PATH_D} fill={color} fillRule="evenodd" stroke="none" />
         </svg>
     );
@@ -82,11 +87,11 @@ export function SplashLogo(props) {
 /**
  * Returns a data URI string you can assign to a <link rel="icon"> href.
  *
- * @param {string} [color="#000000"]
- * @param {string} [bgColor="transparent"]
+ * @param {string} [color=C.p600]
+ * @param {string} [bgColor="white"]
  * @returns {string}  "data:image/svg+xml;base64,..."
  */
-export function getFaviconDataUri(color = '#000000', bgColor = 'transparent') {
+export function getFaviconDataUri(color = C.p600, bgColor = 'white') {
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><rect width="1024" height="1024" fill="${bgColor}"/><path d="${PATH_D}" fill="${color}" fill-rule="evenodd"/></svg>`;
     return `data:image/svg+xml;base64,${btoa(svg)}`;
 }
@@ -95,10 +100,10 @@ export function getFaviconDataUri(color = '#000000', bgColor = 'transparent') {
  * Injects (or updates) a <link rel="icon"> tag in the document <head>.
  * Call once on app boot, e.g. in index.js / main.jsx.
  *
- * @param {string} [color="#000000"]
- * @param {string} [bgColor="transparent"]
+ * @param {string} [color=C.p600]
+ * @param {string} [bgColor="white"]
  */
-export function injectFavicon(color = '#000000', bgColor = 'transparent') {
+export function injectFavicon(color = C.p600, bgColor = 'white') {
     if (typeof document === 'undefined') return;
     let link = document.querySelector("link[rel~='icon']");
     if (!link) {
@@ -107,5 +112,5 @@ export function injectFavicon(color = '#000000', bgColor = 'transparent') {
         document.head.appendChild(link);
     }
     link.type = 'image/svg+xml';
-    link.href = getFaviconDataUri(color, bgColor);
+    link.href = '/favicon.svg';
 }
