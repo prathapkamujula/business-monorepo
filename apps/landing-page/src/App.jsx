@@ -6,6 +6,7 @@ import Home from './pages/Home.jsx';
 import Privacy from './pages/Privacy.jsx';
 import TermsAndConditions from './pages/TermsAndConditions.jsx';
 import Downloads from './pages/Downloads.jsx';
+import NotFound from './pages/NotFound.jsx';
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -28,6 +29,7 @@ export default function App() {
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/terms" element={<TermsAndConditions />} />
                     <Route path="/downloads" element={<Downloads />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
                 <Footer />
             </div>

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { WebsiteLogo } from '../utils/logo.jsx';
-import { navLinks, footerData } from "../utils/content.js";
+import { navLinks, footerData } from '../utils/content.js';
 import { WaIcon } from './Common.jsx';
 
 export default function Footer() {
@@ -12,15 +12,17 @@ export default function Footer() {
                         <WebsiteLogo size={32} color="white" />
                         <span className="font-serif text-xl font-bold text-white">Home Hero</span>
                     </div>
-                    <p className="font-sans text-primary-100/80 max-w-sm leading-relaxed">
-                        {footerData.description}
-                    </p>
+                    <p className="font-sans text-primary-100/80 max-w-sm leading-relaxed">{footerData.description}</p>
                 </div>
                 <div>
                     <h5 className="font-serif text-lg font-bold mb-6 text-white">Quick Links</h5>
                     <ul className="space-y-4 font-sans text-primary-100/70">
-                        {navLinks.map(l => (
-                            <li key={l.name}><a href={l.href} className="hover:text-white transition-colors">{l.name}</a></li>
+                        {navLinks.map((l) => (
+                            <li key={l.name}>
+                                <a href={l.href} className="hover:text-white transition-colors">
+                                    {l.name}
+                                </a>
+                            </li>
                         ))}
                     </ul>
                 </div>
@@ -38,8 +40,12 @@ export default function Footer() {
             <div className="max-w-7xl mx-auto pt-8 border-t border-primary-800/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-primary-200/50 font-sans text-sm">
                 <span className="text-center sm:text-left">{footerData.copyright}</span>
                 <div className="flex gap-8">
-                    <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                    <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+                    <Link to="/privacy" className="hover:text-white transition-colors">
+                        Privacy Policy
+                    </Link>
+                    <Link to="/terms" className="hover:text-white transition-colors">
+                        Terms of Service
+                    </Link>
                 </div>
             </div>
         </footer>

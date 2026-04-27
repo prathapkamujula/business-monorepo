@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { services } from "../utils/content.js";
+import { services } from '../utils/content.js';
 import { SectionLabel, SectionHeading } from './Common.jsx';
 
 export default function Services() {
@@ -22,19 +22,17 @@ export default function Services() {
                             key={i}
                             whileHover={s.live ? { y: -8 } : {}}
                             className={`group flex items-center justify-between p-8 rounded-[2rem] border transition-all
-                                ${s.live 
-                                    ? 'bg-primary-50 border-primary-100 hover:bg-white hover:shadow-xl hover:shadow-primary-100 cursor-pointer' 
-                                    : 'bg-gray-50 border-gray-100 opacity-60 cursor-not-allowed'}`}
+                                ${
+                                    s.live
+                                        ? 'bg-primary-50 border-primary-100 hover:bg-white hover:shadow-xl hover:shadow-primary-100 cursor-pointer'
+                                        : 'bg-gray-50 border-gray-100 opacity-60 cursor-not-allowed'
+                                }`}
                         >
                             <div className="flex items-center gap-6">
-                                <span className="text-4xl filter grayscale group-hover:grayscale-0 transition-all">
-                                    {s.icon}
-                                </span>
+                                <span className="text-4xl filter grayscale group-hover:grayscale-0 transition-all">{s.icon}</span>
                                 <div>
                                     <h4 className="font-serif text-xl font-bold text-primary-700">{s.name}</h4>
-                                    <p className="font-sans text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">
-                                        {s.live ? 'Book Now' : 'Stay Tuned'}
-                                    </p>
+                                    <p className="font-sans text-xs text-gray-400 mt-1 uppercase tracking-widest font-bold">{s.live ? 'Book Now' : 'Stay Tuned'}</p>
                                 </div>
                             </div>
                             {s.live ? (

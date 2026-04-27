@@ -12,7 +12,6 @@ export const C = {
     t600: '#0F6E56',
 };
 
-
 export const WA_NUMBER = '919490599600';
 export const WA_MESSAGE = encodeURIComponent("Hi! I'd like to book a home service.");
 export const WA_MESSAGE_PRO = encodeURIComponent("Hi! I'd like to become a partner with your company.");
@@ -33,13 +32,13 @@ export const heroStats = [
 ];
 
 export const footerData = {
-    description: "Bringing professional, reliable, and verified home services to every Indian household. Excellence in every corner.",
+    description: 'Bringing professional, reliable, and verified home services to every Indian household. Excellence in every corner.',
     contact: {
-        phone: "+91 9490 599 600",
-        address: "Nellore, Andhra Pradesh",
-        country: "India"
+        phone: '+91 9490 599 600',
+        address: 'Nellore, Andhra Pradesh',
+        country: 'India',
     },
-    copyright: "© 2026 Home Hero. Built with ❤️ for India."
+    copyright: '© 2026 Home Hero. Built with ❤️ for India.',
 };
 
 export const services = [

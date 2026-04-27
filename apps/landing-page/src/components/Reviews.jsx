@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
-import { reviews } from "../utils/content.js";
+import { reviews } from '../utils/content.js';
 import { SectionLabel, SectionHeading } from './Common.jsx';
 
 export default function Reviews() {
@@ -24,20 +24,18 @@ export default function Reviews() {
                                 <Star key={s} size={18} fill="currentColor" strokeWidth={0} />
                             ))}
                         </div>
-                        <p className="font-serif text-2xl italic leading-relaxed text-primary-700 mb-10">
-                            "{r.text}"
-                        </p>
+                        <p className="font-serif text-2xl italic leading-relaxed text-primary-700 mb-10">"{r.text}"</p>
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center font-sans text-lg font-bold text-primary-700">
-                                {r.name[0]}
-                            </div>
+                            <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center font-sans text-lg font-bold text-primary-700">{r.name[0]}</div>
                             <div>
                                 <div className="font-sans font-bold text-primary-900">{r.name}</div>
                                 <div className="font-sans text-xs text-primary-400 uppercase tracking-widest font-bold mt-0.5">{r.role}</div>
                             </div>
                         </div>
                         <div className="absolute top-10 right-10 text-primary-50/50">
-                            <svg width="40" height="30" viewBox="0 0 40 30" fill="currentColor"><path d="M0 30h12l8-15V0H0v30zm20 0h12l8-15V0H20v30z"/></svg>
+                            <svg width="40" height="30" viewBox="0 0 40 30" fill="currentColor">
+                                <path d="M0 30h12l8-15V0H0v30zm20 0h12l8-15V0H20v30z" />
+                            </svg>
                         </div>
                     </motion.div>
                 ))}

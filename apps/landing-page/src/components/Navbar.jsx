@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { WebsiteLogo } from '../utils/logo.jsx';
-import { WA_URL, C, navLinks } from "../utils/content.js";
+import { WA_URL, C, navLinks } from '../utils/content.js';
 import { WaIcon } from './Common.jsx';
 
 export default function Navbar() {
@@ -14,28 +14,18 @@ export default function Navbar() {
 
     const renderLink = (l, mobile = false) => {
         const className = mobile
-            ? "font-sans text-lg font-medium text-gray-700"
-            : "font-sans text-sm font-medium tracking-wide text-gray-600 hover:text-primary-600 transition-colors";
+            ? 'font-sans text-lg font-medium text-gray-700'
+            : 'font-sans text-sm font-medium tracking-wide text-gray-600 hover:text-primary-600 transition-colors';
 
         if (isHome) {
             return (
-                <a
-                    key={l.name}
-                    href={l.href}
-                    className={className}
-                    onClick={() => mobile && setMenuOpen(false)}
-                >
+                <a key={l.name} href={l.href} className={className} onClick={() => mobile && setMenuOpen(false)}>
                     {l.name}
                 </a>
             );
         } else {
             return (
-                <Link
-                    key={l.name}
-                    to={`/${l.href}`}
-                    className={className}
-                    onClick={() => mobile && setMenuOpen(false)}
-                >
+                <Link key={l.name} to={`/${l.href}`} className={className} onClick={() => mobile && setMenuOpen(false)}>
                     {l.name}
                 </Link>
             );
@@ -52,9 +42,7 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop links */}
-            <div className="hidden md:flex items-center gap-10">
-                {navLinks.map((l) => renderLink(l))}
-            </div>
+            <div className="hidden md:flex items-center gap-10">{navLinks.map((l) => renderLink(l))}</div>
 
             <div className="hidden md:flex items-center gap-4">
                 <motion.a
@@ -70,10 +58,7 @@ export default function Navbar() {
             </div>
 
             {/* Hamburger */}
-            <button
-                className="md:hidden p-2 text-primary-700"
-                onClick={() => setMenuOpen(!menuOpen)}
-            >
+            <button className="md:hidden p-2 text-primary-700" onClick={() => setMenuOpen(!menuOpen)}>
                 {menuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 

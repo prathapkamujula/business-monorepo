@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { faqs, C } from "../utils/content.js";
+import { faqs, C } from '../utils/content.js';
 import { SectionLabel, SectionHeading } from './Common.jsx';
 
 export default function FAQ() {
@@ -22,23 +22,14 @@ export default function FAQ() {
                                 onClick={() => setOpen(open === i ? null : i)}
                             >
                                 {f.q}
-                                <motion.span
-                                    animate={{ rotate: open === i ? 45 : 0 }}
-                                    className="text-3xl font-light text-primary-300"
-                                >
+                                <motion.span animate={{ rotate: open === i ? 45 : 0 }} className="text-3xl font-light text-primary-300">
                                     +
                                 </motion.span>
                             </button>
                             <AnimatePresence>
                                 {open === i && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: 'auto', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                    >
-                                        <p className="font-sans text-gray-500 p-4 pt-2 leading-relaxed border-t border-primary-50 bg-primary-50/30">
-                                            {f.a}
-                                        </p>
+                                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}>
+                                        <p className="font-sans text-gray-500 p-4 pt-2 leading-relaxed border-t border-primary-50 bg-primary-50/30">{f.a}</p>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
