@@ -17,7 +17,7 @@
  */
 
 import React from 'react';
-import { C } from './content';
+import { C } from './content.js';
 
 // ─── Core path data (original viewBox 0 0 1024 1024) ─────────────────────────
 const PATH_D =
