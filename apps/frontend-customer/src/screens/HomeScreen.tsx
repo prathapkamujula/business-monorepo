@@ -21,6 +21,8 @@ import OfferCard from '../components/screen/home/OfferCard';
 import Services from '../components/screen/home/Services';
 import OfferDetailModal from '../components/homeScreen/OfferDetailModal';
 import { contentApi } from '../api/contentApi';
+import { integrationApi } from '../api/integrationApi';
+import LocationSelectionModal from '../components/shared/LocationSelectionModal';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.5;
@@ -39,6 +41,8 @@ const HomeScreen = () => {
     const [recentlyViewed, setRecentlyViewed] = useState<any[]>([]);
     const [selectedOffer, setSelectedOffer] = useState<any>(null);
     const [offerModalVisible, setOfferModalVisible] = useState(false);
+    const [locationModalVisible, setLocationModalVisible] = useState(false);
+    const [currentAddress, setCurrentAddress] = useState<any>(null);
 
     const fetchData = useCallback(
         async (showRefreshing = true) => {
@@ -52,14 +56,20 @@ const HomeScreen = () => {
             }
 
             try {
-                const [profileRes, homeRes] = await Promise.all([
+                const [profileRes, homeRes, address] = await Promise.all([
                     axiosInstance.get('/customers/profile'),
                     axiosInstance.get('/home/data'),
+                    integrationApi.getCurrentAddress(),
                 ]);
 
                 const customer = profileRes.data;
                 setName(customer.name || authUser?.displayName || 'User');
                 setProfilePic(customer.photoUrl || authUser?.photoURL || '');
+
+                setCurrentAddress(address);
+                if (!address) {
+                    setLocationModalVisible(true);
+                }
 
                 const homeData = homeRes.data;
                 setServices(homeData.services || []);
@@ -100,6 +110,11 @@ const HomeScreen = () => {
             setSelectedOffer(offer);
         }
         setOfferModalVisible(true);
+    };
+
+    const handleLocationResolved = (address: any) => {
+        setCurrentAddress(address);
+        setLocationModalVisible(false);
     };
 
     if (fetching && services.length === 0 && offers.length === 0) {
@@ -263,6 +278,11 @@ const HomeScreen = () => {
                 visible={offerModalVisible}
                 onClose={() => setOfferModalVisible(false)}
                 offer={selectedOffer}
+            />
+
+            <LocationSelectionModal
+                visible={locationModalVisible}
+                onLocationResolved={handleLocationResolved}
             />
         </SafeAreaView>
     );
